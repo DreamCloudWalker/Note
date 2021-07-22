@@ -166,7 +166,7 @@ Android Camera对象通过setPreviewCallback 函数，在onPreviewFrame(byte[] d
 
 NV21和I420都是属于YUV420格式。而NV21是一种two-plane模式，即Y和UV分为两个Plane(平面)，但是UV（CbCr）交错存储，2个平面，而不是分为三个。这种排列方式被称之为YUV420SP，而I420则称之为YUV420P。(Y:明亮度、灰度，UV:色度、饱和度)
 
-下图是大小为4x4的NV21数据:Y1、Y2、Y5、Y6共用V1与U1,
+下图是大小为<font color=red>4x4</font>的NV21数据:Y1、Y2、Y5、Y6共用V1与U1,
 
 ![image-20210721193523827](.asserts/image-20210721193523827.png)
 
