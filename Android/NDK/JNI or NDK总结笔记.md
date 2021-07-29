@@ -1,6 +1,6 @@
 * 常见代码
     * 定义jni日志打印，其中 __VA_ARGS__ 代表 ...的可变参数
-    ```
+    ```c++
     #include <iostream>
     
     // 日志输出
@@ -15,7 +15,7 @@
 * Jni对象
     * 数组操作：jintArray == int[]， jobjectArray == 引用类型对象，例如 String[]   Test[]
         * 把int[] 转成 int*： 
-        ```
+        ```c++
         extern "C" 
         JNIEXPORT void JNICALL
         Java_com_dengjian_testjni_MainActivity_testArraAction(JNIEnv *env, jobject thiz, jint count, jstring text_info, jintArray ints, jobjectArray strs) {
@@ -32,7 +32,7 @@
             int* jintArray = env->GetIntArrayElements(ints, NULL);
         ```
         * Java层数组的长度
-        ```
+        ```c++
             // jsize GetArrayLength(jarray array) // jintArray ints 可以放入到 jarray的参数中去
             jsize size = env->GetArrayLength(ints);
             for (int i = 0; i < size; ++i) {
@@ -63,7 +63,7 @@
         }
         ```
     * 对象操作
-    ```
+    ```c++
     // jobject student == Student
     // jstring str  == String
     extern "C"
@@ -98,7 +98,7 @@
     }
     ```
     * 对象进阶
-    ```
+    ```c++
     extern "C"
     JNIEXPORT void JNICALL
     Java_com_dengjian_testjni_MainActivity_insertObject(JNIEnv *env, jobject thiz) {
@@ -136,7 +136,7 @@
     }
     ```
     * 局部引用与全局引用
-    ```
+    ```c++
     jclass dogClass; // 你以为这个是全局引用，实际上他还是局部引用
     
     extern "C"
@@ -200,7 +200,7 @@
     * JNIEXPORT : Linux 和 Windows jni.h内部的宏定义 是不一样的，此宏代表是 对外暴露的标准形式。例如：在Windows中 对外暴露的标准已经被规定好了，所以在jni.h中的宏是以Windows对外暴露的标准规则来写的。
     * JNICALL ： Linux 和 Windows jni.h内部的宏定义 是不一样的，此宏代表是 此函数形参压栈的规则制定，例如：在Windows平台中里面的宏定义，代表函数压栈从右到左方式操作的 等等。
 * CMake格式说明
-```
+```makefile
 // app(build.gradle)
 externalNativeBuild {
     cmake {
@@ -268,7 +268,7 @@ target_link_libraries(
         * 效率低，执行函数时才开始初始化；
     * 动态注册：
         * 在JNI_OnLoad中去注册函数，该函数类似构造函数，在Sysytem.loadLibrary()时就会触发。比静态函数效率高。和静态相比：静态相当于是：
-        ```
+        ```java
         // 静态注册类似：
         new Student().xx1();
         new Student().xx2();
@@ -281,7 +281,7 @@ target_link_libraries(
         stu.xx3();
         ```
         * 动态注册代码如下：
-    ```
+    ```c++
     JavaVM *jVm = nullptr; // 避免不赋值出现类似0x003545 系统乱值，C++11后，取代NULL，作用是可以初始化指针赋值
     const char *mainActivityClassName = "com/dengjian/testjni/MainActivity";
     
@@ -343,7 +343,7 @@ target_link_libraries(
     ```
 * JNI多线程
     * JNIEnv可以跨函数，但不能跨线程，否则崩溃；解决方案：
-    ```
+    ```c++
     // 假设这里是个异步线程执行的函数
     JNIEnv *env = nullptr;
     jint attachRet = ::javaVm->AttachCurrentThread(&env, nulltpr);   // 附加当前异步线程后，会得到一个全新的JNIEnv,是该子线程专用env
@@ -359,7 +359,7 @@ target_link_libraries(
     * jobject即不能跨函数也不能跨线程，否则崩溃；默认是局部引用，可升级为全局引用解决问题。
     * JavaVM（一个进程只有一个）能跨线程和跨函数；
 * JNI静态缓存（OpenCV,WebRTC都大量使用了静态缓存）
-```
+```c++
 public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -512,7 +512,7 @@ JNIEXPORT void JNICALL Java_com_dengjian_as_1jni_1project_MainActivity2_clearSta
 }
 ```
 * native异常捕获
-```
+```c++
 // 03.native异常捕获 ======================
 // 异常方式一: 【C++处理时异常】 扭转乾坤
 extern "C"
@@ -573,7 +573,7 @@ Java层出错了，Native层可以去 监测到 然后清除Java的异常，具�
 */
 ```
 * 手写JNIEnv
-```
+```c++
 #include <iostream>
 #include <string>
 using namespace std;
