@@ -44,6 +44,10 @@ Premultiplied Alpha 后的像素格式变得不直观，因为在画图的时候
 
 
 
+补充：png的透明有两种计算方法一种叫做直通alpha（straight alpha），一种叫做预乘alpha（premultiplied alpha），和三维没啥关系，看做图的有没有做预乘这一步。简单来说预乘alpha做的png要用glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);来混合才不会有黑边，而直通alpha要用glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);来进行混合。
+
+
+
 ### 纹理处理
 
 我们使用的PNG图片纹理，一般是不会 Premultiplied Alpha 的。游戏引擎在载入PNG纹理后回手动处理，然后再glTexImage2D传给GPU，比如 Cocos2D-x 中的 CCImage::premultipliedAlpha：
