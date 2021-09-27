@@ -16,15 +16,27 @@
 
   pm -lf|grep "aruler"	// 查找（比如查找包在哪个目录）
 
-  adb shell getprop ro.hardware 	// dump CPU信息
+* adb shell **getprop** 
+  * adb shell **getprop** ro.hardware 	// dump CPU信息
+  * 查看设备相关信息，都可用，后面参数可参考Build.java。比如查看手机model信息，就用 adb shell getprop ro.product.model
 
+* root后
+  * adb disable-verity
+  * adb shell getprop ro.product.cpu.abi 	// 查看手机arm版本
 
+*  find
+  * find / -name xxx.xxx	// 按文件名在**根目录**查找
+  * find frameworks/ -name xxx.xxx    // 在frameworks目录下查找
+  * find frameworks/ -name ‘PowerManager*’   // 使用通配符*（0个或任意多个），在frameworks目录下查找文件名开头是字符串‘PowerManager’的文件
+  * find . -name ‘PowerManager*’   // 表示在当前目录下（包含子目录）查找文件名开头是字符串‘PowerManager’的文件。
+  * find frameworks/ -amin -10    // 按文件特征找，表示在frameworks目录下查找最后10分钟访问的文件。
 
-####   // root后
-
-  adb disable-verity
-
-  adb shell getprop ro.product.cpu.abi 	// 查看手机arm版本
+* grep
+  * -i：不区分大小写；
+  * -n：显示匹配行及行号；
+  * -r：包含子目录；
+  * -c：只输出匹配行的计数；
+  * -w：匹配整个单词；
 
 
 
@@ -66,6 +78,16 @@ adb shell后
         }
     }
 ```
+
+
+
+// 定位线程泄漏
+
+先用**ps -fe |grep programname** 查看进程id
+
+adb shell cat /proc/<pid>/status 	// 如图的Threads:后面标注了线程数量
+
+![image-20210923175903909](.asserts/image-20210923175903909.png)
 
 
 
