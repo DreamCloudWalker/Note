@@ -33,7 +33,8 @@ void subStr(char **ret, char *src, int start, int end) {
         cnt++;
     }
     
-    // *ret = retStr;   // 不能这样写，弹栈后内存已被释放，或者可以用堆区的解决方案，比如把char retStr[end - start];改成char *retStr = malloc(end - start); 但需要在函数外自己free
+    // *ret = retStr;   // 不能这样写，弹栈后内存已被释放，或者可以用堆区的解决方案，比如把char retStr[end - start];
+    // 改成char *retStr = malloc(end - start); 但需要在函数外自己free
     strcpy(*ret, retStr);
 }
 ```

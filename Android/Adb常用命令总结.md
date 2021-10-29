@@ -103,6 +103,8 @@ adb shell dumpsys activity | grep mFocusedActivity
 
 **adb shell dumpsys activity activities | sed -En -e '/Running activities/,/Run #0/p'**	// 查看activity堆栈
 
+adb shell dumpsys activity top  // 可以看到Added Fragment的信息
+
 
 
 ### 4. adb logcat
