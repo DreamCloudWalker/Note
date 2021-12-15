@@ -67,5 +67,7 @@ https://blog.csdn.net/linxinfa/article/details/121370565
 
 且这种方式，将模型和动作由Generic改成人形Humanaid时，都会提示模型不是T-pose，需要在Unity中强制转为T-pose后才能正常工作。如图：
 
-![image-20211213181952918](.asserts/image-20211213181952918.png)
+
+
+注意带贴图的fbx导入unity后，要在inspector面板的Materials一项把location改为**"Use External Materials(Legadcy)"**，并且把Naming改为**"From Model's Materials"**。Apply后才会生效。不然会丢失原来的贴图数据。
 
