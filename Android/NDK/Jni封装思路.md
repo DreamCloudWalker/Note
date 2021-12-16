@@ -52,6 +52,29 @@ JNIEnv* GetEnv()
   return reinterpret_cast<JNIEnv*>(env);
 }
 
+static void ThreadDestructor(void* prev_jni_ptr) {
+  // This function only runs on threads where |g_jni_ptr| is non-NULL, meaning
+  // we were responsible for originally attaching the thread, so are responsible
+  // for detaching it now.  However, because some JVM implementations (notably
+  // Oracle's http://goo.gl/eHApYT) also use the pthread_key_create mechanism,
+  // the JVMs accounting info for this thread may already be wiped out by the
+  // time this is called. Thus it may appear we are already detached even though
+  // it was our responsibility to detach!  Oh well.
+  if (!GetEnv())
+    return;
+
+  RTC_CHECK(GetEnv() == prev_jni_ptr)
+      << "Detaching from another thread: " << prev_jni_ptr << ":" << GetEnv();
+  jint status = g_jvm->DetachCurrentThread();
+  RTC_CHECK(status == JNI_OK) << "Failed to detach thread: " << status;
+  RTC_CHECK(!GetEnv()) << "Detaching was a successful no-op???";
+}
+
+static void CreateJNIPtrKey() {
+  RTC_CHECK(!pthread_key_create(&g_jni_ptr, &ThreadDestructor))
+      << "pthread_key_create";
+}
+
 // Return thread ID as a string.
 static std::string GetThreadId()
 {
@@ -96,6 +119,12 @@ JNIEnv* AttachCurrentThreadIfNeeded()
     return jni;
 }
 ```
+
+WebRTC是在线程释放时做DetachCurrentThread，通过pthread_key_create传的销毁函数。
+
+另外也可以参考谷歌Filament引擎的的实现，这个相对比较简单直观，直接在析构里DetachCurrentThread了：
+
+https://github.com/google/filament/blob/main/filament/backend/include/private/backend/VirtualMachineEnv.h
 
 
 
@@ -185,10 +214,61 @@ LOGE("调用到getName方法，值是:%s\n", getNameValue);
 #### 5. 类型转换
 
 * Java String转换为std::string
-
 * std::map与Java HashMap互转
 
-  
+```c++
+std::string JavaToStdString(JNIEnv* jni, const jstring& j_string)
+{
+  const jclass string_class = GetObjectClass(jni, j_string);
+  const jmethodID get_bytes = GetMethodID(jni, string_class, "getBytes", "(Ljava/lang/String;)[B");
+  const jstring charset_name = jni->NewStringUTF("ISO-8859-1");
+  const jbyteArray j_byte_array = (jbyteArray)jni->CallObjectMethod(j_string, get_bytes, charset_name);
+  const size_t len = jni->GetArrayLength(j_byte_array);
+  std::vector<char> buf(len);
+  jni->GetByteArrayRegion(j_byte_array, 0, len, reinterpret_cast<jbyte*>(&buf[0]));
+  return std::string(buf.begin(), buf.end());
+}
+
+jobject StdMapStringToJava(std::map<std::string, std::string> additional_http_headers)
+{
+    jclass c = jni->FindClass("java/util/HashMap");
+    jobject o = jni->NewObject(c, jni->GetMethodID(c, "<init>", "()V"));
+    jmethodID m = jni->GetMethodID(c, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
+    for (const auto& it : additional_http_headers) {
+        jni->CallObjectMethod(o, m, jni->NewStringUTF(it.first.c_str()), jni->NewStringUTF(it.second.c_str())); 
+    }
+    return o;
+}
+
+std::map<std::string, std::string> JavaToStdMapStrings(JNIEnv* jni, jobject j_map)
+{
+    jclass map_class = jni->FindClass("java/util/Map");
+    jclass set_class = jni->FindClass("java/util/Set");
+    jclass iterator_class = jni->FindClass("java/util/Iterator");
+    jclass entry_class = jni->FindClass("java/util/Map$Entry");
+    jmethodID entry_set_method = jni->GetMethodID(map_class, "entrySet", "()Ljava/util/Set;");
+    jmethodID iterator_method = jni->GetMethodID(set_class, "iterator", "()Ljava/util/Iterator;");
+    jmethodID has_next_method = jni->GetMethodID(iterator_class, "hasNext", "()Z");
+    jmethodID next_method = jni->GetMethodID(iterator_class, "next", "()Ljava/lang/Object;");
+    jmethodID get_key_method = jni->GetMethodID(entry_class, "getKey", "()Ljava/lang/Object;");
+    jmethodID get_value_method = jni->GetMethodID(entry_class, "getValue", "()Ljava/lang/Object;");
+
+    jobject j_entry_set = jni->CallObjectMethod(j_map, entry_set_method);
+    jobject j_iterator = jni->CallObjectMethod(j_entry_set, iterator_method);
+
+    std::map<std::string, std::string> result;
+    while (jni->CallBooleanMethod(j_iterator, has_next_method)) {
+        jobject j_entry = jni->CallObjectMethod(j_iterator, next_method);
+        jstring j_key = static_cast<jstring>(jni->CallObjectMethod(j_entry, get_key_method));
+        jstring j_value = static_cast<jstring>(jni->CallObjectMethod(j_entry, get_value_method));
+        result[JavaToStdString(jni, j_key)] = JavaToStdString(jni, j_value);
+    }
+
+    return result;
+}
+```
+
+
 
 #### 6. 本地方法动态注册
 
@@ -309,7 +389,7 @@ class lock_guard
 };
 ```
 
-为了保证`lock_guard`对象不被错误使用，产生不可预知的后果，上面的代码中删除了`lock_guard`对象的拷贝构造函数和赋值运算符,以确保`lock_guard`不会被复制，这是RAII机制的一个基本特征，后面所有RAII实现都具备这个特性。
+为了保证`lock_guard`对象不被错误使用，产生不可预知的后果，上面的代码中注意**`lock_guard`对象的拷贝构造函数和赋值运算符都被声明为delete(告知编译器不生成这些被标记的函数)，以确保`lock_guard`不会被复制，这是RAII机制的一个基本特征**，后面所有RAII实现都具备这个特性。
 
 
 
