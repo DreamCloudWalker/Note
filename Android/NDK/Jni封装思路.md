@@ -316,7 +316,7 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
 * Jni静态缓存
 * 签名
 
-我们在调用这类<font color="red">Get<Static>MethodID、Get<Static><TYPE>Field、Call<Static><TYPE>Method</font>接口的时候都需要填入signature，signature用于表示描述Java类型对应C/C++类型。基本类型使用单字符表示，结构体使用L + 包名 + 结构名 + ;表示，因为JNI需要知道结构体的完整包名才能找到对应的类型。
+我们在调用这类<font color="red">Get&lt;Static&gt;MethodID、Get&lt;Static&gt;&lt;Type&gt;Field、Call&lt;Static&gt;&lt;Type&gt;Method</font>接口的时候都需要填入signature，signature用于表示描述Java类型对应C/C++类型。基本类型使用单字符表示，结构体使用L + 包名 + 结构名 + ;表示，因为JNI需要知道结构体的完整包名才能找到对应的类型。
 
 | Java 类型 | Native 类型         | 类型大小                                            | 签名                         |
 | :-------- | :------------------ | :-------------------------------------------------- | :--------------------------- |
@@ -359,7 +359,7 @@ RAII是C++基础必备知识，非常重要，智能指针、锁都用的这个�
 
 * lock_guard
 
-  C++11中[lock_guard](http://www.cplusplus.com/reference/mutex/lock_guard/)对[mutex](http://www.cplusplus.com/reference/mutex/mutex/)互斥锁的管理就是典型的RAII机制，以下是C++11头文件<mutex>中lock_guard的源代码，看代码注释就清楚了，这是典型的RAII风格。
+  C++11中[lock_guard](http://www.cplusplus.com/reference/mutex/lock_guard/)对[mutex](http://www.cplusplus.com/reference/mutex/mutex/)互斥锁的管理就是典型的RAII机制，以下是C++11头文件mutex中lock_guard的源代码，看代码注释就清楚了，这是典型的RAII风格。
 
 ```C++
 // @brief  Scoped lock idiom.
