@@ -126,6 +126,8 @@ WebRTC是在线程释放时做DetachCurrentThread，通过pthread_key_create传�
 
 https://github.com/google/filament/blob/main/filament/backend/include/private/backend/VirtualMachineEnv.h
 
+外部使用JNIEnv时通过::get()::getEnvironment()来获取，由static thread_local jvm instance;保证析构函数的执行。
+
 
 
 #### 3. Native异常捕获
