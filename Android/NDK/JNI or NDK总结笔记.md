@@ -356,6 +356,8 @@ target_link_libraries(
     ::javaVm->DetachCurrentThread();
     
     ```
+    * 但要注意：即使用了AttachCurrentThread，也不能用JNIEnv去FindClass，这是因为通过AttachCurrentThread附加到虚拟机的线程在查找类时只会通过系统类加载器进行查找，不会通过应用类加载器进行查找，因此可以加载系统类，但是不能加载非系统类，如自己在java层定义的类会返回NULL。
+    * 一般做法： 获取classLoader，通过调用classLoader的loadClass来加载自定义类，适合自定义类比较多的情况。或者在主线程动态注册后创建一个全局的自定义类引用，这种适合自定义类比较少的情况。
     * jobject即不能跨函数也不能跨线程，否则崩溃；默认是局部引用，可升级为全局引用解决问题。
     * JavaVM（一个进程只有一个）能跨线程和跨函数；
 * JNI静态缓存（OpenCV,WebRTC都大量使用了静态缓存）
@@ -589,7 +591,8 @@ struct JNINativeInterface{
 typedef char * jstring; // 简化了
 typedef char * jobject; // 简化了
 
-// 函数指针 对应的 函数实现 (这里只是简写，真正复杂的代码，就不去考虑了) jstring NewStringUTF(JNIEnv* env, char* c_str) {
+// 函数指针 对应的 函数实现 (这里只是简写，真正复杂的代码，就不去考虑了) 
+jstring NewStringUTF(JNIEnv* env, char* c_str) {
     // 注意:在真正的源码中，这里需要写很多复杂代码来转换的(毕竟涉及到跨语言操作了C<-->Java)，这里我们 就简写了
     // c_str -> jstring
     return c_str;

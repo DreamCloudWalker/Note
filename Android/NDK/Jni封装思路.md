@@ -147,6 +147,8 @@ if (env->ExceptionCheck()) {
 
 #### 4. 方法调用
 
+做一层封装，给外部统一调用。
+
 * 构造函数
 
   构造函数的方法名是`<init>`
@@ -310,6 +312,8 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
     return 0;
 }
 ```
+
+可再做一层封装，给外部规范化调用。
 
 
 

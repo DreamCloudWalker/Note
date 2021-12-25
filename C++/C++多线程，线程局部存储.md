@@ -68,7 +68,7 @@ void Dest (void *value)
 
 
 
-3. 函数pthread_setspecific()用于将value的副本存储于一数据结构中，并将其与调用线程以及key相关联。参数value通常指向由调用者分配的一块内存，当线程终止时，会将该指针作为参数传递给与key相关联的destructor函数。当线程被创建时，会将所有的线程局部存储变量初始化为NULL，因此第一次使用此类变量前必须先调用pthread_getspecific()函数来确认是否已经于对应的key相关联，如果没有，那么pthread_getspecific()会分配一块内存并通过pthread_setspecific()函数保存指向该内存块的指针。
+3. 函数pthread_setspecific()用于将value的副本存储于一数据结构中，并将其与调用线程以及key相关联。参数value通常指向由调用者分配的一块内存，当线程终止时，会将该指针作为参数传递给与key相关联的destructor函数。当线程被创建时，会将所有的线程局部存储变量初始化为NULL，因此**第一次使用此类变量前必须先调用pthread_getspecific()函数来确认是否已经于对应的key相关联，如果没有，那么pthread_getspecific()会分配一块内存并通过pthread_setspecific()函数保存指向该内存块的指针**。
 
 > *参数value的值也可以不是一个指向调用者分配的内存区域，而是任何可以强制转换为void\*的变量值，在这种情况下，先前的pthread_key_create()函数应将参数*
 >
