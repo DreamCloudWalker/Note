@@ -53,6 +53,14 @@ Adobe提供的这个网站太厉害了，使用这个都可以自己做一个ARP
 
 
 
+也可以通过Blender的插件 Auto-Rig Pro，操作和Mixamo很相似。首先导入模型后，选择插件的"Auto-Rig Pro:Smart"->"Get Select Objects"，这时视角会摆正模型。注意不要调整视角，不然就没法操作了。
+
+自动绑定骨骼后，可以在"Match To Rig"和"Edit Reference Rig"之间切换来调整。
+
+<img src=".asserts/image-20211222231218068.png" alt="image-20211222231218068" style="zoom:50%;" />
+
+
+
 ### 四、Blender个人小结
 
 要说Blender对新上手的人真心不友好，如果不习惯它的操作流程，真的会用的想砸电脑。虽然整体风格其实挺符合程序员的使用习惯的。但和其他3d工具的流程差别太大了。
