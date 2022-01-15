@@ -5,13 +5,30 @@
 JNI的引用分为三种Local References、Global References和Weak Global References，他们的关系可用简单理解为C++的堆、栈，引用。
 
 * Local References
-  大部分JNI方法返回的引用类型都是local引用（例如**FindClass**），local引用仅仅在此native方法中有效，当native方法返回时此local引用会被自动释放掉，**也可以**调用<font color="red">DeleteLocalRef</font>手动释放。<font color="red">local引用的个数是有限制的</font>，所以建议当不使用的时候就手动释放一下。
+  大部分JNI方法返回的引用类型（例如**FindClass**）/ Jni函数内部创建的 `jobject `对象及其子类( `jclass `、 `jstring `、 `jarray `等) 对象都是local引用，local引用仅仅在此native方法中有效，当native方法返回时此local引用会被自动释放掉，**也可以**调用<font color="red">DeleteLocalRef</font>手动释放。<font color="red">local引用的个数是有限制的</font>，所以建议当不使用的时候就手动释放一下。一般情况下，我们应该依赖 JVM 去自动释放 JNI 局部引用；但下面两种情况必须手动调用 `DeleteLocalRef() `去释放：
+
+  * (在循环体或回调函数中)创建大量 JNI 局部引用，即使它们并不会被同时使用，因为 JVM 需要足够的空间去跟踪所有的 JNI 引用，所以可能会造成内存溢出或者栈溢出;
+  * 如果对一个大的 Java 对象创建了 JNI 局部引用，也必须在使用完后手动释放该引用，否则 GC 迟迟无法回收该 Java 对象也会引发内存泄漏.
 
 * Global References
   Global引用在整个生命周期中都是有效的（直到手动释放它），同样它的<font color="red">引用个数也是有限的</font>，所以在不需要的时候需要手动释放一下。使用NewGlobalRef创建一个Global引用，使用DeleteGlobalRef删除一个Global引用。
 
 * Weak Global References
   Weak Global如其名，所以在使用的时候需要判断一下这个应用对象是否还可用<font color="red">IsSameObject(o, nullptr)</font>，同样它的<font color="red">引用个数也是有限的</font>，所以在不需要的时候需要手动释放一下。使用NewWeakGlobalRef创建一个Weak Global引用，使用DeleteWeakGlobalRef删除一个Weak Global引用。
+
+* 在 JNI 层执行 Java 代码常用到 `FindClass() `、 `GetMethodID() `、 `GetFieldID() `；但只有第一个函数返回的 `jclass `属于 JNI (局部)引用对象，<font color="red">而 `jmethodID `和 `jfieldID `并不是，它们是指向内部 Runtime 数据结构的指针</font>；实际上这些 ID 是用于缓存的静态对象：第一次查找会做一次字符串比较，但后面再次调用就能直接读取而变得很快；JVM 会保证这些 ID 是合法的，直到 `Class `被 unload；所以， `jmethodID `和 `jfieldID `是不需要手动释放的，当然也不能作为 JNI 全局引用。
+
+  参考https://my.oschina.net/u/4419414/blog/4320396
+
+* **其他非 JNI 引用**:
+
+  除了上面提到的 ID，类似 `GetStringUTFChars() `和 `GetByteArrayElements() `/ `GetCharArrayElements() `等函数返回的也是 Raw Data 指针，而非 JNI 引用；
+
+  在调用相对应的 `ReleaseXXX() `函数释放前，它们都是合法的；
+
+* 同一个 `jobject `对象的不同引用可能拥有不同的值，比如同一 `jobject `对象每次调用 `NewGlobalRef() `可能返回不同的值；
+
+  要检查两个引用是否指向同一个 `jobject `对象，必须调用 `IsSameObject() `，而不要使用 `== `去比较;
 
   
 
@@ -143,6 +160,16 @@ if (env->ExceptionCheck()) {
 
 如果需要Java层抛出异常需要封装，详情见笔记《JNI or NDK总结笔记》中的native异常捕获
 
+可以参考WebRTC封装成宏定义如下：
+
+```c++
+#define CHECK_EXCEPTION(jni, ...)        \
+  if (jni->ExceptionCheck()) {      \
+     jni->ExceptionDescribe();      \
+     jni->ExceptionClear();         \
+     LOGE(__VA_ARGS__); }
+```
+
 
 
 #### 4. 方法调用
@@ -231,6 +258,18 @@ std::string JavaToStdString(JNIEnv* jni, const jstring& j_string)
   std::vector<char> buf(len);
   jni->GetByteArrayRegion(j_byte_array, 0, len, reinterpret_cast<jbyte*>(&buf[0]));
   return std::string(buf.begin(), buf.end());
+}
+
+// 用这个
+std::string JNIEnvironment::JavaToStdString(const jstring& j_string) {
+    const char* jchars = jni_->GetStringUTFChars(j_string, nullptr);
+    CHECK_EXCEPTION(jni_, "Error during GetStringUTFChars");
+    const int size = jni_->GetStringUTFLength(j_string);
+    CHECK_EXCEPTION(jni_, "Error during GetStringUTFLength");
+    std::string ret(jchars, size);
+    jni_->ReleaseStringUTFChars(j_string, jchars);
+    CHECK_EXCEPTION(jni_, "Error during ReleaseStringUTFChars");
+    return ret;
 }
 
 jobject StdMapStringToJava(std::map<std::string, std::string> additional_http_headers)
@@ -324,28 +363,28 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
 
 我们在调用这类<font color="red">Get&lt;Static&gt;MethodID、Get&lt;Static&gt;&lt;Type&gt;Field、Call&lt;Static&gt;&lt;Type&gt;Method</font>接口的时候都需要填入signature，signature用于表示描述Java类型对应C/C++类型。基本类型使用单字符表示，结构体使用L + 包名 + 结构名 + ;表示，因为JNI需要知道结构体的完整包名才能找到对应的类型。
 
-| Java 类型 | Native 类型         | 类型大小                                            | 签名                         |
-| :-------- | :------------------ | :-------------------------------------------------- | :--------------------------- |
-| boolean   | jboolean / uint8_t  | unsigned 8 bits                                     | Z                            |
-| byte      | jbyte / int8_t      | signed 8 bits                                       | B                            |
-| char      | jchar / uint16_t    | unsigned 16 bits                                    | C                            |
-| short     | jshort / int16_t    | signed 16 bits                                      | S                            |
-| int       | jint / int32_t      | signed 32 bits                                      | I                            |
-| long      | jlong / int64_t     | signed 64 bits                                      | J                            |
-| float     | jfloat / float      | 32 bits                                             | F                            |
-| double    | jdouble / double    | 64 bits                                             | D                            |
-| void      | void                | N/A                                                 | V                            |
-| Object    | jobject             | 引用对象大小，包括 jclass/jstring/jarray/jthrowable | Lfully/qualified/class/name; |
-| String    | jstring / c++对象类 | N/A                                                 | Ljava/lang/String;           |
-| Object[]  | jobjectArray        | N/A                                                 | N/A                          |
-| boolean[] | jbooleanArray       | N/A                                                 | [Z                           |
-| byte[]    | jbyteArray          | N/A                                                 | [B                           |
-| char[]    | jcharArray          | N/A                                                 | [C                           |
-| short[]   | jshortArray         | N/A                                                 | [S                           |
-| int[]     | jintArray           | N/A                                                 | [I                           |
-| long[]    | jlongArray          | N/A                                                 | [J                           |
-| float[]   | jfloatArray         | N/A                                                 | [F                           |
-| double[]  | jdoubleArray        | N/A                                                 | [D                           |
+| Java 类型 | Native 类型         | 类型大小                                            | 签名                                                         |
+| :-------- | :------------------ | :-------------------------------------------------- | :----------------------------------------------------------- |
+| boolean   | jboolean / uint8_t  | unsigned 8 bits                                     | Z                                                            |
+| byte      | jbyte / int8_t      | signed 8 bits                                       | B                                                            |
+| char      | jchar / uint16_t    | unsigned 16 bits                                    | C                                                            |
+| short     | jshort / int16_t    | signed 16 bits                                      | S                                                            |
+| int       | jint / int32_t      | signed 32 bits                                      | I                                                            |
+| long      | jlong / int64_t     | signed 64 bits                                      | J                                                            |
+| float     | jfloat / float      | 32 bits                                             | F                                                            |
+| double    | jdouble / double    | 64 bits                                             | D                                                            |
+| void      | void                | N/A                                                 | V                                                            |
+| Object    | jobject             | 引用对象大小，包括 jclass/jstring/jarray/jthrowable | Lfully/qualified/class/name;<br />比如：Ljava/nio/ByteBuffer;<br />JLandroid/media/MediaCodec$BufferInfo; |
+| String    | jstring / c++对象类 | N/A                                                 | Ljava/lang/String;                                           |
+| Object[]  | jobjectArray        | N/A                                                 | N/A                                                          |
+| boolean[] | jbooleanArray       | N/A                                                 | [Z                                                           |
+| byte[]    | jbyteArray          | N/A                                                 | [B                                                           |
+| char[]    | jcharArray          | N/A                                                 | [C                                                           |
+| short[]   | jshortArray         | N/A                                                 | [S                                                           |
+| int[]     | jintArray           | N/A                                                 | [I                                                           |
+| long[]    | jlongArray          | N/A                                                 | [J                                                           |
+| float[]   | jfloatArray         | N/A                                                 | [F                                                           |
+| double[]  | jdoubleArray        | N/A                                                 | [D                                                           |
 
 
 
