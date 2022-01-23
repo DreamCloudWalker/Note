@@ -71,3 +71,8 @@ https://blog.csdn.net/linxinfa/article/details/121370565
 
 注意带贴图的fbx导入unity后，要在inspector面板的Materials一项把location改为**"Use External Materials(Legadcy)"**，并且把Naming改为**"From Model's Materials"**。Apply后才会生效。不然会丢失原来的贴图数据。
 
+
+
+注意人形动画中有个坑，尤其和刚体一起作用时。人形动画，包括所有Mixamo下载的动画，在unity转换成Humanoid后，都会乱偏转，甚至一直有个往上的力，抵消掉重力。不知道专业名词叫什么，需要在动画里把下面几个选项勾选后，才会关掉这些乱七八糟的东西。
+
+ <img src=".asserts/image-20220123172158644.png" alt="image-20220123172158644" style="zoom:67%;" />
