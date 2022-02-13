@@ -42,4 +42,3 @@ in /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
 如果使用Qt Creator，则必须在Projects选项卡的Run部分中取消选中Add build library search path to DYLD_LIBRARY_PATH and DYLD_FRAMEWORK_PATH选项，如图：
 
 ![image-20220104182953821](.asserts/image-20220104182953821.png)
-
