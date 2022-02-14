@@ -34,6 +34,48 @@ http://stereoarts.jp/
 
 
 
+#### 4. MMD4Mecanim在移动端显示
+
+https://blog.titanwolf.in/a?ID=00700-0e254dcb-709f-49cd-932e-9d4c61f75fa5
+
+Today, when I combined MMD and unity to make Easy AR.
+
+On the PC side, the model can be displayed normally, but after the release of Android, two problems were encountered:
+
+MMD model cannot be displayed After the MMD model is displayed, the action cannot be played normally.
+
+we solve the first problem:
+
+The MMD model cannot be displayed. Tutorial reference: http://www.jiyuew.top/article/170141
+
+1. Find the material map path Materials of MMD, hold down the shift key, and select all the textures of all models
+
+  2. In the "Inspector" panel, change the shader attribute from the original MMD4Mecanim to "Toon/Basic".
+
+(Some articles say that it is changed to "standard", but it will greatly affect the quality of the model texture)
+
+At this point, after Android is released, the model can be displayed normally.
+
+When I was about to celebrate, I encountered a second problem:
+
+After the MMD model is displayed, the action cannot be played normally, and the model always remains in the initial state. Reference article: http://www.jiyuew.top/article/170141
+
+1. In the "Hierarchy" panel, select your MMD model
+
+2. In the inspector panel, there will be Animator. Next, we convert the Animator into the "Animation" property
+
+3. In the Assets panel, select the model converted from the MMD4Mecanim plug-in.
+
+4. In the "Inspector" of the model, under "Rig", change the "Animation Type" property to "Legacy" and click Apply.
+
+5. At this time, the original Animator will be converted into the "Animation" attribute
+
+Finally, thank you enthusiastic netizens who provide solutions.
+
+Finally, appreciate the results of today's labor, hahahaha. The model is my favorite Yiyi, la la la. . .
+
+
+
 # Unity3D操作转换的fbx（MMD4Mecanim）
 
 转换成功的fbx在unity的asset中如下图所示，可以预览动作效果。默认人物和动作的Rig都是Generic。如果用这种类型去使用其他通用动作会不生效。
