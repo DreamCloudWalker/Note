@@ -1,5 +1,9 @@
 ### 函数指针
 * 函数指针声明来接收函数，如下：
+```C++
+data_types (*func_pointer)( data_types arg1, data_types arg2, ...,data_types argn);
+```
+
 ```c++
 void test(void(*p)(int, int)) {
     // 以下3种写法（调用方法）都一样，因为这是一个明确的函数指针
