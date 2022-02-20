@@ -38,11 +38,11 @@ dotnet --version
 这是因为你电脑没有安装mac mono 所造成的，这里说所的mono 并不是unity安装自带的monoDeveloper, 你可以下载mac mono 在如下地址：
 http://www.mono-project.com/download/
 
-点击左上角调试按钮，Attach 到 Unity。如果没有出现 Unity-Editor 的选择，先删除本地的 .vscode/Launch.json, 然后重启vscode.
+点击左上角调试按钮，Attach 到 Unity。如果没有出现 Unity-Editor 的选择，先删除本地的（工程目录下，比如/GitHub/unity/MmdUnityProjs/RunningSanta/.vscode）的 .vscode/Launch.json, 然后重启vscode.
 
 
 
-另外可能launch.json不会自动生成，可以配置下面的。其中path改为你自己工程目录的EditorInstance.json文件。
+另外可能launch.json不会自动生成，可以配置下面的，也可以拷贝其它项目目录下的。其中path改为你自己工程目录的EditorInstance.json文件。
 
 ```json
 {
