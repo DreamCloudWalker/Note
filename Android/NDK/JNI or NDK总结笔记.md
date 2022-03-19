@@ -15,54 +15,56 @@
 * Jni对象
     * 数组操作：jintArray == int[]， jobjectArray == 引用类型对象，例如 String[]   Test[]
         * 把int[] 转成 int*： 
-        ```c++
-        extern "C" 
-        JNIEXPORT void JNICALL
-        Java_com_dengjian_testjni_MainActivity_testArraAction(JNIEnv *env, jobject thiz, jint count, jstring text_info, jintArray ints, jobjectArray strs) {
-            // ① 基本数据类型  jint count， jstring text_info， 最简单的
-            int countInt = count; // jint本质是int，所以可以用int接收
-            LOGI("参数一 countInt:%d\n", countInt);
-            
-            // const char* GetStringUTFChars(jstring string, jboolean* isCopy)
-            const char * textInfo = env->GetStringUTFChars(text_info, NULL);
-            LOGI("参数二 textInfo:%s\n", textInfo);
-            
-            // ② 把int[] 转成 int*
-            // jint* GetIntArrayElements(jintArray array, jboolean* isCopy)
-            int* jintArray = env->GetIntArrayElements(ints, NULL);
-        ```
-        * Java层数组的长度
-        ```c++
-            // jsize GetArrayLength(jarray array) // jintArray ints 可以放入到 jarray的参数中去
-            jsize size = env->GetArrayLength(ints);
-            for (int i = 0; i < size; ++i) {
-                *(jintArray+i) += 100; // C++的修改，影响不了Java层
-                LOGI("参数三 int[]:%d\n", *jintArray+i);
-            }
-            /**
-             * 0:           刷新Java数组，并 释放C++层数组
-             * JNI_COMMIT:  只提交 只刷新Java数组，不释放C++层数组
-             * JNI_ABORT:   只释放C++层数组
-             */
-            env->ReleaseIntArrayElements(ints, jintArray, 0);
-            
-            // ③：jobjectArray 代表是Java的引用类型数组，不一样
-            jsize  strssize = env->GetArrayLength(strs);
-            for (int i = 0; i < strssize; ++i) {
-                jstring jobj = static_cast<jstring>(env->GetObjectArrayElement(strs, i));
+    ```c++
+    extern "C" 
+    JNIEXPORT void JNICALL
+    Java_com_dengjian_testjni_MainActivity_testArraAction(JNIEnv *env, jobject thiz, jint count, jstring text_info, jintArray ints, jobjectArray strs) {
+        // ① 基本数据类型  jint count， jstring text_info， 最简单的
+        int countInt = count; // jint本质是int，所以可以用int接收
+        LOGI("参数一 countInt:%d\n", countInt);
         
-                // 模糊：isCopy内部启动的机制
-                // const char* GetStringUTFChars(jstring string, jboolean* isCopy)
-                const char * jobjCharp = env->GetStringUTFChars(jobj, NULL);
+        // const char* GetStringUTFChars(jstring string, jboolean* isCopy)
+        const char * textInfo = env->GetStringUTFChars(text_info, NULL);
+        LOGI("参数二 textInfo:%s\n", textInfo);
         
-                LOGI("参数四 引用类型String 具体的：%s\n", jobjCharp);
-        
-                // 释放jstring
-                env->ReleaseStringUTFChars(jobj, jobjCharp);
-            }
+        // ② 把int[] 转成 int*
+        // jint* GetIntArrayElements(jintArray array, jboolean* isCopy)
+        int* jintArray = env->GetIntArrayElements(ints, NULL);
+    ```
+    * Java层数组的长度
+    ```c++
+        // jsize GetArrayLength(jarray array) // jintArray ints 可以放入到 jarray的参数中去
+        jsize size = env->GetArrayLength(ints);
+        for (int i = 0; i < size; ++i) {
+            *(jintArray+i) += 100; // C++的修改，影响不了Java层
+            LOGI("参数三 int[]:%d\n", *jintArray+i);
         }
-        ```
+        /**
+         * 0:           刷新Java数组，并 释放C++层数组
+         * JNI_COMMIT:  只提交 只刷新Java数组，不释放C++层数组
+         * JNI_ABORT:   只释放C++层数组
+         */
+        env->ReleaseIntArrayElements(ints, jintArray, 0);
+        
+        // ③：jobjectArray 代表是Java的引用类型数组，不一样
+        jsize  strssize = env->GetArrayLength(strs);
+        for (int i = 0; i < strssize; ++i) {
+            jstring jobj = static_cast<jstring>(env->GetObjectArrayElement(strs, i));
+    
+            // 模糊：isCopy内部启动的机制
+            // const char* GetStringUTFChars(jstring string, jboolean* isCopy)
+            const char * jobjCharp = env->GetStringUTFChars(jobj, NULL);
+    
+            LOGI("参数四 引用类型String 具体的：%s\n", jobjCharp);
+    
+            // 释放jstring
+            env->ReleaseStringUTFChars(jobj, jobjCharp);
+        }
+    }
+    ```
+    
     * 对象操作
+    
     ```c++
     // jobject student == Student
     // jstring str  == String
