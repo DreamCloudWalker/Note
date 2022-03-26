@@ -34,7 +34,7 @@ Mac: Shift + Ctrl + -
 
   * **首先下载并设置Atom One Light**
 
-  * **之后打开用户设置，添加如下代码**
+  * **之后打开用户设置(Ctrl+Shift+P，搜索setting，找到“Preference: Open Default Setting (Json)”)，添加如下代码**
 
     ```json
     "workbench.colorCustomizations": {
@@ -51,4 +51,3 @@ Mac: Shift + Ctrl + -
   * 新版本的VSCode的settings.json比较难找，需要设置(通过快捷键Cmd/Ctrl + ,打开)中搜索workbench后点击”在settings.json中编辑“
   
      ![image-20211221171258350](.asserts/image-20211221171258350.png)
-
