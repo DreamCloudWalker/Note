@@ -1,0 +1,31 @@
+### Git上传大文件
+
+突破GitHub的限制，使用 [git-lfs(Git Large File Storage)](https://git-lfs.github.com/) 支持单个文件超过100M
+
+ <img src=".asserts/image-20220321115832783.png" alt="image-20220321115832783" style="zoom:67%;" />
+
+LFS 并不能像”变魔术一样”处理所有的大型数据：它需要记录并保存每一个变化。然而，这就把负担转移给了远程服务器 - 允许本地仓库保持相对的精简。
+
+为了实现这个可能，LFS 耍了一个小把戏：它在本地仓库中并不保留所有的文件版本，而是仅根据需要提供检出版本中必需的文件。
+
+但这引发了一个有意思的问题：如果这些庞大的文件本身没有出现在你的本地仓库中….改用什么来代替呢? LFS 保存轻量级指针中有真实的文件数据。当你用一个这样的指针去迁出一个修订版时，LFS 会很轻易地找到源文件（不在他上面可能就在服务器上，特殊缓存）然后你下载就行了。
+
+因此，你最终只会得到你真正想要的文件 - 而不是一些你可能永远都不需要冗余数据。
+
+```shell
+# 1、安装git-lfs
+brew install git-lfs
+
+# 2、没有特别说明的情况下，LFS 不会处理大文件问题，因此，我们必须明确告诉 LFS 该处理哪些文件。将 FrameworkFold/XXXFramework/xxx的文件设置成大文件标示。
+git lfs track "FrameworkFold/XXXFramework/xxx"
+
+# 3、常规的push操作
+git add .
+git commit -m "add large file"
+git push
+```
+
+
+
+
+
