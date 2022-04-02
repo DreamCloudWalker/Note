@@ -135,3 +135,35 @@ dumpsys gfxinfo packagename	// 查看硬件加速是否开启，如果开启，�
 
 
 
+### Top命令总结
+
+adb shell top -d 1 | grep "com.dengjian.xxx"	// 查看线程的CPU占用率、线程状态、占用内存大小等信息。
+
+-d 表示显示多少条，后面的数字是显示条数。
+
+grep 后是线程名，用作过滤。
+
+但这样看的不够清晰，可以运行这个后，找到对于的进程号，然后用 <font color="red">top -d 1 -p xxxxx</font> , 运行结果如下：
+
+![image-20220401163356515](.asserts/image-20220401163356515.png)
+
+旧版本top输出的数据含义：
+
+```shell
+PID   进程id
+USER  用户名
+PR    优先级
+CPU%  当前瞬时CPU占用率
+S     进程状态:D=不可中断的睡眠状态, R=运行, S=睡眠, T=跟踪/停止, Z=僵尸进程
+#THR  程序当前所用的线程数
+VSS   Virtual Set Size  虚拟耗用内存（包含共享库占用的内存）
+RSS   Resident Set Size 实际使用物理内存（包含共享库占用的内存）
+PCY   调度策略优先级，SP_BACKGROUND/SP_FOREGROUND
+UID   进程所有者的用户id
+Name  进程的名称
+```
+
+新版本为：
+
+![image-20220401164050800](.asserts/image-20220401164050800.png)
+

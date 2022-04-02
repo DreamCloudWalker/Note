@@ -17,3 +17,4 @@ app目录下是build/intermediates/merged_native_libs/debug[release]/out/lib/arm
 
 其中obj是中间生成so，用的话可以用merged_native_libs和stripped_native_libs下的；
  区别：直接看大小就明白，stripped下203KB， merged是1129KB，应该是merged下包含一些map信息、地址等，调试用比较合适；stripped移除了这部分，release比较合适。
+
