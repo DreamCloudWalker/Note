@@ -88,3 +88,8 @@ def versionName() {
 }
 ```
 
+后面其他app引用这个aar，可以用
+
+```groovy
+api "com.dengjian.test:1.0.0.x@aar"
+```
