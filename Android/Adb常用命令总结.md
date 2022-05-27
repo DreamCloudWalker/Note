@@ -62,6 +62,10 @@ adb shell后
 
 ![image-20210923174618280](.asserts/image-20210923174618280.png)
 
+或者从AS中看到对应的进程号，然后直接用命令：
+
+top -d 1 -p 16350   ![image-20220421151457212](.asserts/image-20220421151457212.png)
+
 也可以用代码打印出来：
 
 ```java
@@ -146,6 +150,230 @@ grep 后是线程名，用作过滤。
 但这样看的不够清晰，可以运行这个后，找到对于的进程号，然后用 <font color="red">top -d 1 -p xxxxx</font> , 运行结果如下：
 
 ![image-20220401163356515](.asserts/image-20220401163356515.png)
+
+如果要保存输出的结果，可以用adb shell top  -p <pid > top.txt
+
+注意：
+
+CPU会有超过100%的情况，假如这台手机是8核数，总量是按800%算的。
+
+所以此时的CPU=38.0/800=4.75%，一般取十几组拿平均值
+
+经对比，这样获取的数据跟Android studio获取的是一样的
+
+![image-20220421152408357](.asserts/image-20220421152408357.png)
+
+既然方法有了，那脚本自然也可以获取到，下面附上代码和文件：
+
+```python
+# encoding:utf-8
+import logging
+import os
+import re
+from threading import Thread
+import time
+
+thread_running = True
+# 每隔0.5秒获取一次
+interval = 0.3
+
+
+def get_pid(package_name, device_name):
+    if device_name.__len__() > 0:
+        device_name = "-s " + device_name
+    # else:
+    # print("未指定设备名，尝试连接默认设备")
+
+    try:
+        # 获取进程ID
+        cmd = 'adb ' + device_name + ' shell ps -o pid,NAME | grep ' + package_name
+        # print cmd
+        p = os.popen(cmd)
+        pid = p.readline().split()[0]
+    except:
+        try:
+            # 获取进程ID（旧版命令）
+            cmd = 'adb ' + device_name + ' shell ps | grep ' + package_name
+            # print ("获取cpu的adb命令：%s" , cmd)
+            # print cmd
+            p = os.popen(cmd)
+            pid = p.readline().split()[1]
+        except:
+            logging.error("获取进程ID失败，请确认包名是否正确、程序是否打开")
+
+    return pid
+
+
+def get_app_cpu_usage(pid, device_name="", device_cores=-1):
+    """
+    :param package_name: 待检测安卓应用包名【必填】
+    :param device_name: 待检测设备名（使用“adb devices”命令获取）【若为空则检测默认设备，当设备数大于一时将报错】
+    :param device_cores: 设备核心数，从adb获取到的使用率可能会超过100%，指定这个数字来修正获得的结果（旧版安卓系统指定为1即可）
+    :return: 该设备指定应用的CPU占用率（占用15%则return 0.15）
+    """
+    if device_cores == -1:
+        print("未指定CPU核心数，尝试自动获取（结果不一定可靠）")
+        try:
+            cmd = 'adb ' + device_name + ' shell top -n 1'
+            print("adb命令：%s" % cmd)
+            # print cmd
+            device_cores = int(os.popen(cmd).readlines()[3].split('%cpu')[0]) / 100
+        except:
+            device_cores = 1
+            logging.error("获取CPU核心数失败，请手动指定CPU核心数！")
+
+    try:
+        # 根据进程ID获取CPU使用率
+        cmd = 'adb ' + device_name + ' shell top -n 1  -o %CPU,pid  | grep ' + pid
+
+        # print cmd
+        p = os.popen(cmd)
+        # print ("output：%s" % p)
+        result = float(p.readline().split()[0]) / (device_cores * 100)
+        print("current app's cpu usage: %f%%" % (result * 100))
+        return result
+    except:
+        try:
+            # 根据包名获取CPU使用率（旧版命令）
+            cmd = 'adb ' + device_name + ' shell top -n 1 | grep ' + pid
+            # print "获取cpu的adb命令：%s" % cmd
+
+            # print cmd
+            p = os.popen(cmd)
+            output = p.readline().split()
+            # print ("output：%s" % output)
+
+            for i in range(0, output.__len__()):
+                if output[i].__contains__('%'):
+                    return float(output[i].split('%')[0]) / (device_cores * 100)
+            #     若数据中不带%，尝试直接读取第9列
+            result = float(output[8]) / (device_cores * 100)
+            print("current app's cpu usage: %f%%" % (result * 100))
+            return result
+        except:
+            try:
+                result = float(output[9]) / (device_cores * 100)
+                print("可能存在未知字符,尝试获取下一列")
+                print(output)
+                print("current app's cpu usage: %f%%" % (result * 100))
+                return result
+            except:
+                logging.error("尝试获取下一列失败")
+    return -1
+
+
+def get_app_pss_in_KB(pid, device_name=""):
+    if device_name.__len__() > 0:
+        device_name = "-s " + device_name
+    # else:
+    #     print("未指定设备名，尝试连接默认设备")
+    try:
+        cmd = 'adb ' + device_name + ' shell dumpsys meminfo ' + pid
+        output = os.popen(cmd).readlines()
+        for i in range(len(output)):
+            if "TOTAL SWAP" in output[i]:
+                # TOTAL PSS:    84502            TOTAL RSS:   185240       TOTAL SWAP PSS:      83
+                # TOTAL: 201300 TOTAL SWAP PSS: 30797
+                # 部分机器显示TOTAL后面不跟PSS，用swap代替
+                # 正则匹配提取数字，然后获取第一个
+                result = int(re.findall('\d+', output[i])[0])
+                print("current app's pss: %d MB" % (result / 1024))
+                return result
+        raise Exception("快速方法获取失败！该机器可能无法使用meminfo+包名的方式获取")
+    except Exception as e:
+        interval = 0
+        print(e)
+        try:
+            cmd = 'adb ' + device_name + ' shell dumpsys meminfo -package | grep ' + pid
+            # print cmd
+            output = os.popen(cmd).readlines()
+            result = int(output[2].replace(' ', '').replace('k', 'K').split('K')[0].replace(',', ''))
+            print("get slowly : current app's pss: %d MB" % (result / 1024))
+            return result
+        except:
+            logging.error("获取PSS失败，请尝试更改输出信息提取规则，控制台输出为：" + output)
+
+
+def take_input():
+    input('输入任意字符停止计算：\n')
+    # doing something with the input
+    print('停止计算')
+
+
+def restart():
+    result = input("输入Y可以重启app：\n")
+    if result == 'y' or result == "Y":
+        cmd = "adb shell am force-stop com.shopee.sz.media.demo"
+        os.popen(cmd)
+
+        time.sleep(3)
+
+        cmd = 'adb shell am start com.shopee.sz.media.demo'
+        os.popen(cmd)
+
+
+def get_cpu_mem_task():
+    global thread_running
+    global interval
+
+    package_name = "com.shopee.sz.media.demo"
+    # device_name = '8fe3afe'
+
+    pid = get_pid(package_name=package_name, device_name="")
+
+    # cpu核数
+    device_cores = 8
+
+    cpu_data = []
+    mem_data = []
+
+    while thread_running:
+        cpu = get_app_cpu_usage(pid=pid, device_cores=device_cores)
+        # 问题数据排除
+        if cpu != -1:
+            cpu_data.append(cpu)
+        mem_data.append(get_app_pss_in_KB(pid=pid))
+        time.sleep(interval)
+
+    max_cpu = 0
+    sum_cpu = 0
+    max_mem = 0
+    sum_mem = 0
+    for cpu in cpu_data:
+        sum_cpu = sum_cpu + cpu
+        if cpu > max_cpu:
+            max_cpu = cpu
+
+    for mem in mem_data:
+        sum_mem = sum_mem + mem
+        if mem > max_mem:
+            max_mem = mem
+
+    average_mem = sum_mem / len(mem_data)
+    average_cpu = sum_cpu / len(cpu_data)
+
+    print("average_mem：{}, max_max：{}".format(round(average_mem / 1024), round(max_mem / 1024)))
+    # 加回车方便复制
+    print("average_cpu：\n{:.2f}\nmax_cpu：\n{:.2f}".format(average_cpu * 100, max_cpu * 100))
+
+
+if __name__ == "__main__":
+    t1 = Thread(target=get_cpu_mem_task)
+    t2 = Thread(target=take_input)
+
+    t1.start()
+    t2.start()
+
+    t2.join()  # 会一直等到线程结束
+    thread_running = False
+
+    # 输入y重启app，可选
+    # restart()
+```
+
+
+
+
 
 旧版本top输出的数据含义：
 
