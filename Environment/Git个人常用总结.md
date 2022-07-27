@@ -1,4 +1,4 @@
-### Git上传大文件
+## Git上传大文件
 
 突破GitHub的限制，使用 [git-lfs(Git Large File Storage)](https://git-lfs.github.com/) 支持单个文件超过100M
 
@@ -26,6 +26,18 @@ git push
 ```
 
 
+
+## 冷门命令
+
+*  git reset HEAD <fileName>   // 撤销add
+
+* **git reset --soft HEAD^**	// 撤销commit
+
+* git push --set-upstream origin 分支名 // 不提交代码，推送本地分支到远程仓库
+
+* 从分支1拉出分支2，改动后想直接Push到分支2：
+
+  git push origin branch2:branch1
 
 
 
