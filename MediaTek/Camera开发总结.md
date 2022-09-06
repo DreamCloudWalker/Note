@@ -81,7 +81,7 @@ abstract public void onOrientationChanged(int orientation);
 ### 相机预览方向
 
 将摄像头传感器捕获的图像，显示在屏幕上的方向，就是相机预览方向。默认情况下，和摄像头传感器方向一致，可以通过Camera API进行改变。
-Camaer1可以使用`setDisplayOrientation`设置预览方向，Camera2则可以通过TextureView来实现。
+Camaer1可以使用`setDisplayOrientation`设置预览方向***（注意前置和后置方向是不一样的。这个要设置好，OES拿到的矩阵前置和后置是一样的）***，Camera2则可以通过TextureView来实现。
 不同的摄像头位置，`orientation`是不一样的，orientation就是摄像头传感器方向顺时针旋转到屏幕自然方向的角度。
 
 #### 后置

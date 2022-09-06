@@ -39,5 +39,15 @@ git push
 
   git push origin branch2:branch1
 
+* 批量删除分支： 
 
+  比如删除名字带“cherry-pick”的所有分支: git branch | grep 'cherry-pick' | xargs git branch -D
 
+  命令解析：
+
+  * | 管道命令，用于将一串命令串联起来。前面命令的输出可以作为后面命令的输入。
+  * git branch 用于列出本地所有分支
+  * grep 搜索过滤命令。使用正则表达式搜索文本，并把匹配的行打印出来。
+  * Xargs 参数传递命令。用于将标准输入作为命令的参数传给下一个命令。
+
+​		
