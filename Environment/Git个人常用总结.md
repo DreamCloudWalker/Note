@@ -50,4 +50,54 @@ git push
   * grep 搜索过滤命令。使用正则表达式搜索文本，并把匹配的行打印出来。
   * Xargs 参数传递命令。用于将标准输入作为命令的参数传给下一个命令。
 
-​		
+* Git合并多个commit 参考https://segmentfault.com/a/1190000007748862
+
+  * Git log 查看历史
+
+  * git rebase，想要合并 1-3 条，有两个方法: 
+
+    * git rebase -i HEAD~3		// 从HEAD版本开始往过去数3个版本
+    * git rebase -i 3a4226b      // 指名要合并的版本之前的版本号, 请注意 `3a4226b` 这个版本是不参与合并的，可以把它当做一个坐标
+
+  * 执行了 `rebase` 命令之后，会弹出一个窗口，头几行如下：
+
+    ```shell
+    pick 3ca6ec3   '注释**********'
+    pick 1b40566   '注释*********'
+    pick 53f244a   '注释**********'
+    ```
+
+  * 将 `pick` 改为 `squash` 或者 `s`，之后保存并关闭文本编辑窗口即可。改完之后文本内容如下：
+
+    ```shell
+    pick 3ca6ec3   '注释**********'
+    s 1b40566   '注释*********'
+    s 53f244a   '注释**********'
+    ```
+
+  * 然后保存退出，Git 会压缩提交历史，如果有冲突，需要修改，修改的时候要注意，保留最新的历史，不然我们的修改就丢弃了。修改以后要记得敲下面的命令：
+
+    ```shell
+    git add .  
+    git rebase --continue  
+    ```
+
+  * 如果没有冲突，或者冲突已经解决，则会出现如下的编辑窗口：
+
+    ```shell
+    # This is a combination of 4 commits.  
+    #The first commit’s message is:  
+    注释......
+    # The 2nd commit’s message is:  
+    注释......
+    # The 3rd commit’s message is:  
+    注释......
+    # Please enter the commit message for your changes. Lines starting # with ‘#’ will be ignored, and an empty message aborts the commit.
+    ```
+
+    
+
+
+
+
+
