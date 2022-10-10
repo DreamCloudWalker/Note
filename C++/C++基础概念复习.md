@@ -80,7 +80,7 @@
 
 * 继承关系中默认访问属性的区别：在继承关系，struct 默认是 public 的，而 class 是 private
 
-* class这个关键字还可用于定义模板参数，就等同于 typename；而strcut不用与定义模板参数
+* class这个关键字还可用于定义模板参数，就等同于 typename；而struct不用与定义模板参数
 
   
 
@@ -271,7 +271,7 @@ null与空串的区别
 
 1, null不占用空间,空字符串占用一定内存空间
 
-2, null可以赋值给任何对象,而空字条串只能赋值给String
+2, null可以赋值给任何对象,而空字符串""只能赋值给String
 
 3, 调用null的方法会返回nullpointerexception,调用空字符串的方法不会报错
 

@@ -50,7 +50,8 @@
   OpenglUtils.checkGlError("vbo glBindBuffer");
   ```
 
-  
+
+* 帮直播那边调代码，发现相机NV21数据渲染不出来（渲染到FBO后再dump纹理）。后面发现直播那边初始化vbo后，没有用“GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0); // recover”把VBO Buffer恢复。这种也会导致后面无法绘制到FBO上。
 
 
 
