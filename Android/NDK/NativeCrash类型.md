@@ -1,5 +1,51 @@
 ## 常见的Native Crash类型
 
+当native 层发生异常的时候，往往是通过信号的方式发送，给相对应的信号处理器处理
+
+![image-20221010143323919](.asserts/image-20221010143323919.png)
+
+我们可以从signal.h看到，大概已经定义的信号有
+
+```c++
+/**
+ * #define SIGHUP 1
+#define SIGINT 2
+#define SIGQUIT 3
+#define SIGILL 4
+#define SIGTRAP 5
+#define SIGABRT 6
+#define SIGIOT 6
+#define SIGBUS 7
+#define SIGFPE 8
+#define SIGKILL 9
+#define SIGUSR1 10
+#define SIGSEGV 11
+#define SIGUSR2 12
+## define SIGPIPE 13
+#define SIGALRM 14
+#define SIGTERM 15
+#define SIGSTKFLT 16
+#define SIGCHLD 17
+#define SIGCONT 18
+#define SIGSTOP 19
+#define SIGTSTP 20
+#define SIGTTIN 21
+#define SIGTTOU 22
+#define SIGURG 23
+#define SIGXCPU 24
+#define SIGXFSZ 25
+#define SIGVTALRM 26
+#define SIGPROF 27
+#define SIGWINCH 28
+#define SIGIO 29
+#define SIGPOLL SIGIO
+#define SIGPWR 30
+#define SIGSYS 31
+ */
+```
+
+
+
 | SIGSEGV      | SEGV_MAPERR                         | 地址不在 /proc/self/maps 映射中              |
 | ------------ | ----------------------------------- | -------------------------------------------- |
 | SEGV_ACCERR  | 没有访问权限                        |                                              |
