@@ -46,6 +46,12 @@
 
   如果要拷贝出这里面的文件，可先把他拷贝到手机SD卡，比如再data目录下，cp 1.jpg /mnt/sdcard/
 
+
+
+通过如下 adb 命令在 /mnt/sdcard/ 目录下产生一个名为 bigfile 的文件，让其自动增长到磁盘剩余空间大：
+
+adb shell dd if=/dev/zero of=/mnt/sdcard/bigfile
+
   
 
 ### 2. 进程线程信息
