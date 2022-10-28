@@ -41,6 +41,12 @@ ffmpeg -i testIn.mp4 -vcodec libx264 -bf 0 -g 1 -x264-params  "keyint=1:min-keyi
 
 
 
+### 给mp3添加封面
+
+ffmpeg -i 别云间-明-夏完淳.mp3 -i 别云间.jpg -map 0:0 -map 1:0 -c copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (Front)" 别云间-明-夏完淳F.mp3
+
+
+
 ### ffprobe
 
 * 统计视频I、B、P帧: 
