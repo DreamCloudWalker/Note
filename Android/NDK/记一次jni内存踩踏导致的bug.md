@@ -55,11 +55,54 @@ int ret = env->CallIntMethod((*class_obj_)(), decode_method_id, config_buffer(),
 
 
 
+### 后续
+
+* Java 中只有8种数据基本类型，C++的基本数据类型较多。
+
+Java 中的8种基本数据类型为：[boolean](https://so.csdn.net/so/search?q=boolean&spm=1001.2101.3001.7020), byte, short, int, long, float, double, char
+
+c++ 中的数据类型较多，且部分写法有所区别：bool, short, int, long, float, double, char
 
 
 
+* 因为 Java 支持跨平台，所以每个基本数据类型占用的字节数是固定的。而 c++ 在不同平台会有所差别。
+
+Java 中的boolean， byte 一个字节， char,short 两个字节， int, float 四个字节， long, double八个字节。
+
+c++ 中，规定了最小尺寸，bool, char一个字节，int, short两个字节，long 四个字节，规定了大数据类型不得小于小数据类型。比如long 所占字节数不得小于int所占字节数。
 
 
+
+- Java 中的数字变量都是有符号的，c++可以定义为有符号和无符号两种。
+
+
+
+上次在项目中碰到MediaCodec编码，armv8手机正常，但在armv7的手机就不行了。
+
+是因为在C++层用：mediaData->pts = TimeUtils::NasToUs(env->GetLongField(media_frame, field_id_timeStamp_ns));
+
+其中field_id_timeStamp_ns是获取Java层拿到的System.nanoTime()，这是个64位的long。
+
+函数原代码如下：
+
+```c++
+static int64_t NasToUs(long ns) {
+	return static_cast<int64_t>(ns / 1000);
+}
+```
+
+这个GetLongField拿到的是个jlong，如果直接传入上面这个函数，在32位机器上会溢出，导致得到一个负数。
+
+正确方法如下：
+
+```c++
+static int64_t NasToUs(int64_t ns) {	// 不要用long
+	return static_cast<int64_t>(ns / 1000);
+}
+
+jlong time_stamp = env->GetLongField(media_frame, field_id_timeStamp_ns);	// 或long long,不推荐
+mediaData->pts = TimeUtils::NasToUs(time_stamp);
+```
 
 
 
