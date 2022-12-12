@@ -21,8 +21,9 @@
     * -s：表示一帧的尺寸，这个尺寸将是你生成yuv数据的宽和高，需要牢牢记住，因为转换成yuv数据后，数据将不会存储任何无关信息，包括尺寸。
     * -i：很简单，就是需要转换的文件，i表示input。参数不仅可以是jpg格式的，也可以是bmp等任何其它常见类型。
     * little_prince_yuv420p_960x540.yuv：我的输出文件名，在文件名中，记录了yuv的格式，和尺寸，这些信息在显示过程中比较重要。
-* h265转h264
+* h265互转h264
     * ffmpeg -i inputfile.mp4 -map 0 -c:a copy -c:s copy -c:v libx264 output.mp4
+    * ffmpeg -i H264.mp4 -map 0 -c copy -c:v:0 libx265 -y H265.mp4          // 保留所有音频轨、字幕轨等等并且直接复制，仅仅转换视频轨0为H265
 * 设置B帧
     * -bf 0 主要设置B帧数量
     * keyint=1:min-keyint=1 主要设置 I帧间隔 和最小I帧间隔，其实就是GOP数量
