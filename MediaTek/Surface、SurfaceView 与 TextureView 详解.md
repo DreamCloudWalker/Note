@@ -147,6 +147,8 @@ SurfaceTexture 包含一个应用是其使用方的BufferQueue。当生产方将
 
 对内容进行的更新可能会导致其他 View 元素重绘，例如，如果其他 View 位于 TextureView 上方。View 呈现完成后，SurfaceFlinger 会合成应用界面层和所有其他层，以便每个可见像素合成两次。
 
+另外，SurfaceView的隐藏，后台都会触发onSurfaceDestroyed，这点要注意。
+
 
 
 **注意：受 DRM 保护的视频只能在叠加平面上呈现。支持受保护内容的视频播放器必须使用 SurfaceView 进行实现**。

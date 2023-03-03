@@ -5,7 +5,7 @@
 JNI的引用分为三种Local References、Global References和Weak Global References，他们的关系可用简单理解为C++的堆、栈，引用。
 
 * Local References
-  大部分JNI方法返回的引用类型（例如**FindClass**）/ Jni函数内部创建的 `jobject `对象及其子类( `jclass `、 `jstring `、 `jarray `等) 对象都是local引用，local引用仅仅在此native方法中有效，当native方法返回时此local引用会被自动释放掉，**也可以**调用<font color="red">DeleteLocalRef</font>手动释放。<font color="red">local引用的个数是有限制的</font>，所以建议当不使用的时候就手动释放一下。一般情况下，我们应该依赖 JVM 去自动释放 JNI 局部引用；但下面两种情况必须手动调用 `DeleteLocalRef() `去释放：
+  大部分JNI方法返回的引用类型（例如**FindClass**）/ Jni函数内部创建的 `jobject `对象及其子类( `jclass `、 `jstring `、 `jarray  `、 `jobject `等) 对象都是local引用，local引用仅仅在此native方法中有效，当native方法返回时此local引用会被自动释放掉，**也可以**调用<font color="red">DeleteLocalRef</font>手动释放。<font color="red">local引用的个数是有限制的</font>，所以建议当不使用的时候就手动释放一下。一般情况下，我们应该依赖 JVM 去自动释放 JNI 局部引用；但下面两种情况必须手动调用 `DeleteLocalRef() `去释放：
 
   * (在循环体或回调函数中)创建大量 JNI 局部引用，即使它们并不会被同时使用，因为 JVM 需要足够的空间去跟踪所有的 JNI 引用，所以可能会造成内存溢出或者栈溢出;
   * 如果对一个大的 Java 对象创建了 JNI 局部引用，也必须在使用完后手动释放该引用，否则 GC 迟迟无法回收该 Java 对象也会引发内存泄漏.

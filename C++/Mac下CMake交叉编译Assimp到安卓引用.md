@@ -104,7 +104,79 @@ google发现`fseeko64` is not available until android-24. You have to either rai
 
 根据官网https://assimp-docs.readthedocs.io/en/v5.1.0/about/quickstart.html#the-android-build提示：编译so的CMakeLists.txt需要-DASSIMP_ANDROID_JNIIOSYSTEM=ON
 
+
+
+注意安卓引入的CMakeLists.txt最后的target_link_libraries要引入assimp，不然可能出现如下报错：
+
 error: undefined reference to 'Assimp::Importer::Importer()'
+
+参考CMakeLists.txt如下：
+
+```cmake
+cmake_minimum_required(VERSION 3.4.1)
+
+# Declares and names the project.
+project("switchablegapi")
+
+add_definitions(-DSTBI_ONLY_PNG -DANDROID_PLATFORM) # -DUSE_VULKAN
+
+# build native_app_glue as a static lib
+set(APP_GLUE_DIR ${ANDROID_NDK}/sources/android/native_app_glue)
+set(APP_GLM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/switchablegapi/third-party/glm)
+set(APP_ASSIMP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/switchablegapi/third-party/assimp_5_2_5/include/assimp)
+include_directories(
+        ${APP_GLUE_DIR}
+        ${APP_GLM_DIR}
+        ${APP_ASSIMP_DIR}
+)
+add_library(app-glue STATIC ${APP_GLUE_DIR}/android_native_app_glue.c)
+
+# assimp
+add_library(assimp SHARED IMPORTED)
+set_target_properties(assimp PROPERTIES
+        IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${ANDROID_ABI}/libassimp.so)
+        
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror \
+                     -DVK_USE_PLATFORM_ANDROID_KHR")
+                     
+add_library( # Sets the name of the library.
+        youProjName
+        # Sets the library as a shared library.
+        SHARED
+        # Provides a relative path to your source file(s).
+        ${your_proj_headers}
+        ${your_proj_sources}
+)
+                     
+# Searches for a specified prebuilt library and stores the path as a
+# variable. Because CMake includes system libraries in the search path by
+# default, you only need to specify the name of the public NDK library
+# you want to add. CMake verifies that the library exists before
+# completing its build.
+find_library( # Sets the name of the path variable.
+        log-lib
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log)
+
+# Specifies libraries CMake should link to your target library. You
+# can link multiple libraries, such as libraries you define in this
+# build script, prebuilt third-party libraries, or system libraries.
+target_link_libraries( # Specifies the target library.
+        switchablegapi
+
+        android
+        app-glue
+
+        assimp
+
+        GLESv3
+        EGL
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
+```
 
 
 
