@@ -8,8 +8,12 @@ lambda 表达式也叫**闭包**。闭就是封闭的意思（封闭就是其他
 
 **lambda 表达式其实就是一个函数对象**，他内部创建了一个重载()操作符的类。
 
-
 lambda 表达式的简单语法如下：**[capture] (parameters) -> return value { body }**, 只有 **[capture] 捕获列表和 { body } 函数体是必选的**，其他可选。
+
+* 用于capture 指定可在 lambda 中访问的周围作用域中的变量。变量可以按值、按引用或使用this.
+* 指定parameters将传递给 lambda 的参数。
+* return value指定 lambda 将返回的值的类型。如果未指定，编译器将尝试推导它。
+* 指定 body调用 lambda 时将执行的代码。
 
 
 
@@ -245,3 +249,186 @@ int main()
 版权声明：本文为CSDN博主「宇宙379」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 
 原文链接：https://blog.csdn.net/a379039233/article/details/83714770
+
+
+
+Lambdas 提供了一种在 C++ 中编写类函数对象的灵活简洁的方法，并广泛用于现代 C++ 编程中。
+
+以下是在 C++ 中使用 lambda 的几种不同方式：
+
+1. 函数回调
+2. 捕获默认值
+3. 按价值捕获
+4. 通过引用捕获
+5. 可变的 Lambda
+
+### {1} 函数回调
+
+函数回调是作为参数传递给另一个函数的函数，稍后由接收函数调用。您可以将 lambda 作为函数参数传递，它会在特定事件发生时执行。
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+int main() {
+  std::vector<int> numbers = {1, 2, 3, 4, 5};
+
+  // Lambda expression to find the sum of two numbers
+  auto sum = [](int a, int b) { return a + b; };
+
+  int result = std::accumulate(numbers.begin(), numbers.end(), 0, sum);
+  std::cout << "Sum of elements in the vector: " << result << std::endl;
+
+  return 0;
+}
+```
+
+在此示例中，sum变量是一个 Lambda 表达式，它接受两个参数a并b返回它们的总和。该std::accumulate函数采用数字向量、结果的初始值和求和函数（Lambda 表达式）。该函数计算向量中所有元素的总和并返回结果，该结果打印在屏幕上。
+
+另一个例子：
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+int main()
+{
+    std::vector<int> vec = { 1, 2, 3, 4, 5 };
+    int sum = 0;
+    std::for_each(vec.begin(), vec.end(), [&sum](int x) { sum += x; });
+    std::cout << "The sum is: " << sum << std::endl;
+    return 0;
+}
+```
+
+在这种情况下，lambda 表达式[&sum](int x) { sum += x; }作为要应用于每个元素的函数传递。sumlambda通过引用捕获变量&，以便可以在 lambda 主体内对其进行修改。
+
+两个示例都获得了相同的结果，但第二个示例使用了std::for_each算法和 lambda 表达式，这是 C++ 中更现代和简洁的技术。
+
+### {2} 捕获默认值
+
+当声明 lambda 表达式时没有任何显式捕获，默认行为是通过引用捕获周围范围内的变量。这称为捕获默认值。
+
+例子：
+
+```cpp
+#include <iostream>
+
+int main() {
+  int x = 42;
+  auto f = [ ]() { std::cout << x << std::endl; };
+  f();
+  return 0;
+}
+
+#include <iostream>
+
+int main()
+{
+    auto square = [](int x) { return x * x; };
+    std::cout << "The square of 5 is: " << square(5) << std::endl;
+    return 0;
+}
+```
+
+在第二个示例中，lambda 表达式被定义并存储在名为 的变量中square。此 lambda 表达式接受一个int参数x并返回 的值x * x，即参数的平方。
+
+在main函数中，这个 lambda 表达式被用作函数对象。它通过传递参数来调用5，结果使用cout流显示。
+
+### {3} 按价值获取
+
+这是 lambda 表达式的最简单形式，您可以在其中按值将变量传递给函数。当一个变量被值捕获时，它的当前值存储在闭包中，并且当变量在周围范围内发生变化时不会更新。这是通过在方括号中包含变量来完成的[ ]
+
+例子
+
+```cpp
+#include <iostream>
+
+int main() {
+  int x = 42;
+  auto f = [x]() { std::cout << x << std::endl; };
+  f();
+  return 0;
+}
+
+#include <iostream>
+
+int main() {
+    int x = 42;
+    auto f = [x](int y) { std::cout << x+y << std::endl;};
+    f(1);
+    return 0;
+}
+```
+
+### {4} 通过引用捕获
+
+&您可以使用符号通过引用将变量传递给 lambda 表达式。当通过引用捕获变量时，其当前值存储在闭包中，并在变量在周围范围内发生变化时更新。这是通过&在方括号中的变量前面包含寻址运算符来完成的[ ]。
+
+例子
+
+```cpp
+#include <iostream>
+
+int main() {
+  int x = 42;
+  auto f = [&x]() { std::cout << x << std::endl; };
+  f();
+  return 0;
+}
+#include <iostream>
+
+int main() {
+  int x = 10;
+
+  auto add_one = [&x]() { ++x; };
+  add_one();
+  std::cout << x << "\n";
+
+  return 0;
+}
+#include <iostream>
+
+int main() {
+  int x = 42;
+  auto f = [&x]() { std::cout << x << std::endl; };
+  f();
+  return 0;
+}
+```
+
+在最后一个例子中，变量x是通过引用捕获的，lambdaadd可以修改它的值。
+
+### {5} 可变的 Lambda
+
+默认情况下，lambda 表达式捕获的变量是常量，不能在 lambda 表达式主体内修改。如果要修改 lambda 表达式中捕获的变量，可以使 lambda 表达式可变。可变 lambda 允许修改捕获的变量。这是通过mutable在方括号中包含关键字来完成的[ ]。
+
+例子
+
+```cpp
+#include <iostream>
+
+int main() {
+  int x = 42;
+  auto f = [x]() mutable { std::cout << ++x << std::endl; };
+  f();
+  return 0;
+}
+```
+
+### {结论}
+
+lambda 表达式类似于常规函数，但有一些关键差异。例如，lambda 表达式的类型没有明确指定，但可以由编译器推断。此外，lambda 表达式可以从周围范围捕获变量，这使得它们对于创建闭包和使用 C++ 中的函数式编程概念非常有用。
+
+与传统函数相比，Lambda 具有一些性能优势
+
+1. **内联函数**：Lambdas 由编译器自动内联，这意味着它们的代码直接插入到调用函数中。这可以减少函数调用的开销并提高性能。
+2. **避免命名函数的开销：** Lambda 没有名称，因此不必声明它们并存储在符号表中，这样可以减少开销并提高性能。
+3. **改进的缓存局部性**：Lambda 可以在同一函数中定义和使用，这意味着 lambda 使用的代码和数据将与调用代码存储在同一缓存行中。这可以改善缓存局部性并降低缓存未命中的成本。
+4. **减少代码大小**：Lambda 通常比命名函数更小，并且不需要外部函数调用，这可以减少编译代码的大小并提高性能。
+5. **增加灵活性**：Lambda 可用于将函数作为参数传递给其他函数，这在如何重用和组织代码方面提供了更大的灵活性。这可以通过减少对重复代码的需求来提高性能。
+6. **提高可读性**：Lambda 可以通过以紧凑和独立的方式封装复杂的逻辑来提高代码的可读性。这可以通过使代码更容易理解和维护来提高性能。
+
+总之，lambda 可以通过减少开销、改进缓存局部性、减少代码大小、增加灵活性和提高可读性来提供优于传统函数的性能。

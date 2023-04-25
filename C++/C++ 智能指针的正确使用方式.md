@@ -200,6 +200,12 @@ public:
 
 # weak_ptr
 
+#### 声明
+
+头文件：`<memory>` 
+模版类：`template <class T> class weak_ptr` 
+声明方式：`std::weak_ptr<type_id> statement`
+
 weak_ptr 是为了解决 shared_ptr 双向引用的问题。即：
 
 ```cpp
@@ -235,6 +241,20 @@ pb->a = pa;
 
 weak_ptr 不会增加引用计数，因此可以打破 shared_ptr 的循环引用。
 通常做法是 parent 类持有 child 的 shared_ptr, child 持有指向 parent 的 weak_ptr。这样也更符合语义。
+
+
+
+### 总结
+
+shared_ptr和weak_ptr主要区别如下
+
+1. shared_ptr对象能够初始化实际指向一个地址内容而weak_ptr对象没办法直接初始化一个具体地址，它的对象需要由shared_ptr去初始化
+2. weak_ptr不会影响shared_ptr的引用计数，因为它是一个弱引用，只是一个临时引用指向shared_ptr。即使用shared_ptr对象初始化weak_ptr不会导致shared_ptr引用计数增加。依此特性可以解决shared_ptr的循环引用问题。
+3. weak_ptr没有解引用*和获取指针->运算符,它只能通过lock成员函数去获取对应的shared_ptr智能指针对象，从而获取对应的地址和内容。
+
+参考文档： 
+http://www.cplusplus.com/reference/memory/weak_ptr/ 
+https://www.boost.org/doc/libs/1_66_0/libs/smart_ptr/doc/html/smart_ptr.html#weak_ptr
 
 
 
