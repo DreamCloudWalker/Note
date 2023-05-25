@@ -11,7 +11,7 @@ Direct Textures用glEGLImageTargetTexture2DOES接口替代glReadPixels，它依�
 值得注意的是，一旦解锁，写入的数据将立即反馈在屏幕上。
 
 初始化代码示例如下：
-```
+```c++
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include <EGL/egl.h>
@@ -44,13 +44,13 @@ glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, img);
 ```
 
 1、使用glEGLImageTargetTexture2DOES替换glTexImage2D或glTexSubImage2D。
-```
+```c++
 // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, EGLImage);
 ```
 
 2、使用glEGLImageTargetTexture2DOES替换glReadPixels。
-```
+```c++
 // glReadPixels(0, 0, 
 //              textureWidth, textureHeight, 
 //              GL_RGBA, 
@@ -61,7 +61,7 @@ glEGLImageTargetTexture2DOES(GL_TEXTURE_2D, pEGLImage);
 值得注意的是，由于glReadPixels及其等价函数默认读取后台帧缓冲区，故需要在eglSwapBuffers前调用这些函数。
 
 根据android 下使用Direct Texture，Android 3.0等老版本因Android EGL库存在缺陷，故需手工加载Mali等GPU驱动。在3.0之后，此问题被修复，因而直接用eglGetProcAddress替代dlopen更为简单，完整示例代码如下所示。
-```
+```c++
 const char* const driver_absolute_path = "/system/lib/egl/libEGL_mali.so";
 // On Gingerbread you have to load symbols manually from Mali driver because
 // Android EGL library has a bug.
@@ -147,7 +147,7 @@ checkGlError("eglCreateImageKHR");
 由于Android NDK不暴露以上接口，意味着使用Direct Textures需要下载Android源码，编译并打包成动态库。接着，通过dlopen或eglGetProcAddress获取eglCreateImageKHR等接口的地址，再进行调用。
 
 编译时包含头文件：
-```
+```cmake
 LOCAL_C_INCLUDES +=
     $(ANDROID_SRC_HOME)/frameworks/base/core/jni/android/graphics 
     $(ANDROID_SRC_HOME)/frameworks/base/include/
@@ -158,7 +158,7 @@ LOCAL_C_INCLUDES +=
 ```
 
 链接选项：
-```
+```cmake
 LOCAL_LDLIBS := -llog -lGLESv2 -lEGL -landroid  -lui -landroid_runtime  -ljnigraphics
 ```
 
