@@ -17,3 +17,11 @@
 Xcode->Windows->Device and Simulator，然后点击View Device Logs
 
 这里的日志貌似如果是插着XCode调试的崩溃不会在这里。其他崩溃也不能实时拿到（可能延时1~2个小时），拔掉重插可能会刷新。
+
+
+
+## 3.签名
+
+有时点击勾选Automatically manage signing时team无法选择成自己的。可以在Build Setting中搜索sign，修改以下两处。
+
+![image-20230608142736004](.asserts/image-20230608142736004.png)
