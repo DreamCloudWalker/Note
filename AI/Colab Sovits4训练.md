@@ -284,6 +284,10 @@ Epoch次数和checkpoint的迭代次数不对应。音频资源好的话，每50
 
 Losses值这个有好几个值，不知道分别对应哪些损失函数。
 
+这里每一次Epoch系统都会返回损失函数等相关信息，训练好的模型存放在项目的logs/44k目录下，模型的后缀名是.pth。
+
+一般情况下，训练损失率低于50%，并且损失函数在训练集和验证集上都趋于稳定，则可以认为模型已经收敛。收敛的模型就可以为我们所用了。train.log里能看到所有训练的日志记录。
+
 
 
 ## 多个Google账号共享接力训练
@@ -314,6 +318,20 @@ while True:
     # 等待5分钟
     time.sleep(30)
 ```
+
+
+
+## 参考文档
+
+# [云端炼丹,算力白嫖,基于云端GPU(Colab)使用So-vits库制作AI特朗普演唱《国际歌》 ](https://www.cnblogs.com/v3ucn/p/17405638.html)
+
+# [民谣女神唱流行，基于AI人工智能so-vits库训练自己的音色模型(叶蓓/Python3.10) ](https://www.cnblogs.com/v3ucn/p/17393827.html)
+
+
+
+**【So-VITS/VITS】炼丹速通指南** https://zhuanlan.zhihu.com/p/618630799
+
+免费模型分享：https://huggingface.co/Nardicality/so-vits-svc-4.0-models/tree/main
 
 
 
