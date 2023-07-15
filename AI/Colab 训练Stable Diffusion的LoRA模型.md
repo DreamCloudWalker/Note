@@ -12,7 +12,7 @@ https://github.com/Linaqruf/kohya-trainer
 
 ### 1. Install Kohya Trainer
 
-1.1勾选mount drive后直接运行，如有报错可再跑一次；
+1.1勾选mount drive后直接运行，如有报错可再跑一次；(这一步Colab耗时4分钟左右)
 
 1.2跳过
 
@@ -22,7 +22,7 @@ https://github.com/Linaqruf/kohya-trainer
 
 2.1 Download Available Model，选择Stable Diffusion-v1-5运行；
 
-2.2 跳过
+2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型来训练，出图效果更好）
 
 2.3 Download Available VAE (Optional)，选择stable diffusion vae.pt运行；
 
@@ -40,9 +40,9 @@ https://github.com/Linaqruf/kohya-trainer
 
 ### 4. Data Cleaning
 
-4.1 直接运行；
+4.1 直接运行；(可以不跑，我碰到过把我正常图片都删了的情况)
 
-4.2.1 直接运行；（生成提示词）
+4.2.1 直接运行；（生成提示词）（这一步耗时2m）
 
 4.2.2 如果是人物图片的训练，可以把人物的**character_threshold**这个调高，比如调到0.8再运行；（生成关键字提示词）
 
@@ -52,7 +52,7 @@ https://github.com/Linaqruf/kohya-trainer
 
 ### 5. 训练
 
-5.1 配置，project_name给出自己要训练的模型的名字，**pretrained_model_name_or_path**这个要把工作目录下的/content/pretrained_model/Stable-Diffusion-v1-5.safetensor这个路径拷贝过来。vae这个要拷贝工作目录/content/vae/stablediffusion.vae.pt。output dir可以用默认的，下面可以勾选保存到drive。运行；
+5.1 配置，<font color="red">project_name给出自己要训练的模型的名字</font>，**pretrained_model_name_or_path**这个要把工作目录下的/content/pretrained_model/Stable-Diffusion-v1-5.safetensor这个路径拷贝过来。vae这个要拷贝工作目录/content/vae/stablediffusion.vae.pt。output dir可以用默认的，下面可以勾选保存到drive。运行；
 
 5.2 数据集配置，默认运行；
 
@@ -74,3 +74,8 @@ https://github.com/Linaqruf/kohya-trainer
 
 3. 下面选择Lora，点击刚才拷贝加入的模型；
 4. 输入提示词，比如a girl，就会生成对应模型训练的图片了。
+
+
+
+P.S. Stable Diffusion WebUI可在地址末尾加上/?__theme=dark，开启黑夜模式。
+
