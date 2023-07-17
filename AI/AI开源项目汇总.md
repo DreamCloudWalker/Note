@@ -118,6 +118,10 @@ npm start
 
 
 
+### **[insightface](https://github.com/deepinsight/insightface)**
+
+图片换脸，可以直接在Discord上使用。
+
 
 
 ## AI语音
@@ -182,6 +186,14 @@ OpenAI出品，文生3D模型。效果一般，适合做一些趣味性的模型
 
 
 
+### Rodin Diffusion
+
+微软的文生3D，一张照片生成人物3D模型。未开源。看介绍效果不错，官网在[RODIN Diffusion (microsoft.com)](https://3d-avatar-diffusion.microsoft.com/)
+
+可以持续关注。
+
+
+
 ### [Skybox AI (blockadelabs.com)](https://skybox.blockadelabs.com/)
 
 文生SkyBox。
@@ -210,5 +222,165 @@ OpenAI出品，文生3D模型。效果一般，适合做一些趣味性的模型
 
 Whisper.cpp的张量运算符针对苹果M芯片的 CPU 进行了大量优化，根据计算大小，使用 Arm Neon SIMD instrisics 或 CBLAS Accelerate 框架例程，后者对于更大的尺寸特别有效，因为 Accelerate 框架可以使用苹果M系列芯片中提供的专用 AMX 协处理器。
 
+注意音频源需要转码成wav，且16000的采样率才行。
 
+以下内容参考博客：https://www.cnblogs.com/v3ucn/p/17370373.html
+
+#### 配置Whisper.cpp
+
+老规矩，运行git命令来克隆Whisper.cpp项目：
+
+```bash
+git clone https://github.com/ggerganov/whisper.cpp.git
+```
+
+随后进入项目的目录：
+
+```bash
+cd whisper.cpp
+```
+
+<font color="red">项目默认的基础模型不支持中文</font>，这里推荐使用medium模型，通过shell脚本进行下载：
+
+```bash
+bash ./models/download-ggml-model.sh medium
+```
+
+下载完成后，会在项目的models目录保存ggml-medium.bin模型文件，大小为1.53GB：
+
+```diff
+whisper.cpp git:(master) cd models   
+➜  models git:(master) ll  
+total 3006000  
+-rw-r--r--  1 liuyue  staff   3.2K  4 21 07:21 README.md  
+-rw-r--r--  1 liuyue  staff   7.2K  4 21 07:21 convert-h5-to-ggml.py  
+-rw-r--r--  1 liuyue  staff   9.2K  4 21 07:21 convert-pt-to-ggml.py  
+-rw-r--r--  1 liuyue  staff    13K  4 21 07:21 convert-whisper-to-coreml.py  
+drwxr-xr-x  4 liuyue  staff   128B  4 22 00:33 coreml-encoder-medium.mlpackage  
+-rwxr-xr-x  1 liuyue  staff   2.1K  4 21 07:21 download-coreml-model.sh  
+-rw-r--r--  1 liuyue  staff   1.3K  4 21 07:21 download-ggml-model.cmd  
+-rwxr-xr-x  1 liuyue  staff   2.0K  4 21 07:21 download-ggml-model.sh  
+-rw-r--r--  1 liuyue  staff   562K  4 21 07:21 for-tests-ggml-base.bin  
+-rw-r--r--  1 liuyue  staff   573K  4 21 07:21 for-tests-ggml-base.en.bin  
+-rw-r--r--  1 liuyue  staff   562K  4 21 07:21 for-tests-ggml-large.bin  
+-rw-r--r--  1 liuyue  staff   562K  4 21 07:21 for-tests-ggml-medium.bin  
+-rw-r--r--  1 liuyue  staff   573K  4 21 07:21 for-tests-ggml-medium.en.bin  
+-rw-r--r--  1 liuyue  staff   562K  4 21 07:21 for-tests-ggml-small.bin  
+-rw-r--r--  1 liuyue  staff   573K  4 21 07:21 for-tests-ggml-small.en.bin  
+-rw-r--r--  1 liuyue  staff   562K  4 21 07:21 for-tests-ggml-tiny.bin  
+-rw-r--r--  1 liuyue  staff   573K  4 21 07:21 for-tests-ggml-tiny.en.bin  
+-rwxr-xr-x  1 liuyue  staff   1.4K  4 21 07:21 generate-coreml-interface.sh  
+-rwxr-xr-x@ 1 liuyue  staff   769B  4 21 07:21 generate-coreml-model.sh  
+-rw-r--r--  1 liuyue  staff   1.4G  3 22 16:04 ggml-medium.bin
+```
+
+模型下载以后，在根目录编译可执行文件：
+
+```go
+make
+```
+
+程序返回：
+
+```yaml
+➜  whisper.cpp git:(master) make  
+I whisper.cpp build info:   
+I UNAME_S:  Darwin  
+I UNAME_P:  arm  
+I UNAME_M:  arm64  
+I CFLAGS:   -I.              -O3 -DNDEBUG -std=c11   -fPIC -pthread -DGGML_USE_ACCELERATE  
+I CXXFLAGS: -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -pthread  
+I LDFLAGS:   -framework Accelerate  
+I CC:       Apple clang version 14.0.3 (clang-1403.0.22.14.1)  
+I CXX:      Apple clang version 14.0.3 (clang-1403.0.22.14.1)  
+  
+c++ -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -pthread examples/bench/bench.cpp ggml.o whisper.o -o bench  -framework Accelerate
+```
+
+至此，Whisper.cpp就配置好了。
+
+#### 牛刀小试
+
+现在我们来测试一段英文语音，看看效果：
+
+```bash
+./main -osrt -m ./models/ggml-medium.bin -f samples/jfk.wav
+```
+
+这行命令的含义是通过刚才下载ggml-medium.bin模型来对项目中的samples/jfk.wav语音文件进行识别，只需要11秒，同时语音字幕会写入samples/jfk.wav.srt文件。英文准确率是百分之百。
+
+现在我们来换成中文语音，可以随便录制一段语音，需要注意的是，Whisper.cpp只支持wav格式的语音文件，这里先通过ffmpeg将mp3文件转换为wav:
+
+```bash
+ffmpeg -i ./test1.mp3 -ar 16000 -ac 1 -c:a pcm_s16le ./test1.wav
+```
+
+这里将一段五分四十一秒的语音转换为wav文件。
+
+随后运行命令开始转录：
+
+```bash
+./main -osrt -m ./models/ggml-medium.bin -f samples/test1.wav -l zh
+```
+
+这里需要加上参数-l，告知程序为中文语音。五分钟的语音，只需要一分钟多一点就可以转录完成，效率满分。
+
+当然，精确度还有待提高，提高精确度可以选择large模型，但转录时间会相应增加。
+
+#### 苹果M芯片模型转换
+
+基于苹果Mac系统的用户有福了，Whisper.cpp可以通过Core ML在Apple Neural Engine (ANE)上执行编码器推理，这可以比仅使用CPU执行快出三倍以上。
+
+首先安装转换依赖：
+
+```mipsasm
+pip install ane_transformers  
+pip install openai-whisper  
+pip install coremltools
+```
+
+接着运行转换脚本：
+
+```verilog
+./models/generate-coreml-model.sh medium 
+```
+
+这里参数即模型的名称。
+
+程序返回：<font color="red">这个步骤我会一直卡在done converting之前，</font>Running MIL backend_mlprogram pipeline: 100%这个已经输出，但一直不输出done，后面也无法进行转换。报错failed to load Core ML model。不推荐使用。
+
+```vhdl
+➜  models git:(master) python3 convert-whisper-to-coreml.py --model medium --encoder-only True   
+scikit-learn version 1.2.0 is not supported. Minimum required version: 0.17. Maximum required version: 1.1.2. Disabling scikit-learn conversion API.  
+ModelDimensions(n_mels=80, n_audio_ctx=1500, n_audio_state=1024, n_audio_head=16, n_audio_layer=24, n_vocab=51865, n_text_ctx=448, n_text_state=1024, n_text_head=16, n_text_layer=24)  
+/opt/homebrew/lib/python3.10/site-packages/whisper/model.py:166: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!  
+  assert x.shape[1:] == self.positional_embedding.shape, "incorrect audio shape"  
+/opt/homebrew/lib/python3.10/site-packages/whisper/model.py:97: UserWarning: __floordiv__ is deprecated, and its behavior will change in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values. To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor').  
+  scale = (n_state // self.n_head) ** -0.25  
+Converting PyTorch Frontend ==> MIL Ops: 100%|▉| 1971/1972 [00:00<00:00, 3247.25  
+Running MIL frontend_pytorch pipeline: 100%|█| 5/5 [00:00<00:00, 54.69 passes/s]  
+Running MIL default pipeline: 100%|████████| 57/57 [00:09<00:00,  6.29 passes/s]  
+Running MIL backend_mlprogram pipeline: 100%|█| 10/10 [00:00<00:00, 444.13 passe  
+  
+done converting
+```
+
+转换好以后，重新进行编译：
+
+```go
+make clean  
+WHISPER_COREML=1 make -j
+```
+
+随后用转换后的模型进行转录即可：
+
+```bash
+./main -m models/ggml-medium.bin -f samples/jfk.wav
+```
+
+至此，Mac用户立马荣升一等公民。
+
+#### 日语支持
+
+我有一个大胆的想法...
 

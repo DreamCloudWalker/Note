@@ -54,6 +54,8 @@ https://github.com/Linaqruf/kohya-trainer
 
 5.1 配置，<font color="red">project_name给出自己要训练的模型的名字</font>，**pretrained_model_name_or_path**这个要把工作目录下的/content/pretrained_model/Stable-Diffusion-v1-5.safetensor这个路径拷贝过来。vae这个要拷贝工作目录/content/vae/stablediffusion.vae.pt。output dir可以用默认的，下面可以勾选保存到drive。运行；
 
+如果是重新训练新数据，记得把工作目录的train_data文件改名。
+
 5.2 数据集配置，默认运行；
 
 5.3 LoRA配置，默认运行；
