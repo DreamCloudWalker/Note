@@ -45,6 +45,12 @@
 
 
 
+### [h2ogpt](https://github.com/h2oai/h2ogpt)
+
+开源大语言模型，还未尝试。有视频介绍：https://www.youtube.com/watch?v=Coj72EzmX20
+
+
+
 ## 动作/表情捕捉
 
 ### [SysMocap](https://github.com/xianfei/SysMocap)
@@ -309,7 +315,7 @@ c++ -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -pthread examples/bench/bench
 
 这行命令的含义是通过刚才下载ggml-medium.bin模型来对项目中的samples/jfk.wav语音文件进行识别，只需要11秒，同时语音字幕会写入samples/jfk.wav.srt文件。英文准确率是百分之百。
 
-现在我们来换成中文语音，可以随便录制一段语音，需要注意的是，Whisper.cpp只支持wav格式的语音文件，这里先通过ffmpeg将mp3文件转换为wav:
+现在我们来换成中文语音，可以随便录制一段语音，需要注意的是，Whisper.cpp只支持wav格式的单声道且采样率16k Hz的语音文件，这里先通过ffmpeg将mp3文件转换为wav:（格式不对可能报错read_wav: WAV file '/Users/jian.deng/Downloads/Se1Ep07.wav' must be 16 kHz）
 
 ```bash
 ffmpeg -i ./test1.mp3 -ar 16000 -ac 1 -c:a pcm_s16le ./test1.wav
@@ -326,6 +332,14 @@ ffmpeg -i ./test1.mp3 -ar 16000 -ac 1 -c:a pcm_s16le ./test1.wav
 这里需要加上参数-l，告知程序为中文语音。五分钟的语音，只需要一分钟多一点就可以转录完成，效率满分。
 
 当然，精确度还有待提高，提高精确度可以选择large模型，但转录时间会相应增加。
+
+P.S. 输入的wav的采样率必须是16k，如果不是用ffmpeg命令转一下
+
+```shell
+ffmpeg -i input.mp4 -vn -acodec pcm_s16le -ar 16000 -ac 2 output.wav
+```
+
+
 
 #### 苹果M芯片模型转换
 
@@ -382,5 +396,54 @@ WHISPER_COREML=1 make -j
 
 #### 日语支持
 
+参考https://sspai.com/post/76899
+
 我有一个大胆的想法...
+
+whisper貌似默认支持日语，不知道识别效果如何，前面下载的ggml-medium.bin就可以用。使用时需要指定语言，不能简写。同样注意输入的原音频需要采样率是16k的。如下：
+```
+./main -osrt -m ./models/ggml-medium.bin -f /Users/jian.deng/AI/WhisperTest/test.wav -l japanese
+```
+
+我这边Mac M1测试16分钟的日语wav转换花了4分钟左右。
+
+![image-20230717184225717](.asserts/image-20230717184225717.png)
+
+然后再用https://www.nikse.dk/subtitleedit/online 这个进行翻译。
+
+通过 Whisper 获得原生字幕后，接着要将其翻译为中文。这一步需借助 SubtitleEdit Online，它支持免费在线翻译字幕，可使用 Google 和 Yandex 两种翻译引擎。1
+
+1. 打开 [SubtitleEdit Online](https://sspai.com/link?target=https%3A%2F%2Fwww.nikse.dk%2Fsubtitleedit%2Fonline)，点击「Subtitle」>「Open...」，选择要导入的字幕文件。
+2. 点击「Auto-translate」，选择翻译引擎，然后在弹出窗口中选择字幕要翻译的语言，并**将页面拖动到最下方**（非常重要），确定所有文字都被翻译后点击 OK 按钮。
+3. 点击「Subtitle」>「Save/download...」，即可保存翻译好的字幕文件。
+
+除了网页翻译字幕，本地端的神经机器翻译也是种好选择。macOS 用户推荐使用 [Argos Translate](https://sspai.com/link?target=https%3A%2F%2Fgithub.com%2Fargosopentech%2Fargos-translate)，这是基于 OpenNMT 的开源神经机器翻译。如果你的动手能力较强，可以尝试 [Opus-MT](https://sspai.com/link?target=https%3A%2F%2Fgithub.com%2FHelsinki-NLP%2FOpus-MT)。不管用哪种方式，都是将字幕以文本方式导出，复制到翻译引擎中翻译，即可得到不同于 Google Translate 的翻译结果。
+
+
+
+#### Whisper 进阶命令
+
+##### task
+
+`--task` 分为 transcribe（语音转录）和 translate。Whisper 默认使用 `--task transcribe` 模式，将语音转录为对应的语言字幕。`--task translate` 是所有语言翻译为**英文**，目前尚未支持翻译为其他语言。
+
+##### language
+
+`--language` 是设置语音转录的语种，支持语种范围查看 [tokenizer.py](https://sspai.com/link?target=https%3A%2F%2Fgithub.com%2Fopenai%2Fwhisper%2Fblob%2Fmain%2Fwhisper%2Ftokenizer.py)，比如指定日语 `--language japanese`。如果你没指定语种，Whisper 会截取音频的前 30 秒来判断语种。
+
+如果指定语种与文件中的语种并不相同，Whisper 会强制翻译，但 10 分钟以上的音视频会出现大量的重复无意义字幕。2假设你把日语视频的转录语言设为汉语，前 8 分钟 Whisper 会正确转录到中文，但 8 分钟后的转录字幕会一直重复，并与实际片段无关。
+
+##### model
+
+`--model` 指 Whisper 的转录模型，转录效果为 tiny < base < small < medium < large，默认使用 small。添加参数 `--model medium` 或 `--model large` 可以切换到更大的模型，但转录时间也会变长。如果你是对英文视频进行转录，则在模型参数上添加后缀 `.en`，能提升转录速度。
+
+##### 幻听参数
+
+非英语视频的转录有时会出现**幻听**，即静默片段被识别出语音，或是转录结果与该片段无关。这些问题是由语气停顿参数引起的。幻听的解决方案是引入 [VAD](https://sspai.com/link?target=https%3A%2F%2Fgithub.com%2Fsnakers4%2Fsilero-vad)，但 VAD 对动手能力要求较高。如果你的视频转录出现了严重幻听，建议先尝试调节参数阈值。
+
+- `--no_speech_threshold` 无声识别的阈值，默认为 0.6。当 no_speech_threshold 高于阈值且 logprob_threshold 低于预设时，该片段将被标记为静默。对于非英语长视频来说，建议将其调低，否则经常出现大段的重复识别。
+- `--logprob_threshold` 转录频次的阈值，默认为 -1.0。当 logprob_threshold 低于预设时，将不对该片段进行转录。建议修改为 None 或更低的值。
+- `--compression_ratio_threshold` 压缩比的阈值，默认为 2.4。当 compression_ratio_threshold 高于预设时，将不对该片段进行转录。
+
+`--no_speech_threshold 0.5 --logprob_threshold None --compression_ratio_threshold 2.2` 是我常用的参数，你可以按视频情况来调节。
 

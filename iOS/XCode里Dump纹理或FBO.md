@@ -37,9 +37,15 @@ The commands will be available the next time `Xcode` starts.
 ### 2. 使用步骤
 
 // 在lldb初始化一个img临时变量，调用 SSPEditorDumpUtils 的dump接口生成UIImage
-e UIImage *$img = SSPEditorDumpFramebuffer(*out_buf1);
+```objective-c
+e UIImage *$img = SSPEditorDumpFramebuffer(*process_fbo.get());
+```
+
 // img变量 可以重复使用
-e $img = SSPEditorDumpFramebuffer(*out_buf2);
+```objective-c
+e $img = SSPEditorDumpFramebuffer(*process_fbo);
+```
+
 // 调命令预览画面
 visualize $img
 

@@ -117,6 +117,10 @@ adb shell dumpsys activity top  // 可以看到Added Fragment的信息
 
 
 
+<font color="red">adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'	// 这个可以查看当前活动的进程和页面</font>
+
+![image-20230810104104593](.asserts/image-20230810104104593.png)
+
 ### 4. adb logcat
 
 adb logcat | grep -E "keyword1|keyword2$"
