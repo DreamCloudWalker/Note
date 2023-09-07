@@ -75,3 +75,22 @@ Steps: 30, ENSD: 31337, Size: 512x768, Seed: 88181140, Model: chilloutmix_NiPrun
 
 <img src=".asserts/image-20230803152822985.png" alt="image-20230803152822985" style="zoom:50%;" />
 
+
+
+## 杨幂
+
+```
+(yangmi), RAW photo, best quality, high resolution, (masterpiece), (photorealistic:1.4), professional photography, sharp focus, HDR, 8K resolution, perfect anatomy, intricate detail, sophisticated detail, depth of field, (extremely detailed CG unity 8k wallpaper), highlight and shadow, vivid color palette, 20 years old model, 1 girl, (skinny), (slender), smaller head, thin waist, extremely detailed background, detailed skin, perfectly detailed symmetrical face, detailed nose, detailed mouth, pose, wearing japanese kimono, japanese shrine, fully covered,  <lora:yangmi_v10:1>
+Negative prompt: paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, lowres,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,
+Steps: 30, Size: 512x768, Seed: 4074525342, Model: chilloutmix_NiPrunedFp32Fix, Sampler: DPM++ SDE Karras, CFG scale: 7, Model hash: fc2511737a
+```
+
+<img src=".asserts/image-20230903215853647.png" alt="image-20230903215853647" style="zoom:50%;" />
+
+```
+(yangmi), RAW photo, best quality, high resolution, (masterpiece), (photorealistic:1.4), professional photography, sharp focus, HDR, 8K resolution, perfect anatomy, intricate detail, sophisticated detail, depth of field, (extremely detailed CG unity 8k wallpaper), highlight and shadow, vivid color palette, 20 years old model, 1 girl, (skinny), (slender), smaller head, thin waist, extremely detailed background, detailed skin, perfectly detailed symmetrical face, detailed nose, detailed mouth, pose, wearing japanese kimono, japanese shrine, fully covered,  <lora:chinadolllikenessyangmi_v10:1>
+Negative prompt: paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, lowres,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,
+Steps: 30, Size: 512x768, Seed: 4074525341, Model: chikmix_V2, Sampler: DPM++ SDE Karras, CFG scale: 7, Model hash: 0bcee2e498, Face restoration: CodeFormer
+```
+
+<img src=".asserts/image-20230903215928632.png" alt="image-20230903215928632" style="zoom:50%;" />
