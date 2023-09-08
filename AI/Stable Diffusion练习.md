@@ -10,6 +10,60 @@
 
 可配合各种LoRA模型使用；
 
+```
+作者：树先生
+链接：https://www.zhihu.com/question/299206143/answer/3157466498
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+内容型提示词
+1）人物及主体特征
+服饰穿搭 white dress
+发型发色 blonde hair,long hair
+五官特色 small eyes,big mouth
+面部表情 smile
+肢体动作 stretching arms
+​
+2）场景特征
+室内、室外 indooor,outdoor
+大场景 forest,city,street
+小细节 tree，bush，white flower
+​
+3）环境光照
+白天黑夜 day,night
+特定时段 moring,sunset
+光环境 sunlight,bright,dark
+天空 blue sky,starry sky
+​
+4）画幅视角
+距离 close-up,distant
+人物比例 full body,upper body
+观察视角 from above,view of back
+镜头类型 wide angle,Sony A7 III
+​
+标准化提示词
+1）画质提示词
+通用高画质
+best quality,ultra-detailed,masterpiece,highres,8k
+特定高分辨率类型
+extremely detailed CG unity 8k wallpaper,unreal engine rendered
+​
+2）画风提示词
+插画风 illustration,painting,painbrush
+二次元 anime,comic,game CG
+写实系 photorealistic,realistic,ptotograph
+```
+
+常用反向提示词
+
+```
+NSFW,(worst quality:2),(low quality:2),(normal quality:2),lowres,((monochrome)),((grayscale)),bad anatomy,DeepNegative,easynegative,
+skin spots,acnes,skin blemishes,(fat:1.2),facing away,looking away,tilted head,bad anatomy,bad hands, missing fingers,extra digit, fewer digits,bad feet,poorly drawn hands,poorly drawn face,mutation,deformed,extra fingers,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,missing arms,missing legs,extra digit, extra arms, extra leg, extra foot,teethcroppe,
+signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
+```
+
+
+
 
 
 ## 咒语
@@ -166,7 +220,153 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 
 
 
-### 6. 画动物
+### 6. 证件照
+
+可以配合https://www.liblibai.com/modelinfo/7f1574259f4141e39a537b12b8142ac8 这个LoRA使用。
+
+正面：
+
+```
+<lora:证件照lora3.0_v3.0:0.6>,(Utility_jacket:1.4),(Cargo_pants:1.3),(Combat_boots:1.2),(face shot:1.4)(IDphoto,white background:1.5), (happy,smile),black eyes,,(upper body:1.2), (PureErosFace_V1:0.8),(ulzzang-6500:0.3), (red lipstick:0.8), (detailed pupils:1.3),(aegyo sal:1), ((puffy eyes)),, (Glowing ambiance, enchanting radiance, luminous lighting, ethereal atmosphere, mesmerizing glow, evocative hues, captivating coloration, dramatic lighting, enchanting aura), trending
+```
+
+反面：
+
+```
+(cleavage:1.6),(nsfw:1.5),badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, ng_deepnegative_v1_75t, easynegative, bad-picture-chill-75v,Multiple people,lowres,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand (low quality, worst quality:1.4), (bad_prompt:0.8), (monochrome), (greyscale)
+```
+
+![yx4](.asserts/yx4.png)
+
+军服证件照
+
+正面：
+
+```
+<lora:证件照lora3.0_v3.0:0.2>,(Army_green_cargo_jacket:1.5),(Camouflage_cargo_pants:1.4),(Combat_boots:1.3),(face shot:1.4)(IDphoto,white background:1.5), (happy,smile),black eyes,,(upper body:1.2), (PureErosFace_V1:0.8),(ulzzang-6500:0.3), (red lipstick:0.8), (detailed pupils:1.3),(aegyo sal:1), ((puffy eyes)),, (Glowing ambiance, enchanting radiance, luminous lighting, ethereal atmosphere, mesmerizing glow, evocative hues, captivating coloration, dramatic lighting, enchanting aura), trending
+```
+
+反面
+
+```
+(cleavage:1.6),(nsfw:1.5),badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, ng_deepnegative_v1_75t, easynegative, bad-picture-chill-75v,Multiple people,lowres,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand (low quality, worst quality:1.4), (bad_prompt:0.8), (monochrome), (greyscale)
+```
+
+![00196-839262796](.asserts/00196-839262796.png)
+
+制服证件照
+
+```
+masterpiece, best quality, real,realistic, photo,photorealistic, 8k wallpaper,real light,real shadow, starry detailed water,detailed light,sunlight, cinematic lighting,full body, solo, looking at viewer, 
+airplane interior, sitting, 
+pretty face,pretty  shiny skin, big eyes,long eyelashes,extremely detailed eyes and face, beautiful detailed nose, beautiful detailed eyes,smile, 
+1girl,japanese mature_female all_nippon_airways flight_attendant, black long hair,hair bun,bangs pinned back, hair over breasts, hair ornament,medium breasts, 
+wearing gray anauniform with blue ribbon on neck,brooch,
+<lora:NiceLora_v20:0.1> <lora:cuteGirlMix4_v10:0.1> <lora:japanesedolllikenessV1_v15:0.2><lora:anauniform_lora-06:0.8> 
+Negative prompt: simple background,(worst quality:1.4), (low quality:1.4), (normal quality:1.4), polar lowres,bad anatomy,bad hands,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,
+Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 26300002, Size: 512x768, Model hash: fc2511737a, Model: chilloutmix_NiPrunedFp32Fix, Clip skip: 2, ENSD: 31337
+Steps: 20, Seed: 26300002, Sampler: Euler a, CFG scale: 7
+```
+
+![00208-26300002](.asserts/00208-26300002.png)
+
+
+
+和服证件照
+
+正面：
+
+```
+<lora:证件照lora3.0_v3.0:0.3>,(Silk_kimono:1.5),(Wide-leg_trousers:1.4),(Platform_sandals:1.3),(face shot:1.4)(IDphoto,white background:1.5), (happy,smile),black eyes,,(upper body:1.2), (PureErosFace_V1:0.8),(ulzzang-6500:0.3), (red lipstick:0.8), (detailed pupils:1.3),(aegyo sal:1), ((puffy eyes)),, (Glowing ambiance, enchanting radiance, luminous lighting, ethereal atmosphere, mesmerizing glow, evocative hues, captivating coloration, dramatic lighting, enchanting aura), trending
+```
+
+反面：
+
+```
+(cleavage:1.6),(nsfw:1.5),badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, badhandv4,badv4, bad-picture-chill-75v, By_bad_artist_-neg, ng_deepnegative_v1_75t, easynegative,, ng_deepnegative_v1_75t, easynegative, bad-picture-chill-75v,Multiple people,lowres,bad anatomy,bad hands, text, error, missing fingers,extra digit, fewer digits, cropped, worstquality, low quality, normal quality,jpegartifacts,signature, watermark, username,blurry,bad feet,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,extra fingers,fewer fingers,strange fingers,bad hand (low quality, worst quality:1.4), (bad_prompt:0.8), (monochrome), (greyscale)
+```
+
+![00197-839262783](.asserts/00197-839262783.png)
+
+### 7. 和服
+
+需要配合这个LoRA: https://civitai.com/models/56963/realistic-kimono-clothes-with-umbrella
+
+```
+<lora:betterCuteAsian03:0.3>, woman, (wearing colorful kimono_clothes:1.3), holding umbrella, 
+good hand,4k, high-res, masterpiece, best quality, head:1.3,((Hasselblad photography)), finely detailed skin, sharp focus, (cinematic lighting), night, soft lighting, dynamic angle, [:(detailed face:1.2):0.2], medium breasts, outside,   <lora:realistic_kimono_clothes:0.5>
+Negative prompt: NG_DeepNagetive_V1_75T,(greyscale:1.2),
+paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans
+Steps: 30, Size: 512x768, Seed: 139898805, Model: blueberrymix_10, Sampler: DPM++ 2M Karras, CFG scale: 7, Model hash: f31db98b5d, Face restoration: CodeFormer
+```
+
+![00199-2288076656](.asserts/00199-2288076656.png)
+
+```
+beautiful japanese woman in japanese castle park, cute kimono outfit, masterpiece, best quality, camera photograph, unity 8k wallpaper, ultra detailed, beautiful and aesthetic, beautiful face, 1woman, kawaii_asian,  <lora:realistic_kimono_clothes:0.5>
+Negative prompt: anime, cartoon, cartoonized, ad, easynegative, (negative_hand-neg), watermark, logo,
+Steps: 40, Size: 512x768, Seed: 1862497964, Model: reliberate_v10, Version: v1.2.1, Sampler: DPM++ SDE Karras, CFG scale: 6, Model hash: 980cb713af, Face restoration: CodeFormer
+```
+
+![00200-1862497964](.asserts/00200-1862497964.png)
+
+```
+(hdr:1.2), gorgeous japanese woman in an onsen, large breasts, cute kimono outfit, cute, (masterpiece:1.2), best quality, camera photograph, ultra realistic, ultra detailed, aesthetic,  intricate details, hyperdetailed, cinematic, dark shot, muted colors, film grainy, soothing tones, muted colors, technicolor,  <lora:realistic_kimono_clothes:1>
+Negative prompt: (deformed, distorted, disfigured:1.3), doll, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, (mutated hands and fingers:1.4), disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation, anime, cartoon
+Steps: 40, Size: 512x768, Seed: 979682169, Model: reliberate_v10, Version: v1.2.1, Sampler: DPM++ SDE Karras, CFG scale: 6, Model hash: 980cb713af, Face restoration: CodeFormer
+```
+
+![00206-979682169](.asserts/00206-979682169.png)
+
+### 8. 制服
+
+可配合https://civitai.com/models/58847/ana-stewardess-uniform 这个LoRA
+
+```
+masterpiece, best quality, real,realistic, photo,photorealistic, 8k wallpaper,real light,real shadow, starry detailed water,detailed light,sunlight, cinematic lighting,full body, solo, looking at viewer, 
+airplane interior, sitting, 
+pretty face,pretty  shiny skin, big eyes,long eyelashes,extremely detailed eyes and face, beautiful detailed nose, beautiful detailed eyes,smile, 
+1girl,japanese mature_female all_nippon_airways flight_attendant, black long hair,hair bun,bangs pinned back, hair over breasts, hair ornament,medium breasts, 
+wearing gray anauniform with blue ribbon on neck,brooch,
+<lora:NiceLora_v20:0.1> <lora:cuteGirlMix4_v10:0.1> <lora:japanesedolllikenessV1_v15:0.2><lora:anauniform_lora-06:0.8> 
+Negative prompt: simple background,(worst quality:1.4), (low quality:1.4), (normal quality:1.4), polar lowres,bad anatomy,bad hands,bad body,bad proportions,gross proportions,text,error,missing fingers,missing arms,missing legs,extra digit,cropped,poorly drawn hands,poorly drawn face,mutation,deformed,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,
+Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 26300002, Size: 512x768, Model hash: fc2511737a, Model: chilloutmix_NiPrunedFp32Fix, Clip skip: 2, ENSD: 31337
+Steps: 20, Seed: 26300002, Sampler: Euler a, CFG scale: 7
+```
+
+![00211-2289749385](.asserts/00211-2289749385.png)
+
+或https://www.liblibai.com/modelinfo/e1f04b35fd5e483d85e504e851d20521 这个国航空姐LoRA
+
+```
+ultra realistic 8k cg,picture-perfect face,flawless,clean,masterpiece,cinematic lighting,perfect face,beautiful face,beautiful eyes,standing,(looking at viewer:1.6),,1girl,solo,large breasts,scarfy,hat,red headwear,short sleeves,red vest,white shirt,red shirt,red skirt,pencil skirt,thighs,,face lighting,(closed mouth:1.2),Facial brightening,arms akimbo,cowboy shot,Supplementary light,(simple background:1.1),(white_background:1.1),<lora:GHhangkong_v2:0.75>,
+Negative prompt: (worst quality, freckles, low quality:1.3),lowres,logo,watermark,text,buttons,(bad anatomy),extra fingers,fewer digits,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,missing fingers,missing arms,missing legs,extra arms,extra leg,
+Steps: 20, Size: 1024x1536, Seed: 1595372042, Model: mistoonAnime_v10, Sampler: Euler a, CFG scale: 7
+```
+
+<img src=".asserts/00212-1595372042.png" alt="00212-1595372042" style="zoom:50%;" />
+
+如果配合这个LoRA:https://civitai.com/models/52345/airasia-stewardess-uniform
+
+```
+(8k, RAW photo, best quality, masterpiece:1.2), (realistic, photo-realistic:1.37),long shot,1girl,smiling,ulzzang-6500-v1.1, wearing AIRASIA UNIFORM with high heels and D20,cute, at busy airport lounge, professional lighting, photon mapping, radiosity, physically-based rendering, <lora:airasiaStewardess_v15:0.7>,  <lora:20d_v10:0.4>
+Negative prompt: paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans,  ng_deepnegative_v1_75t, watermarks
+Steps: 20, Size: 1360x2048, Seed: 56844296, Model: braBeautifulRealistic_v40, Sampler: DPM++ SDE Karras, CFG scale: 7, Model hash: 9c03252bea, ControlNet-0 Model: controlnet11Models_tile [39a89b25], Denoising strength: 0.4, ControlNet-0 Module: tile_gaussian, ControlNet-0 Weight: 1, ControlNet-0 Enabled: True, ControlNet-0 Guidance End: 1, ControlNet-0 Guidance Start: 0
+```
+
+![00214-56844296](.asserts/00214-56844296.png)
+
+配合这个LoRA: https://civitai.com/models/63405/jal-stewardess-uniform
+
+```
+(realistic:1.3), finely detailed, quality, rembrandt lighting, (masterpiece:1.2), (photorealistic:1.2), (best quality), (detailed skin:1.3), (intricate details), dramatic, ray tracing, 1girl, japanese girl, 21 years old, detailed skin texture, (blush:0.5), (goosebumps:0.5), subsurface scattering, smiling, medium breasts, updo hair, bangs, hair between eyes, jal uniform, black uniform, black dress, neck scarf, (brightly lit, airplane cabin),  <lora:jaluniform_lora:0.7>
+Negative prompt: head out of frame, Drawings, abstract art, cartoons, surrealist painting, conceptual drawing, graphics, (low resolution:1.3), (blurry:1.3), (worst quality:1.3), (low quality:1.3), collage, bad proportions, (watermark:1.3), letter,
+Steps: 50, Size: 512x768, Seed: 2494406377, Model: henmixReal_v40, (blush: 0.5), (blurry: 1.3), Version: v1.3.2, Sampler: DPM++ SDE Karras, CFG mode: Half Cosine Down, CFG scale: 20, Clip skip: 2, (watermark: 1.3), letter,", Mimic mode: Cosine Up, Model hash: f4151d2b7b, (goosebumps: 0.5), subsurface scattering, smiling,", Mimic scale: 10, (low quality: 1.3), collage, bad proportions, Hires upscale: 2, (worst quality: 1.3), Hires upscaler: R-ESRGAN 4x+, (low resolution: 1.3), ADetailer model: mediapipe_face_full, "jaluniform_lora: 4baf6102fbda", ADetailer prompt: "japanese girl,  21 years old, detailed skin texture, ADetailer version: 23.7.1, CFG scale minimum: 12.5, Denoising strength: 0.35, ADetailer mask blur: 4, Mimic scale minimum: 0, ADetailer confidence: 0.3, Threshold percentile: 99.9, ADetailer dilate/erode: 4, ADetailer inpaint padding: 32, ADetailer negative prompt: "Drawings, abstract art, cartoons, surrealist painting, conceptual drawing, graphics, ADetailer denoising strength: 0.25, Dynamic thresholding enabled: True, ADetailer inpaint only masked: True
+```
+
+![00216-3889093389](.asserts/00216-3889093389.png)
+
+### 9. 画动物
 
 正向：（这种就比较接近自然语言描述）
 
@@ -182,7 +382,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 <img src=".asserts/image-20230830114411620.png" alt="image-20230830114411620" style="zoom:50%;" />
 
-### 7. 画景色
+### 10. 画景色
 
 这种最方便用于做二维码或其他ControlNet图，需要启用control_v1p_sd15_qrcode_monster.ckpt
 
@@ -203,7 +403,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 
 
-### . 画机甲
+### 11. 画机甲
 
 ```
 cinematic photo breathtaking photograph, armor mech future knight intricate details, Style-Psycho town, blue steel, by Mark Brooks, by Ismail Inceoglu, (intricate details:0.9), Sony A9 II, split lighting, award-winning, professional, highly detailed . 35mm photograph, film, bokeh, professional, 4k, highly detailed, confused, looking around scared
