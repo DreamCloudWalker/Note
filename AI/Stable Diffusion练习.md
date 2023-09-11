@@ -158,6 +158,22 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 
 ![00130-1757047792](.asserts/00130-1757047792.png)
 
+夏日城市风格，
+
+正向：
+
+```
+(1girl:1.3), (best quality, masterpiece, ultra high resolution),(photorealistic:1.3), (realistic:1.3), depth of field,(full body:1.2), (outdoors:1.2), (day:1.2), (cinematic lighting:1.2), (dim light:1.2), (in autumn, cyberpunk, city, kowloon, rain),(closed mouth), (light smile:1.2), (expressive hair:1.2), (floating hair:1.2), (pink compression shirt:1.3), (button-down:1.2), (skinny jeans:1.2),busty, vivacious and seductive, (only one girl:1.2),(standing:1.2), (slender), (slender legs), (long legs:1.3), (looking at viewer, facing viewer:1.2), (pov:1.3), (sfw:1.4), (One hand insertion pocket:1.2), (straight-on:1.2), (large breasts:1.2),
+```
+
+反向：
+
+```
+(badhandv4), negative_hand-neg, NSFW, Easy Negative, paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, age spot, glans, extra fingers, fewer fingers, (extra hands), bad anatomy, bad hands, missing fingers, extra digit, fewer digits, blurry, bad feet, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, bad proportions, gross proportions, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands, (multiple fingers, broken fingers),
+```
+
+![00232-1736096529](.asserts/00232-1736096529.png)
+
 
 
 ### 4. 改成丝袜风格
@@ -179,6 +195,26 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 <img src=".asserts/image-20230830111715693.png" alt="image-20230830111715693" style="zoom:50%;" />
 
 ![00128-4199840123](.asserts/00128-4199840123.png)
+
+黑白制服丝袜
+
+正向：
+
+```
+1girl, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3),depth of field, indoors, (night:1.3), (dim light), (office:1.2, flower arrangement:1.2), chair,floating hair, long hair, dark brown hair,([white]collared_shirt:1.2), (full body:1.3), arms at sides, seductive pose, (wedge heels), (pantyhose), pencil skirt,(sitting:1.3), (large breasts), (solo_focus:1.2), looking_at_viewer,(fit and petite body, busty), (curvy:1.2), (crossed legs),
+```
+
+反向：
+
+```
+(badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
+```
+
+![00217-2410561558](.asserts/00217-2410561558.png)
+
+![00218-2718393433](.asserts/00218-2718393433.png)
+
+![00219-10907697](.asserts/00219-10907697.png)
 
 
 
@@ -366,7 +402,31 @@ Steps: 50, Size: 512x768, Seed: 2494406377, Model: henmixReal_v40, (blush: 0.5),
 
 ![00216-3889093389](.asserts/00216-3889093389.png)
 
-### 9. 画动物
+### 9. 运动服
+
+正向：
+
+```
+(Masterpiece, Best Quality), highly detailed, 8K, realistic focus, complex details, a Chinese girl, a women's volleyball player, in a uniform, wearing a size 9 jersey, knee socks,
+
+(Volleyball Arena), tall, long legs, ponytails, buttocks up, robust body, sexy and robust, detailed abdominal muscles, meticulous muscle lines, dynamic posture, oily body, sweaty body, normal body proportions, normal face, normal hands, front, full body photos, Tall image, looking from bottom to top, looking from below,
+```
+
+反向：
+
+```
+(nsfw:1.5),verybadimagenegative_v1.3, ng_deepnegative_v1_75t, (ugly face:0.8),cross-eyed,sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad anatomy, DeepNegative, facing away, tilted head, {Multiple people}, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality,
+
+normal quality, jpegartifacts, signature, watermark, username, blurry, bad feet, cropped, poorly drawn hands, poorly drawn face, mutation, deformed, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, extra fingers, fewer digits, extra limbs, extra arms,extra legs, malformed limbs, fused fingers, too many fingers, long neck,
+
+cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proportions, text, error, missing fingers, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, ((repeating hair))
+```
+
+![00222-2195232392](.asserts/00222-2195232392.png)
+
+
+
+### 10. 画动物
 
 正向：（这种就比较接近自然语言描述）
 
@@ -382,7 +442,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 <img src=".asserts/image-20230830114411620.png" alt="image-20230830114411620" style="zoom:50%;" />
 
-### 10. 画景色
+### 11. 画景色
 
 这种最方便用于做二维码或其他ControlNet图，需要启用control_v1p_sd15_qrcode_monster.ckpt
 
@@ -403,7 +463,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 
 
-### 11. 画机甲
+### 1. 画机甲
 
 ```
 cinematic photo breathtaking photograph, armor mech future knight intricate details, Style-Psycho town, blue steel, by Mark Brooks, by Ismail Inceoglu, (intricate details:0.9), Sony A9 II, split lighting, award-winning, professional, highly detailed . 35mm photograph, film, bokeh, professional, 4k, highly detailed, confused, looking around scared
