@@ -341,6 +341,10 @@ AF_MODE_CONTINUOUS_VIDEO or AF_MODE_CONTINUOUS_PICTURE
 
 现在，一般手机都不支持EDOF。
 
+参考：https://blog.csdn.net/Mr_ZJC/article/details/118715214
+
+
+
 ### **四、总结** 
 
 1）点击拍照时：为了尽快对焦且提供恒定的图像流，使用AF_MODE_CONTINUOUS_PICTURE

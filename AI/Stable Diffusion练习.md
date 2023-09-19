@@ -424,9 +424,59 @@ cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proport
 
 ![00222-2195232392](.asserts/00222-2195232392.png)
 
+如果是瑜伽服：
+
+正面：
+
+```
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3), (Golden hour),(indoor, gym:1.2, treadmills:1.2), (Canon RF 85mm f/1.2L 85mm),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (large breasts:1.3), facing viewer, (long pink_camisole:1.2), ([ocean] ocean_leggings:1.2), (running shoes), (school bag:1.2),<lora:Realhands_v1.0:0.6>, <lora:Xian-T_v3.0:1>, (sex pose, seductive pose),
+```
+
+反面：
+
+```
+(badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
+```
+
+![00246-2034390418](.asserts/00246-2034390418.png)
 
 
-### 10. 画动物
+
+
+
+### 10. 针织衫/毛线衫
+
+正向：
+
+```
+1girl, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3),depth of field, indoors, (day:1.3), (dim light), (bedroom, flowers meadows:1.2, flower arrangement:1.2),floating hair, long hair, dark brown hair,(full body:1.3), arms at sides, seductive pose, ([white]turtleneck sweater), ([black] thighhighs),(sitting:1.3), (large breasts), (solo_focus:1.2), looking_at_viewer,(fit and petite body, busty), (curvy:1.2), (wet hair), (from below),
+```
+
+反向：
+
+```
+(badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
+```
+
+![00235-1665332800](.asserts/00235-1665332800.png)
+
+### 11. 泳装
+
+正向：
+
+```
+1girl, (realistic:1.3, photo realistic:1.3), (masterpiece:1.3), (best quality:1.2), 8k, absurdres, (extremely detailed:1.3), highestres, (soft light, rim light, beautiful shadow),rash_guard_(swim_shirt), Swimming skirt, standing, swimming pool,
+```
+
+反向：
+
+```
+(badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
+```
+
+![00244-2041581678](.asserts/00244-2041581678.png)
+
+### 12. 画动物
 
 正向：（这种就比较接近自然语言描述）
 
@@ -442,7 +492,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 <img src=".asserts/image-20230830114411620.png" alt="image-20230830114411620" style="zoom:50%;" />
 
-### 11. 画景色
+### 13. 画景色
 
 这种最方便用于做二维码或其他ControlNet图，需要启用control_v1p_sd15_qrcode_monster.ckpt
 
