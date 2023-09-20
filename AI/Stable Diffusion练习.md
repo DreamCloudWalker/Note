@@ -216,6 +216,22 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 
 ![00219-10907697](.asserts/00219-10907697.png)
 
+教室背景
+
+正向：
+
+```
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3), legs,(indoors, classroom, black board, school desk), (Canon RF 85mm f/1.2L 85mm), (flower arrangement:1.2),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (huge breasts:1.3), ([blue]collared shirt), (short pencil skirt:1.2), (pantyhose:1.2), facing viewer, wetclothes, publictattoo,<lora:Realhands_v1.0:0.6>, <lora:Xian-T_v3.0:1>, (foot focus:1.2, high heels), <lora:Better Legwears_offset2.0:0.9>
+```
+
+反向：
+
+```
+(badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
+```
+
+![00284-1322343421](.asserts/00284-1322343421.png)
+
 
 
 ### 5. 汉服风格
@@ -475,6 +491,24 @@ cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proport
 ```
 
 ![00244-2041581678](.asserts/00244-2041581678.png)
+
+比基尼
+
+正向：
+
+```
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3),(swimming pool), (Canon RF 85mm f/1.2L 85mm), sunset, light particles,floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(sitting:1.3), (gigantic breasts:1.3), facing viewer, (side-tie bikini bottom:1.3),<lora:Realhands_v1.0:0.6>, <lora:Xian-T_v3.0:1>, breasts, gigantic breasts, (sex pose, seductive pose), stretching,
+```
+
+反向：
+
+```
+(dedicated_to_artificial_humans:1.2), [(DeepNegativeV1.x_V175T:0.9) :0.1], (bad_prompt_version2), (cameltoe:1.5, rei no himo:1.5), (multiple arms, bad hands, only hand, missing finger, multiple hands), (NSFW),
+```
+
+![00288-352762530](.asserts/00288-352762530.png)
+
+
 
 ### 12. 画动物
 
