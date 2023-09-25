@@ -72,3 +72,150 @@ ffprobe -show_packets input.mp4
 ```
 
 Packets信息与帧信息比较类似，也是包括pts信息、大小等。
+
+* 查看关键帧信息
+
+```shell
+ffprobe -v error -select_streams v:0 -show_entries frame=pict_type -of csv=print_section=0 input.mp4
+```
+
+打印结果如下：
+
+```
+I,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,
+```
+
+或者用
+
+```
+ffprobe -v quiet -print_format json -show_format -show_streams input.mp4
+// 或
+ffprobe -v quiet -print_format json -show_format -show_frames input.mp4
+```
+
+打印出结果如下：
+
+```shell
+NK2M63R7VN:images jian.deng$ ffprobe -v quiet -print_format json -show_format -show_frames shopee_23.mp4 
+{
+    "frames": [
+        {
+            "media_type": "video",
+            "stream_index": 0,
+            "key_frame": 1,
+            "pts": 0,
+            "pts_time": "0.000000",
+            "pkt_dts": 0,
+            "pkt_dts_time": "0.000000",
+            "best_effort_timestamp": 0,
+            "best_effort_timestamp_time": "0.000000",
+            "pkt_pos": "48",
+            "pkt_size": "8739",
+            "width": 1440,
+            "height": 1280,
+            "pix_fmt": "yuv420p",
+            "sample_aspect_ratio": "1:1",
+            "pict_type": "I",
+            "coded_picture_number": 0,
+            "display_picture_number": 0,
+            "interlaced_frame": 0,
+            "top_field_first": 0,
+            "repeat_pict": 0,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "color_primaries": "bt709",
+            "color_transfer": "bt709",
+            "chroma_location": "left",
+            "side_data_list": [
+                {
+                    "side_data_type": "H.26[45] User Data Unregistered SEI message"
+                }
+            ]
+        },
+        {
+            "media_type": "video",
+            "stream_index": 0,
+            "key_frame": 0,
+            "pts": 3000,
+            "pts_time": "0.033333",
+            "pkt_dts": 3000,
+            "pkt_dts_time": "0.033333",
+            "best_effort_timestamp": 3000,
+            "best_effort_timestamp_time": "0.033333",
+            "pkt_pos": "16134",
+            "pkt_size": "1005",
+            "width": 1440,
+            "height": 1280,
+            "pix_fmt": "yuv420p",
+            "sample_aspect_ratio": "1:1",
+            "pict_type": "B",
+            "coded_picture_number": 3,
+            "display_picture_number": 0,
+            "interlaced_frame": 0,
+            "top_field_first": 0,
+            "repeat_pict": 0,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "color_primaries": "bt709",
+            "color_transfer": "bt709",
+            "chroma_location": "left"
+        },
+        {
+            "media_type": "video",
+            "stream_index": 0,
+            "key_frame": 0,
+            "pts": 6000,
+            "pts_time": "0.066667",
+            "pkt_dts": 6000,
+            "pkt_dts_time": "0.066667",
+            "best_effort_timestamp": 6000,
+            "best_effort_timestamp_time": "0.066667",
+            "pkt_pos": "14235",
+            "pkt_size": "1899",
+            "width": 1440,
+            "height": 1280,
+            "pix_fmt": "yuv420p",
+            "sample_aspect_ratio": "1:1",
+            "pict_type": "B",
+            "coded_picture_number": 2,
+            "display_picture_number": 0,
+            "interlaced_frame": 0,
+            "top_field_first": 0,
+            "repeat_pict": 0,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "color_primaries": "bt709",
+            "color_transfer": "bt709",
+            "chroma_location": "left"
+        },
+        {
+            "media_type": "video",
+            "stream_index": 0,
+            "key_frame": 0,
+            "pts": 9000,
+            "pts_time": "0.100000",
+            "pkt_dts": 9000,
+            "pkt_dts_time": "0.100000",
+            "best_effort_timestamp": 9000,
+            "best_effort_timestamp_time": "0.100000",
+            "pkt_pos": "17139",
+            "pkt_size": "1376",
+            "width": 1440,
+            "height": 1280,
+            "pix_fmt": "yuv420p",
+            "sample_aspect_ratio": "1:1",
+            "pict_type": "B",
+            "coded_picture_number": 4,
+            "display_picture_number": 0,
+            "interlaced_frame": 0,
+            "top_field_first": 0,
+            "repeat_pict": 0,
+            "color_range": "tv",
+            "color_space": "bt709",
+            "color_primaries": "bt709",
+            "color_transfer": "bt709",
+            "chroma_location": "left"
+        },
+```
+
+这里找"key_frame": 1,的，可以看出I帧间隔
