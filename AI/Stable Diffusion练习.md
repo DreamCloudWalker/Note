@@ -2,20 +2,13 @@
 
 插件**ADetailer**必须要启用，不然很容易出现脸崩的情况。这里也有正向提示词：realistic face, detailed face。反向提示词: ugly
 
-<img src=".asserts/image-20230828115623093.png" alt="image-20230828115623093" style="zoom:50%;" />
-
-主模型我用的beautifulRealistic_v60.safetensors，这个是针对亚洲女人的。
+主模型我用的beautifulRealistic_v60.safetensors，这个是针对亚洲女性的。
 
 分辨率我一般用640*960，后面再用高清修复。
 
 可配合各种LoRA模型使用；
 
 ```
-作者：树先生
-链接：https://www.zhihu.com/question/299206143/answer/3157466498
-来源：知乎
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-
 内容型提示词
 1）人物及主体特征
 服饰穿搭 white dress
@@ -62,6 +55,52 @@ skin spots,acnes,skin blemishes,(fat:1.2),facing away,looking away,tilted head,b
 signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 ```
 
+常用服饰、妆容、发型、姿势等关键字：
+
+* 清晰度
+  * (best quality, masterpiece, ultra high resolution, 4K, HDR, UHD, 64K)  常用
+
+* 发型
+
+  * bangs: 刘海
+
+  * hair bun: 扎头发
+  * long hair
+
+* 衣服
+  * (jeans:1.2) 牛仔裤
+  *  pink printed T-shirt
+
+* 姿势
+  * looking at viewer 看向阅览者
+  * facing viewer 面向观众
+  * looking back 回眸
+  * Profile 侧脸
+  * looking down 俯视
+  * looking up 仰视
+
+* 光照
+  * (dim light:1.2) 昏暗灯光
+
+* 角度
+  * full_body 或 (full body:1.3): 全身照
+  * from below 低位视角
+  * from above 高位视角
+  * 
+* 场景
+  * indoors: 室内
+  *  (outdoors:1.2) 户外
+  * (starry sky, clusters of stars, starry sky, glinting stars) 星空
+* 表情
+  * light smile 浅笑
+
+* 身材
+  * (huge breasts:1.2) 
+  *  (slim legs:1.2), (Slender legs:1.2)
+  * super big chest,Tight chest,Tight clothes
+
+* 人数
+  * (only one girl:1.2) 
 
 
 
@@ -291,9 +330,10 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 宋制汉服，LoRA: https://liblib.ai/modelinfo/3e64e409fc504ad6a495868700656f60
 
 ```
-analog film photo A beautiful girl in a bamboo forest, rain,rainy day, wet hair,sadness,frontal view,looking at view,watching with deep affection, beautiful face,long eyelashes, charming eyes,wet szhf dress,light green beizi,white pleated skirt,drenched,full body . faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage
+cinematic film still a beautiful girl is sitting on a rock,szhf dress,highly detailed,solo,light blue beizi,near a lake,willow tree,mountains,beautiful landscape,beautiful face,slim <lora:szhf:0.7> . shallow depth of field, vignette, highly detailed, high budget Hollywood movie, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy
+
 Negative prompt: (low quality:1.3), (worst quality:1.3),(monochrome:0.8),(deformed:1.3),(malformed hands:1.4),(mutated fingers:1.4),(bad anatomy:1.3),(extra limbs:1.35),(watermark:1.3), bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad anatomy, bad hands, text, error, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, ugly,pregnant,duplicate,morbid,mutilated,hermaphrodite,long neck,mutated hands,mutation,deformed,blurry,bad anatomy,bad proportions,malformed limbs,extra limbs,cloned face,disfigured,gross proportions, (((missing arms))),(((missing legs))), (((extra arms))),(((extra legs))),pubic hair, plump,bad legs,error legs,username,blurry,bad feet, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured
-Steps: 30, Size: 1024x1024, Seed: 3944754010, Sampler: Euler a, CFG scale: 7
+Steps: 30, Size: 1024x1024, Seed: 2376981541, Sampler: Euler a, CFG scale: 7
 ```
 
 
@@ -566,9 +606,34 @@ cross-eyed,mutated hands, polar lowres, bad body, bad proportions, gross proport
 
 ![00288-352762530](.asserts/00288-352762530.png)
 
+### 12. 旗袍
+
+推荐这个LoRA:
+
+https://liblib.ai/modelinfo/647a5d11e0a7c87583eda80152016606
+
+```
+(global illumination, reality,ray tracing, HDR, unreal rendering, reasonable design, high detail, masterpiece,best quality, ultra high definition, movie lighting),
+1 girl,qipao01,outdoor,looking_at_viewer,hair bun,side_blunt_bangs,china_dress,chinese_style,light green qipao,big breasts,pose,solo,1girl,black hair,black eyes, 
+Negative prompt: (worst quality:1.8),(low quality:1.8),(normal quality:1.8),(twisted fingers,malformed hands,fusion of hands,a deformed foot,huge hands,extra fingers,missing fingers,fused fingers,extra limb,bad anatomy,independent limb,disconnected limbs,disconnected limbs,amputation,overlapping fingers:1.3),3d,cartoon,anime,sketches,lowres((monochrome)),((grayscale)),((monochrome)),nsfw,
+Steps: 20, Size: 768x1024, Seed: 1931430471, Sampler: DPM++ SDE Karras, CFG scale: 7
+```
+
+![00100-1652570787-0000](.asserts/00100-1652570787-0000.png)
+
+### 13. 画机甲
+
+```
+cinematic photo breathtaking photograph, armor mech future knight intricate details, Style-Psycho town, blue steel, by Mark Brooks, by Ismail Inceoglu, (intricate details:0.9), Sony A9 II, split lighting, award-winning, professional, highly detailed . 35mm photograph, film, bokeh, professional, 4k, highly detailed, confused, looking around scared
+Negative prompt: (Low_quality:1.5), blurry, ugly, duplicate, error, fake, watermark, text, monochrome
+Steps: 37, Size: 768x1024, Seed: 1326882228, Model: nightvisionXLPhotorealisticPortrait_beta0681Bakedvae, Version: 1.5.2, Sampler: Euler a, CFG scale: 7, Model hash: 2f602b1df5
+```
+
+<img src=".asserts/00106-1326882228.png" alt="00106-1326882228" style="zoom:50%;" />
 
 
-### 12. 画动物
+
+### 14. 画动物
 
 正向：（这种就比较接近自然语言描述）
 
@@ -584,7 +649,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 <img src=".asserts/image-20230830114411620.png" alt="image-20230830114411620" style="zoom:50%;" />
 
-### 13. 画景色
+### 15. 画景色
 
 这种最方便用于做二维码或其他ControlNet图，需要启用control_v1p_sd15_qrcode_monster.ckpt
 
@@ -605,12 +670,3 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 
 
-### 1. 画机甲
-
-```
-cinematic photo breathtaking photograph, armor mech future knight intricate details, Style-Psycho town, blue steel, by Mark Brooks, by Ismail Inceoglu, (intricate details:0.9), Sony A9 II, split lighting, award-winning, professional, highly detailed . 35mm photograph, film, bokeh, professional, 4k, highly detailed, confused, looking around scared
-Negative prompt: (Low_quality:1.5), blurry, ugly, duplicate, error, fake, watermark, text, monochrome
-Steps: 37, Size: 768x1024, Seed: 1326882228, Model: nightvisionXLPhotorealisticPortrait_beta0681Bakedvae, Version: 1.5.2, Sampler: Euler a, CFG scale: 7, Model hash: 2f602b1df5
-```
-
-<img src=".asserts/00106-1326882228.png" alt="00106-1326882228" style="zoom:50%;" />
