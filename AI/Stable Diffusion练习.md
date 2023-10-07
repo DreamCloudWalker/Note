@@ -70,6 +70,9 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 * 衣服
   * (jeans:1.2) 牛仔裤
   *  pink printed T-shirt
+  * Knit_cropped_top 针织短上衣
+  * High-waisted_flared_jeans 高腰喇叭牛仔裤
+  * Platform_sandals 平底高跟凉鞋
 
 * 姿势
   * looking at viewer 看向阅览者
@@ -291,7 +294,7 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 
 ### 5. 汉服风格
 
-需要使用“国风 _ 汉服 _ 写实_v1.safetensors”这个主模型
+需要使用“国风 _ 汉服 _ 写实_v1.safetensors”这个主模型https://liblibai-online.vibrou.com/web/model/19efc22018e29fc74670245f861a378e51f3a268f332b23b56b1af08d56d0788.safetensors?attname=%E5%9B%BD%E9%A3%8E%20%7C%20%E6%B1%89%E6%9C%8D%20%7C%20%E5%86%99%E5%AE%9E_v20.safetensors
 
 正向：
 
