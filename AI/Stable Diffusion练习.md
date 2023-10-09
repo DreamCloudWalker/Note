@@ -2,7 +2,7 @@
 
 插件**ADetailer**必须要启用，不然很容易出现脸崩的情况。这里也有正向提示词：realistic face, detailed face。反向提示词: ugly
 
-主模型我用的beautifulRealistic_v60.safetensors，这个是针对亚洲女性的。
+主模型我用的beautifulRealistic_v7.safetensors(https://civitai-delivery-worker-prod-2023-10-01.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/275927/brav7finalFp16201.uDDf.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22beautifulRealistic_v7.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=2fea663d76bd24a496545da373d610fc/20231008/us-east-1/s3/aws4_request&X-Amz-Date=20231008T020912Z&X-Amz-SignedHeaders=host&X-Amz-Signature=717b5495f5df63a1924e5546fe873a3e8edd06889f4307cb1c182fd380ac54b3)，这个是针对亚洲女性的。
 
 分辨率我一般用640*960，后面再用高清修复。
 
@@ -215,6 +215,16 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 ```
 
 ![00232-1736096529](.asserts/00232-1736096529.png)
+
+```
+ulzzang-6500-v1.1,(original photo:1.2),(realistic:1.4),beautiful detailed girl,very detailed eyes and face,beautiful detail eyes,ridiculous,incredibly ridiculous,huge file size,super detailed,high resolution,very detailed,best quality,masterpiece,((fashion clothing in different colors)),illustration,very detailed,CG,unified,8k wallpaper,amazing,fine detail,masterpiece,best quality,Very detailed CG uniform 8k wallpaper,face light,movie lights,1 girl,16 years old,long white hair,((dynamic pose))),((sexy pose))),(camel toe),(pantyhose),(Knit_cropped_top:1.4),(High-waisted_flared_jeans:1.3),(Platform_sandals:1.2),(Retro_diner_background:1.4),
+Negative prompt: (nsfw:1.5),ng_deepnegative_v1_75t, (badhandv4:1.2), (worst quality:2), (low quality:2), (normal quality:2), lowres, bad anatomy, bad hands, normal quality, ((monochrome)), ((grayscale)) watermark
+Steps: 40, Size: 640x960, Seed: 3149472495, Sampler: EULER_A, CFG scale: 7
+```
+
+![00037-98489423](.asserts/00037-98489423.png)
+
+![00016-684590685](.asserts/00016-684590685.png)
 
 
 

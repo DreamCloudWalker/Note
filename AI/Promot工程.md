@@ -14,6 +14,51 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 
 ```
 
+### 查看可调用模型
+
+```python
+import openai
+import os
+
+# 加载 .env 文件
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
+
+# 从环境变量中获得你的 OpenAI Key
+openai.api_key  = os.getenv('OPENAI_API_KEY')
+
+# 模型列表
+models = openai.Model.list()
+
+for model in models.data:
+    print(model.id)
+```
+
+### 定义角色发消息
+
+```python
+# 消息格式
+messages=[
+    { 
+        "role": "system", 
+        "content": "你是AI助教，提醒学生每周一到周五白天上课"
+    },
+    { 
+        "role": "user", 
+        "content": "你是干什么的?什么时间上课"
+    },
+    
+]
+
+# 调用ChatGPT-3.5
+chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+
+# 输出回复
+print(chat_completion.choices[0].message.content)
+```
+
+### 定义基于prompt生成文本的函数
+
 ```python
 # 基于 prompt 生成文本
 def get_completion(prompt, model="gpt-3.5-turbo"):

@@ -22,7 +22,7 @@ https://github.com/Linaqruf/kohya-trainer
 
 2.1 Download Available Model，选择Stable Diffusion-v1-5运行；
 
-2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型来训练，出图效果更好）
+2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型或https://civitai.com/api/download/models/177164 这个beautifulRealistic_v7.safetensors来训练，出人物图效果更好）
 
 2.3 Download Available VAE (Optional)，选择stable diffusion vae.pt运行；
 

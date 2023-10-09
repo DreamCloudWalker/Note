@@ -106,6 +106,20 @@ npm start
 
 
 
+### **[DINet](https://github.com/MRzzm/DINet)**
+
+可结合Openface来训练数字人模型。
+
+参考：https://www.youtube.com/watch?v=YhK5LQTdPCM
+
+[基于DINet+openface自训练AI数字人_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Hg4y1u7C3/?spm_id_from=333.788.recommend_more_video.-1&vd_source=001f650913e144b8c11cbad6dd894734)
+
+[AI 数字人训练(方法一：DINet训练)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Zu411L786/?spm_id_from=333.999.0.0)
+
+
+
+
+
 ## AI换脸
 
 ### [roop](https://github.com/s0md3v/roop)
@@ -170,11 +184,61 @@ Stable Diffusion模型训练。
 
 
 
+## AI视频
+
+### **[VToonify](https://github.com/williamyang1991/VToonify)**
+
+视频转卡通风格。相比使用stable diffusion，这个效率更高，不闪烁，且有huggingface试用，试用地址只支持3秒视频。可以在Colab上转完整的视频。
+
+
+
+### [CogVideo](https://github.com/THUDM/CogVideo)
+
+AI文字生成视频方案：
+
+方法一：在线试玩
+
+google的Imagen-Video  网址：https://imagen.research.google/video/ 
+
+google的phenaki    网址：https://phenaki.github.io/# 
+
+Meta的Make-A-Video  网址：https://makeavideo.studio/ 
+
+方法二：跑开源项目代码。 github开源项目 CogVideo    网址： https://github.com/THUDM/CogVideo 
+
+有试玩：[CogVideo - a Hugging Face Space by THUDM](https://huggingface.co/spaces/THUDM/CogVideo)
+
+方法三：用自己的方法，先文字生成图像，再用图像生成视频。 先用：Disco Diffusion或者Stable Diffusion 文字生成图片     网址：https://www.bilibili.com/video/BV1Hd4y197hF/?spm_id_from=333.999.0.0&vd_source=7720ff9e037156b51374d14ee8f76b51 
+
+再用：Infinite Nature 生成视频     网址：https://www.bilibili.com/video/BV1bB4y1J7Ux/?spm_id_from=333.999.0.0&vd_source=7720ff9e037156b51374d14ee8f76b51    
+
+
+
+
+
+### [Controlvideo](https://github.com/YBYBZhang/ControlVideo)
+
+项目地址：https://ml.cs.tsinghua.edu.cn/controlvideo/
+
+在线试玩：https://replicate.com/cjwbw/controlvideo/examples#az7atbep3fc3lnprxwdavpqaxy
+
+文字编辑视频
+
+
+
 ## AI 3D
 
 ### **[ECON](https://github.com/YuliangXiu/ECON)**
 
 一张图片生成3d人物。支持Colab，但效果一般
+
+
+
+### [mint](https://github.com/google-research/mint)
+
+Google出品，根据音乐生成3D人物动作。官网介绍：
+
+[AI Choreographer: Music Conditioned 3D Dance Generation with AIST++ (google.github.io)](https://google.github.io/aichoreographer/)
 
 
 
@@ -209,6 +273,16 @@ OpenAI出品，文生3D模型。效果一般，适合做一些趣味性的模型
 ### 其他
 
 ![image-20231007154746495](.asserts/image-20231007154746495.png)
+
+
+
+## AI生成游戏
+
+### [GameGAN](https://github.com/nv-tlabs/GameGAN_code)
+
+官网https://nv-tlabs.github.io/gameGAN/
+
+
 
 
 
