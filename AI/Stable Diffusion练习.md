@@ -47,6 +47,12 @@ extremely detailed CG unity 8k wallpaper,unreal engine rendered
 写实系 photorealistic,realistic,ptotograph
 ```
 
+常用前缀
+
+```
+(1girl:1.3), (best quality, masterpiece, ultra high resolution),(photorealistic:1.3), (realistic:1.3), depth of field,(full body:1.2), (outdoors:1.2), (day:1.2), (cinematic lighting:1.2),
+```
+
 常用反向提示词
 
 ```
@@ -59,20 +65,23 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 
 * 清晰度
   * (best quality, masterpiece, ultra high resolution, 4K, HDR, UHD, 64K)  常用
-
 * 发型
 
   * bangs: 刘海
 
   * hair bun: 扎头发
   * long hair
-
 * 衣服
-  * (jeans:1.2) 牛仔裤
+  * (skinny jeans:1.2) 紧身牛仔裤 bootcut jeans 喇叭牛仔裤
+  * cheongsam 旗袍
   *  pink printed T-shirt
   * Knit_cropped_top 针织短上衣
   * High-waisted_flared_jeans 高腰喇叭牛仔裤
   * Platform_sandals 平底高跟凉鞋
+  * serafuku 水手服
+  * thighhighs 长筒袜
+* 饰品
+  * hair stick 发簪
 
 * 姿势
   * looking at viewer 看向阅览者
@@ -81,27 +90,23 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * Profile 侧脸
   * looking down 俯视
   * looking up 仰视
-
 * 光照
   * (dim light:1.2) 昏暗灯光
-
 * 角度
   * full_body 或 (full body:1.3): 全身照
   * from below 低位视角
   * from above 高位视角
-  * 
+  * face shot:1.4 身份证角度
 * 场景
   * indoors: 室内
   *  (outdoors:1.2) 户外
   * (starry sky, clusters of stars, starry sky, glinting stars) 星空
 * 表情
   * light smile 浅笑
-
 * 身材
   * (huge breasts:1.2) 
   *  (slim legs:1.2), (Slender legs:1.2)
   * super big chest,Tight chest,Tight clothes
-
 * 人数
   * (only one girl:1.2) 
 
@@ -127,6 +132,16 @@ paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low
 效果如图：
 
 <img src=".asserts/image-20230828123920274.png" alt="image-20230828123920274" style="zoom:50%;" />
+
+如果画肖像
+
+```
+(masterpiece,best quality:1.5), , ultra realistic,1girl, long hair, straight hair, portrait, mysterious forest, firefly, bokeh, mysterious, night, sky, cloud
+Negative prompt: badhandv4,EasyNegative,ng_deepnegative_v1_75t,rev2-badprompt,verybadimagenegative_v1.3,negative_hand-neg,bad-picture-chill-75v,mutated hands and fingers,deformed,bad anatomy,poorly drawn face,mutated,extra limb,ugly,floating limbs,malformed hands,
+Steps: 40, Size: 920x1520, Seed: 4273211111, Model: 写实摄影_BRairtX6_V1.0, Sampler: DPM++ 2M Karras, CFG scale: 7, Clip skip: 2
+```
+
+![00020-464652310](.asserts/00020-464652310.png)
 
 
 
@@ -282,7 +297,7 @@ Steps: 40, Size: 640x960, Seed: 3149472495, Sampler: EULER_A, CFG scale: 7
 (badhandv4:0.6), EasyNegative, negative_hand-neg, bhands-neg, ((multiple arm, bad hands, only hand, missing finger)), (NSFW), (cameltoe:1.5, rei no himo:1.5), paintings, sketches, (worst quality:2), (low quality:2), (normal quality:2), low res, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad feet, missing arms, missing legs, extra digit, extra arms, extra leg, extra foot, multiple arms, multiple hands,
 ```
 
-![00284-1322343421](.asserts/00284-1322343421.png)
+![00284-1322343421](../../../AI/Roop/AISrc/00284-1322343421.png)
 
 皮裤风格，建筑背景，换发型，正向：
 

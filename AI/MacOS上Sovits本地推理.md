@@ -46,3 +46,16 @@ brew install python@3.10
 
 ![image-20230908115104648](.asserts/image-20230908115104648.png)
 
+
+
+## 版本问题
+
+从git上clone的https://github.com/svc-develop-team/so-vits-svc 这个默认版本是4.0（refs/heads/4.0）。但实际还有一个更新的4.1-Stable版本。可以git checkout -b 4.1-Stable origin/4.1-Stable 用这个来拿到4.1版本。
+
+因为我使用Colab脚本训练的都是基于4.1的模型，网上公开的大部分是4.0模型。这有两个区别：
+
+1. 4.1的preprocess_flist_config.py编码器默认是768l12，而4.0版本默认是256l9。如果用4.0的分支做本地推理，会用不了4.1的模型而报错；反过来也一样，4.1本地推理使用4.0的模型会报错：RuntimeError('Given groups=1, weight of size [192, 256, 5], expected input[1, 768, 418] to have 256 channels, but got 768 channels instead')
+
+参考：https://www.cnblogs.com/strawberryPudding/p/17473944.html
+
+2. 本地推理时，4.0分支checkpoint_best_legacy_500.pt这个模型需要放在so-vits-svc/hubert目录下。而4.1-stable分支需要放到so-vits-svc/pretrain目录。
