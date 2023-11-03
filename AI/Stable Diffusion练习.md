@@ -466,6 +466,20 @@ Steps: 40, Size: 512x768, Seed: 979682169, Model: reliberate_v10, Version: v1.2.
 
 ![00206-979682169](.asserts/00206-979682169.png)
 
+配合这个https://liblib.ai/modelinfo/395e5c574cf94c7f934e5778756c63e8
+
+**备注： Wearing a Japanese kimono（穿和服）需要打在提示词里，不然生成的衣服不一定是完整的和服。**
+
+```
+1 girl, high quality face, high detailed face skin, Wearing a Japanese kimono,<lora:身材调节器S-shape body(1.5-2.5)_v1.0:0.9> <lora:20231026-1698309368847:0.9>
+Negative prompt: (umbrella:2),(worst quality:2),(low quality:2),(letterboxed),easynegative,ng_deepnegative_v1_75t,(normal quality:2),lowres,bad anatomy,bad hands,normal quality,((monochrome)),((grayscale)),((watermark)),(nsfw),(naked),,nsfw
+Steps: 26, Sampler: Euler a, CFG scale: 6, Seed: 656613292, Size: 512x768, Model hash: 1a17bcd93d, Model: beautifulRealistic_v7, Clip skip: 2, ADetailer model: face_yolov8n.pt, ADetailer confidence: 0.3, ADetailer dilate/erode: 4, ADetailer mask blur: 4, ADetailer denoising strength: 0.4, ADetailer inpaint only masked: True, ADetailer inpaint padding: 32, ADetailer model 2nd: hand_yolov8n.pt, ADetailer confidence 2nd: 0.3, ADetailer dilate/erode 2nd: 4, ADetailer mask blur 2nd: 4, ADetailer denoising strength 2nd: 0.4, ADetailer inpaint only masked 2nd: True, ADetailer inpaint padding 2nd: 32, ADetailer version: 23.7.11, Lora hashes: "身材调节器S-shape body(1.5-2.5)_v1.0: 4221edfe4df6, 20231026-1698309368847: 4d7aef12f497", Version: v1.6.0
+```
+
+![00009-656613292](.asserts/00009-656613292.png)
+
+
+
 ### 8. 制服
 
 可配合https://civitai.com/models/58847/ana-stewardess-uniform 这个LoRA
@@ -661,7 +675,61 @@ Steps: 37, Size: 768x1024, Seed: 1326882228, Model: nightvisionXLPhotorealisticP
 
 
 
-### 14. 画动物
+### 14. Cosplay
+
+#### 春丽
+
+需要配合https://liblib.ai/modelinfo/9bd175a5188541ccbe9732c3dfd8908e
+
+这个LoRA，且必须包含触发提示词：chun li, spiked bracelet, sash, brown pantyhose,brown eyes, short hair, brown hair, double bun, bun cover, blue dress, pelvic curtain
+
+```
+1 girl, full body, high quality face, high detailed face skin, chun li, spiked bracelet, sash, brown pantyhose,brown eyes, short hair, brown hair, double bun, bun cover, blue dress, pelvic curtain <lora:chunli:0.9> <lora:身材调节器S-shape body(1.5-2.5)_v1.0:1.65>
+Negative prompt: (umbrella:2),(worst quality:2),(low quality:2),(letterboxed),easynegative,ng_deepnegative_v1_75t,(normal quality:2),lowres,bad anatomy,bad hands,normal quality,((monochrome)),((grayscale)),((watermark)),(nsfw),(naked),,nsfw
+Steps: 26, Sampler: Euler a, CFG scale: 6, Seed: 319045885, Size: 608x768, Model hash: 1a17bcd93d, Model: beautifulRealistic_v7, Clip skip: 2, ADetailer model: face_yolov8n.pt, ADetailer confidence: 0.3, ADetailer dilate/erode: 4, ADetailer mask blur: 4, ADetailer denoising strength: 0.4, ADetailer inpaint only masked: True, ADetailer inpaint padding: 32, ADetailer model 2nd: hand_yolov8n.pt, ADetailer confidence 2nd: 0.3, ADetailer dilate/erode 2nd: 4, ADetailer mask blur 2nd: 4, ADetailer denoising strength 2nd: 0.4, ADetailer inpaint only masked 2nd: True, ADetailer inpaint padding 2nd: 32, ADetailer version: 23.7.11, Lora hashes: "chunli: c54b091f0a69, 身材调节器S-shape body(1.5-2.5)_v1.0: 4221edfe4df6", Version: v1.6.0
+```
+
+![00006-735260313](.asserts/00006-735260313.png)
+
+### 15. 配饰
+
+#### 帽子
+
+https://liblib.ai/modelinfo/21005f14ab6b44fea2cabda1d272f0eb
+
+LoRA权重建议0.7~0.8，触发词muli，关键词curtained hat；
+
+```
+1 girl, high quality face, high detailed face skin, curtained hat, hanfu song,<lora:身材调节器S-shape body(1.5-2.5)_v1.0:0.9>, <lora:20231019-1697721769055:0.9> ,<lora:songStyle19:0.8>
+Negative prompt: (umbrella:2),(worst quality:2),(low quality:2),(letterboxed),easynegative,ng_deepnegative_v1_75t,(normal quality:2),lowres,bad anatomy,bad hands,normal quality,((monochrome)),((grayscale)),((watermark)),(nsfw),(naked),,nsfw
+Steps: 26, Sampler: Euler a, CFG scale: 6, Seed: 3197002425, Size: 512x768, Model hash: 1a17bcd93d, Model: beautifulRealistic_v7, Clip skip: 2, ADetailer model: face_yolov8n.pt, ADetailer confidence: 0.3, ADetailer dilate/erode: 4, ADetailer mask blur: 4, ADetailer denoising strength: 0.4, ADetailer inpaint only masked: True, ADetailer inpaint padding: 32, ADetailer model 2nd: hand_yolov8n.pt, ADetailer confidence 2nd: 0.3, ADetailer dilate/erode 2nd: 4, ADetailer mask blur 2nd: 4, ADetailer denoising strength 2nd: 0.4, ADetailer inpaint only masked 2nd: True, ADetailer inpaint padding 2nd: 32, ADetailer version: 23.7.11, Lora hashes: "身材调节器S-shape body(1.5-2.5)_v1.0: 4221edfe4df6, 20231019-1697721769055: 4d5742bc5180, songStyle19: b24ad10e9dcc", Version: v1.6.0
+```
+
+![00010-683061536](.asserts/00010-683061536.png)
+
+### 16. 盔甲
+
+https://liblib.ai/modelinfo/eae798b3a92a4e2ba685eb02bd139574 (宋步人甲)
+
+权重建议0.8
+
+helmet ，头盔可戴可不戴
+
+无触发词
+
+```
+1 girl, full body, high quality face, high detailed face skin, helmet <lora:身材调节器S-shape body(1.5-2.5)_v1.0:0.7>, <lora:jianpianjia_20231007225255:1>
+Negative prompt: (umbrella:2),(worst quality:2),(low quality:2),(letterboxed),easynegative,ng_deepnegative_v1_75t,(normal quality:2),lowres,bad anatomy,bad hands,normal quality,((monochrome)),((grayscale)),((watermark)),(nsfw),(naked),,nsfw
+Steps: 26, Sampler: Euler a, CFG scale: 6, Seed: 1522427051, Size: 512x768, Model hash: 1a17bcd93d, Model: beautifulRealistic_v7, Clip skip: 2, ADetailer model: face_yolov8n.pt, ADetailer confidence: 0.3, ADetailer dilate/erode: 4, ADetailer mask blur: 4, ADetailer denoising strength: 0.4, ADetailer inpaint only masked: True, ADetailer inpaint padding: 32, ADetailer model 2nd: hand_yolov8n.pt, ADetailer confidence 2nd: 0.3, ADetailer dilate/erode 2nd: 4, ADetailer mask blur 2nd: 4, ADetailer denoising strength 2nd: 0.4, ADetailer inpaint only masked 2nd: True, ADetailer inpaint padding 2nd: 32, ADetailer version: 23.7.11, Lora hashes: "身材调节器S-shape body(1.5-2.5)_v1.0: 4221edfe4df6, jianpianjia_20231007225255: 6df6ec934a71", Version: v1.6.0
+```
+
+![00001-1522427049](.asserts/00001-1522427049.png)
+
+
+
+
+
+### 17. 画动物
 
 正向：（这种就比较接近自然语言描述）
 
@@ -677,7 +745,7 @@ worst quality, low quality, lowres, bad anatomy, bad hands, text, error, missing
 
 <img src=".asserts/image-20230830114411620.png" alt="image-20230830114411620" style="zoom:50%;" />
 
-### 15. 画景色
+### 18. 画景色
 
 这种最方便用于做二维码或其他ControlNet图，需要启用control_v1p_sd15_qrcode_monster.ckpt
 

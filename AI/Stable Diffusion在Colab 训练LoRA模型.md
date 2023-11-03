@@ -6,6 +6,22 @@ https://github.com/Linaqruf/kohya-trainer
 
 ![image-20230714105941045](.asserts/image-20230714105941045.png)
 
+教程参考：
+
+https://home.gamer.com.tw/artwork.php?sn=5687897
+
+
+
+数据准备：
+
+準備一個想學習的資料集，圖片**不需要固定解析度**（enable_bucket預設為True）。
+
+訓練角色時**不需要服裝一致**，除非你想要把服裝當成角色概念的一部分。
+
+背景不需要去背，維持多元背景即可。
+
+至於多角色圖，個人還是習慣裁掉以免影響訓練。
+
 
 
 ## 二、训练
@@ -60,7 +76,10 @@ https://github.com/Linaqruf/kohya-trainer
 
 5.3 LoRA配置，默认运行；
 
-5.4 训练参数配置，用默认值运行；
+5.4 训练参数配置，用默认值运行；也可以在这里修改训练参数。常改参数分别代表如下：
+
+* **num_epochs**
+* **save_n_epochs_type_value** 代表每几个epochs存一次檔
 
 5.5 开始训练，直接运行，30多张图估计要20多分钟；
 

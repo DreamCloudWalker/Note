@@ -27,7 +27,7 @@
 作为一个语言变量，下面的 const 定义的常量 Pi 肯定会被编译器看到，出错的时候可以很清楚知道，是这个变量导致的问题：
 
 ```c++
-const doule Pi = 3.14;
+const double Pi = 3.14;
 ```
 
 如果是定义常量字符串，则必须要 const 两次，目的是为了防止指针所指内容和指针自身不能被改变：
@@ -97,8 +97,8 @@ std::cout << a << std::endl;
 输出结果（以下结果是错误的）：
 
 ```
-17 // 正确的答案是 max 输出 6
-28 // 正确的答案是  a  输出 7
+7 // 正确的答案是 max 输出 6
+8 // 正确的答案是  a  输出 7
 ```
 
 要解释出错的原因很简单，我们把 MAX 宏做简单替换：
@@ -384,7 +384,7 @@ private:
 这份代码有两个转型动作：
 
 - static_cast(*this)[position]，表示将 MyString& 转换成 const MyString&，**可让其调用 const operator[] 兄弟**；
-- const_cast<char& style="font-size: inherit; color: inherit; line-height: inherit; margin: 0px; padding: 0px;">( … )，表示将 const char & 转换为 char &，**让其是 non-const operator[] 的返回类型**。
+- const_cast<char&>( … )，表示将 const char & 转换为 char &，**让其是 non-const operator[] 的返回类型**。
 
 虽然语法有一点点奇特，但「运用 const 成员函数实现 non-const 孪生兄弟 」的技术是值得了解的。
 
