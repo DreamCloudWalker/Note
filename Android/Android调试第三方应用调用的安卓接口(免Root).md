@@ -307,7 +307,7 @@ hook函数可以写成如下(如下为打印Camera2相机参数设置的日志)�
 
 
 
-然后按之前基础操作中安装patch过的app，比如tiktok。点击后选择模块作用域，如图：
+然后按之前基础操作中安装patch过的app，比如tiktok。点击后选择<font color="red">模块作用域</font>，如图：
 
 <img src=".asserts/image-20231026113855224.png" alt="image-20231026113855224" style="zoom:50%;" />
 
