@@ -39,6 +39,8 @@ https://home.gamer.com.tw/artwork.php?sn=5687897
 2.1 Download Available Model，选择Stable Diffusion-v1-5运行；
 
 2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型或https://civitai.com/api/download/models/177164 这个beautifulRealistic_v7.safetensors来训练，出人物图效果更好）
+=======
+2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型来训练，出图效果更好），不过现在我一般用https://civitai-delivery-worker-prod-2023-09-01.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/275927/model/bra6test.bhwb.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22beautifulRealistic_v60.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=2fea663d76bd24a496545da373d610fc/20230904/us-east-1/s3/aws4_request&X-Amz-Date=20230904T144623Z&X-Amz-SignedHeaders=host&X-Amz-Signature=01eb68ff67815888a6d12a1dcac862d959f6c1a1d6070124f3a3eb64348fc0cf 这个Beautiful Realistic Asians这个CheckPoint。
 
 2.3 Download Available VAE (Optional)，选择stable diffusion vae.pt运行；
 

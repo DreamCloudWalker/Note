@@ -493,7 +493,7 @@ whisper貌似默认支持日语，不知道识别效果如何，前面下载的g
 
 通过 Whisper 获得原生字幕后，接着要将其翻译为中文。这一步需借助 SubtitleEdit Online，它支持免费在线翻译字幕，可使用 Google 和 Yandex 两种翻译引擎。1
 
-1. 打开 [SubtitleEdit Online](https://sspai.com/link?target=https%3A%2F%2Fwww.nikse.dk%2Fsubtitleedit%2Fonline)，点击「Subtitle」>「Open...」，选择要导入的字幕文件。
+1. 打开 [SubtitleEdit Online]([Nikse - Subtitle Edit online](https://www.nikse.dk/subtitleedit/online))，点击「Subtitle」>「Open...」，选择要导入的字幕文件。
 2. 点击「Auto-translate」，选择翻译引擎，然后在弹出窗口中选择字幕要翻译的语言，并**将页面拖动到最下方**（非常重要），确定所有文字都被翻译后点击 OK 按钮。
 3. 点击「Subtitle」>「Save/download...」，即可保存翻译好的字幕文件。
 
