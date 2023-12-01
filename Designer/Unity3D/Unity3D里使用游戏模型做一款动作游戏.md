@@ -97,7 +97,7 @@ Finally, appreciate the results of today's labor, hahahaha. The model is my favo
 参考https://blog.csdn.net/weixin_43275631/article/details/105323289
 
 我们从网上下载的人物资源大部分都是静态的，这里我推荐一个网站：
-Adobe公司的Xixamo网站：https://www.mixamo.com/#/?page=1&query=Idel（不用翻墙）专门用于提供人物模型的动作，用户可以将自己的模型（类型可以是fox、obj、zip）导入网站中，网站会识别模型并有多种动作供用户选择，选择之后点击DOWNLOAD下载即可，下载的类型最好是fbx的即直接可以导进unity如图：（或者自己用C4d、Maya制作也可以）。
+Adobe公司的Mixamo网站：https://www.mixamo.com/#/?page=1&query=Idel（不用翻墙）专门用于提供人物模型的动作，用户可以将自己的模型（类型可以是fox、obj、zip）导入网站中，网站会识别模型并有多种动作供用户选择，选择之后点击DOWNLOAD下载即可，下载的类型最好是fbx的即直接可以导进unity如图：（或者自己用C4d、Maya制作也可以）。
 
 
 
@@ -115,6 +115,8 @@ https://blog.csdn.net/linxinfa/article/details/121370565
 
 
 
-注意人形动画中有个坑，尤其和刚体一起作用时。人形动画，包括所有Mixamo下载的动画，在unity转换成Humanoid后，都会乱偏转，甚至一直有个往上的力，抵消掉重力。不知道专业名词叫什么，需要在动画里把下面几个选项勾选后，才会关掉这些乱七八糟的东西。
+注意人形动画中有个坑，尤其和刚体一起作用时。人形动画，包括所有Mixamo下载的动画，在unity转换成Humanoid后，都会乱偏转，甚至一直有个往上的力，抵消掉重力。不知道专业名词叫什么，需要选中FBX或要修改的动作的动画文件，点击Edit，在动画里把下面几个选项勾选后，才会关掉这些乱七八糟的东西。
+
+
 
  <img src=".asserts/image-20220123172158644.png" alt="image-20220123172158644" style="zoom:67%;" />
