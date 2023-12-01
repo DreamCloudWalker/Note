@@ -137,3 +137,10 @@ Open the generated .ebs under project directory and press [Run All] button.
 If out-* directory already exists in the Project directory, delete it manually before executing.
 If multiple .ebs files are generated, run them all.
 
+依次把Step5生成的.ebs文件拖到独立app EbSynth中运行。如果不需要mask可以点off掉。
+
+
+
+### Step7
+
+直接运行，有时看起来好像没响应，不用管。直接等视频生成就可以。

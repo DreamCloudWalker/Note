@@ -116,7 +116,13 @@ npm start
 
 [AI 数字人训练(方法一：DINet训练)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Zu411L786/?spm_id_from=333.999.0.0)
 
+本地训练可参考：[基于DINet的虚拟数字人-CSDN博客](https://datayang.blog.csdn.net/article/details/130082007)
 
+
+
+### [ER-NeRF](https://github.com/Fictionarry/ER-NeRF)
+
+应该是效果最好的，技术基于 ，但Colab训练貌似会爆显存。
 
 
 
@@ -300,6 +306,174 @@ OpenAI出品，文生3D模型。效果一般，适合做一些趣味性的模型
 
 ### [tortoise-tts](https://github.com/neonbjb/tortoise-tts)
 
+英文效果较好。据说eleven-labs用的它
+
+#### Apple Silicon
+
+On macOS 13+ with M1/M2 chips you need to install the nighly version of PyTorch, as stated in the official page you can do:
+
+```
+pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+```
+
+Be sure to do that after you activate the environment. If you don't use conda the commands would look like this:
+
+```
+python3.10 -m venv .venv
+source .venv/bin/activate
+pip3.10 install numba inflect psutil
+pip3.10 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+pip3.10 install transformers
+git clone https://github.com/neonbjb/tortoise-tts.git
+cd tortoise-tts
+pip3.10 install .
+```
+
+Be aware that DeepSpeed is disabled on Apple Silicon since it does not work. The flag `--use_deepspeed` is ignored. You may need to prepend `PYTORCH_ENABLE_MPS_FALLBACK=1` to the commands below to make them work since MPS does not support all the operations in Pytorch.
+
+#### do_tts.py
+
+This script allows you to speak a single phrase with one or more voices.
+
+```
+python3.10 tortoise/do_tts.py --text "I'm going to speak this" --voice random --preset fast
+```
+
+
+
+#### 自定义声音
+
+```
+# the scipy version packaged with colab is not tolerant of misformated WAV files.
+# install the latest version.
+!pip3 install -U scipy
+
+!git clone https://github.com/jnordberg/tortoise-tts.git
+%cd tortoise-tts
+!pip3 install -r requirements.txt
+!pip3 install transformers==4.19.0 einops==0.5.0 rotary_embedding_torch==0.1.5 unidecode==1.3.5
+!python3 setup.py install
+```
+
+```
+# Imports used through the rest of the notebook.
+import torch
+import torchaudio
+import torch.nn as nn
+import torch.nn.functional as F
+
+import IPython
+
+from tortoise.api import TextToSpeech
+from tortoise.utils.audio import load_audio, load_voice, load_voices
+
+# This will download all the models used by Tortoise from the HuggingFace hub.
+tts = TextToSpeech()
+```
+
+```
+# This is the text that will be spoken.
+text = "In the second year of Jianzhong of the Tang Dynasty, Tubo captured Shazhou with its strength."
+
+# Pick a "preset mode" to determine quality. Options: {"ultra_fast", "fast" (default), "standard", "high_quality"}. See docs in api.py
+preset = "fast"
+```
+
+```
+# Optionally, upload use your own voice by running the next two cells. I recommend
+# you upload at least 2 audio clips. They must be a WAV file, 6-10 seconds long.
+CUSTOM_VOICE_NAME = "martin"
+
+import os
+from google.colab import files
+
+custom_voice_folder = f"tortoise/voices/{CUSTOM_VOICE_NAME}"
+os.makedirs(custom_voice_folder)
+for i, file_data in enumerate(files.upload().values()):
+  with open(os.path.join(custom_voice_folder, f'{i}.wav'), 'wb') as f:
+    f.write(file_data)
+```
+
+```
+# Generate speech with the custotm voice.
+voice_samples, conditioning_latents = load_voice(CUSTOM_VOICE_NAME)
+gen = tts.tts_with_preset(text, voice_samples=voice_samples, conditioning_latents=conditioning_latents, 
+                          preset=preset)
+torchaudio.save(f'generated-{CUSTOM_VOICE_NAME}.wav', gen.squeeze(0).cpu(), 24000)
+IPython.display.Audio(f'generated-{CUSTOM_VOICE_NAME}.wav')
+```
+
+
+
+### [VITS-fast-fine-tuning](https://github.com/Plachtaa/VITS-fast-fine-tuning)
+
+相比tortoise-tts, 这个是中文效果较好的tts，且有完善的Colab训练方式，可根据短音频集、长音频、视频、视频链接等方式直接拿数据训练。训练完成还有推理的UI。暂未和Bert-Vits2进行比较，不知道这两个哪个效果更好。和Sovits的训练基本类似；
+
+
+
+### [Bert-VITS2](https://github.com/fishaudio/Bert-VITS2)
+
+暂时没找到合适的Colab训练方式，本地推理不友好。
+
+
+
+### **[bark](https://github.com/suno-ai/bark)**
+
+带情绪的tts，用于做数字人的推理应该效果不错。
+
+有快速推理的huggingface链接：https://huggingface.co/spaces/suno/bark
+
+限制14秒以内，会自动插入一些情绪、停顿等声音，不适合做新闻、自媒体类播报；
+
+如果突破14秒限制，可以用Colab实现如下：
+
+```python
+# install bark (make sure you have torch>=2 for much faster flash-attention)
+!pip install git+https://github.com/suno-ai/bark.git
+```
+
+```python
+# 生成长语音
+import nltk
+nltk.download('punkt')
+```
+
+```python
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+from IPython.display import Audio
+import nltk  # we'll use this to split into sentences
+import numpy as np
+
+from bark.generation import (
+    generate_text_semantic,
+    preload_models,
+)
+from bark.api import semantic_to_waveform
+from bark import generate_audio, SAMPLE_RATE
+preload_models()
+script = """
+Dunhuang, also known as Shazhou in ancient times.
+In the second year of Jianzhong of the Tang Dynasty, Tubo captured Shazhou with its strength.
+All the defenders of the Tang Dynasty died for the country.
+Chang'an lost its last stronghold leading to the Western Regions.
+To the west of Yumen Pass, there is no flag of the Tang family.
+""".replace("\n", " ").strip()
+sentences = nltk.sent_tokenize(script)
+SPEAKER = "v2/en_speaker_7"
+silence = np.zeros(int(0.85 * SAMPLE_RATE))  # quarter second of silence
+
+pieces = []
+for sentence in sentences:
+    audio_array = generate_audio(sentence, history_prompt=SPEAKER)
+    pieces += [audio_array, silence.copy()]
+Audio(np.concatenate(pieces), rate=SAMPLE_RATE)
+```
+
+音色的speaker可以从这里预览：https://suno-ai.notion.site/8b8e8749ed514b0cbf3f699013548683?v=bc67cff786b04b50b3ceb756fd05f68c
+
 
 
 ### [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
@@ -360,7 +534,7 @@ drwxr-xr-x  4 liuyue  staff   128B  4 22 00:33 coreml-encoder-medium.mlpackage
 -rw-r--r--  1 liuyue  staff   1.4G  3 22 16:04 ggml-medium.bin
 ```
 
-模型下载以后，在根目录编译可执行文件：
+模型下载以后，在根目录编译可执行文件：（<font color="red">注意，如果切换了模型，比如切换为ggml-large-v3.bin，要重新make才能生效，不然好像只能支持英文</font>）
 
 ```go
 make
