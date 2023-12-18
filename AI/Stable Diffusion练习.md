@@ -97,6 +97,7 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * from below 低位视角
   * from above 高位视角
   * face shot:1.4 身份证角度
+  * facing to camera 身体正视镜头
 * 场景
   * indoors: 室内
   *  (outdoors:1.2) 户外
