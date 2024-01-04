@@ -39,8 +39,40 @@ https://home.gamer.com.tw/artwork.php?sn=5687897
 2.1 Download Available Model，选择Stable Diffusion-v1-5运行；
 
 2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型或https://civitai.com/api/download/models/177164 这个beautifulRealistic_v7.safetensors来训练，出人物图效果更好）
-=======
+
 2.2 跳过（如果不训练2.1，推荐用https://civitai.com/api/download/models/11745 这个ChilloutMix模型来训练，出图效果更好），不过现在我一般用https://civitai-delivery-worker-prod-2023-09-01.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/275927/model/bra6test.bhwb.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22beautifulRealistic_v60.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=2fea663d76bd24a496545da373d610fc/20230904/us-east-1/s3/aws4_request&X-Amz-Date=20230904T144623Z&X-Amz-SignedHeaders=host&X-Amz-Signature=01eb68ff67815888a6d12a1dcac862d959f6c1a1d6070124f3a3eb64348fc0cf 这个Beautiful Realistic Asians这个CheckPoint。
+
+
+
+如果是训练插画风，可以用 https://civitai.com/api/download/models/93208?type=Model&format=SafeTensor&size=pruned&fp=fp16  Dark Sushi Mix 大颗寿司Mix 这个CheckPoint试试。
+
+
+
+P.S.
+
+今天给大家推荐 5 个超实用 Stable Diffusion 大模型，提高AI绘画效率的必备神器！
+
+* 1、EpiCRealism：下载量高达27万的冠军级真人模型，与其他真人模型相比，它的人物形象不容易被认为是生成的AI脸，非常适合生成逼真的照片。https://civitai.com/api/download/models/143906?type=Model&format=SafeTensor&size=pruned&fp=fp16
+
+![image-20231225104117445](.asserts/image-20231225104117445.png)
+
+* 2、DarkSushi：模型非常适合绘制复杂场景的二次元插画，并能够呈现出正常亮度和出色的光影效果。  https://civitai.com/api/download/models/93208?type=Model&format=SafeTensor&size=pruned&fp=fp16
+
+![image-20231225104034594](.asserts/image-20231225104034594.png)
+
+* 3、RongHua：荣华国风大模型，适用于生成国风的真人摄影照片，以后用自己的照片做图生图是不是不用跑影楼了 https://civitai.com/api/download/models/253479?type=Model&format=SafeTensor&size=pruned&fp=bf16
+
+![image-20231225103804261](.asserts/image-20231225103804261.png)
+
+* 4、SDVN7-NijiStyleXL：二次元风格模型，色彩比较丰富，生出的图很有特色。 https://civitai.com/api/download/models/155870?type=Model&format=SafeTensor&size=full&fp=fp16
+
+![image-20231225103850228](.asserts/image-20231225103850228.png)
+
+* 5、DynaVision XL：专为绘制3D卡通IP而设计的模型，它能够制作出精美细腻、色彩丰富的3D卡通角色。对于那些希望绘制3D卡通IP的小伙伴来说，这款模型是必备的工具。https://civitai.com/api/download/models/198962?type=Model&format=SafeTensor&size=pruned&fp=fp16
+
+![image-20231225103938325](.asserts/image-20231225103938325.png)
+
+
 
 2.3 Download Available VAE (Optional)，选择stable diffusion vae.pt运行；
 

@@ -71,6 +71,7 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 
   * hair bun: 扎头发
   * long hair
+  * blunt_bangs:齐刘海
 * 衣服
   * (skinny jeans:1.2) 紧身牛仔裤 bootcut jeans 喇叭牛仔裤
   * cheongsam 旗袍
@@ -94,14 +95,16 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * (dim light:1.2) 昏暗灯光
 * 角度
   * full_body 或 (full body:1.3): 全身照
+  * (upper body:1.2) 
   * from below 低位视角
   * from above 高位视角
-  * face shot:1.4 身份证角度
+  * (face shot:1.4) 身份证角度
   * facing to camera 身体正视镜头
 * 场景
   * indoors: 室内
   *  (outdoors:1.2) 户外
   * (starry sky, clusters of stars, starry sky, glinting stars) 星空
+  * (IDphoto,white background:1.5)
 * 表情
   * light smile 浅笑
 * 身材
