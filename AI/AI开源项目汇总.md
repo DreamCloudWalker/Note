@@ -581,6 +581,9 @@ ffmpeg -i ./test1.mp3 -ar 16000 -ac 1 -c:a pcm_s16le ./test1.wav
 
 ```bash
 ./main -osrt -m ./models/ggml-medium.bin -f samples/test1.wav -l zh
+
+或
+./main -osrt -m ./models/ggml-large-v3.bin -f samples/test1.wav -l zh
 ```
 
 这里需要加上参数-l，告知程序为中文语音。五分钟的语音，只需要一分钟多一点就可以转录完成，效率满分。

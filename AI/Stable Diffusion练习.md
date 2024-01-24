@@ -73,7 +73,7 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * long hair
   * blunt_bangs:齐刘海
 * 衣服
-  * (skinny jeans:1.2) 紧身牛仔裤 bootcut jeans 喇叭牛仔裤
+  * (skinny jeans:1.2) 紧身牛仔裤 bootcut jeans 喇叭牛仔裤 High-waisted_flared_jeans 高腰牛仔裤
   * cheongsam 旗袍
   *  pink printed T-shirt
   * Knit_cropped_top 针织短上衣
