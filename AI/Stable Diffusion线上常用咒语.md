@@ -125,3 +125,51 @@ good hand,4k, high-res, masterpiece, best quality, head:1.3,((Hasselblad photogr
 cinematic photo breathtaking photograph, (armor mech future knight intricate details background), Style-Psycho town, blue steel, by Mark Brooks, by Ismail Inceoglu, (intricate details:0.9), Sony A9 II, split lighting, award-winning, professional, highly detailed . 35mm photograph, film, bokeh, professional, 4k, highly detailed, confused, looking around scared
 ```
 
+* 女孩插画
+
+```
+Chinese scenery, bamboo fences covered with azaleas and vines, with rain covering the flowers and leaves. Close ups, rainy spring, with roses covering the hedges in the style of Oyu Kagyo, realistic and ultra detailed rendering style, glowing, Zbrush, super realistic oil painting, exaggerated perspective, Tyndall effect, mother of pearl rainbow, background, realistic
+```
+
+* 儿童插画
+
+```
+A child playing in the grass, surrounded by plants and animals, illustration, Children's illustrations, Children's, Cartoon, Gouache, graffiti
+```
+
+```
+child playing in the grass, surrounded by plants, Forest, by the stream, illustration, Children's illustrations, Children's, Cartoon, Gouache, graffiti, watercolor painting, Q
+```
+
+* 龙女
+
+```
+Chinese Dragon,1girl\(solo,fashion model,appearance\(picture-perfect face,black eyes,perfect eyes,red lips,slim,narrow waist,cleavage,(fair shiny skin):1.5,(Hands drooping on both sides of body):1.5\),(has a chinese dragon by her side: 1.5),(hanfu Ru Skirt)\((rad and white):1.3,Glitter,luxurious,gorgeous with embroidery patterns\(golden decorative patterns,Plum Blossom,Lotus,Rose,Orchid\)\),makeup\(red lips,earrings,eyelashes,eyeliner,eyeshadow\):1.3,Cleavage,plump,looking at viewer,breasts,floating hair,outdoor,(full body):1.3\), Background\(full monn,desert,sky,forest,cliffs\), masterpiece,best quality,unreal engine 5 rendering,movie light,movie lens,movie special effects,detailed details,HDR,UHD,8K,CG wallpaper
+```
+
+
+
+
+
+* 山水画
+
+```
+(best quality), (masterpiece), (ultra-detailed), illustration, 8k wallpaper, best illustration, (extremely detailed CG unity 8k wallpaper), huge filesize,landscape,tree, no humans, scenery, architecture, mountain, east asian architecture, outdoors, cherry blossoms, cloud, bridge, building, water, river, sky, lake, petals, pagoda
+```
+
+```
+(best quality), (masterpiece), (ultra-detailed), illustration, 8k wallpaper, best illustration, (extremely detailed CG unity 8k wallpaper), huge filesize,landscape,scenery, outdoors, water, mountain, no humans, bird, cloud, sky, watercraft, boat, day, fog, waterfall, oriental cherry,tree, lake, cliff
+```
+
+* 年画
+
+```
+masterpiece,best quality,(anime),illustration,extremely detailed,extremely intricate,highres, ,a group of cute children at their doorstep in winter celebrate the spring festival,door of a house,spring festival couplets,branch,pefom the dragon dance,fireworks,lantern/lamp,yuanbao,
+```
+
+* 静物插画
+
+```
+fruit,nohumans,artist name,close-up,food,grey background,leaf,simple background,traditional media
+```
+

@@ -607,7 +607,7 @@ class Student
 public:
     Student(std::string & name, const T& id); // 构造函数
     ...                          // 假设未声明 operator=
-priavte:
+private:
     std::string& m_Name;    // 引用
     const T m_Id; // const
 };
