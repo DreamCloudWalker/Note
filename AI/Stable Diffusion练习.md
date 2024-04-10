@@ -107,6 +107,7 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * (IDphoto,white background:1.5)
 * 表情
   * light smile 浅笑
+  * dimples 酒窝
 * 身材
   * (huge breasts:1.2) 
   *  (slim legs:1.2), (Slender legs:1.2)

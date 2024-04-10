@@ -1,7 +1,7 @@
 ## 反向提示词
 
 ```
-NSFW,(worst quality:2),(low quality:2),(normal quality:2),lowres,((monochrome)),((grayscale)),bad anatomy,DeepNegative,easynegative,
+NSFW,(worst quality:1.4),(low quality:1.4),(normal quality:1.4),lowres,((monochrome)),((grayscale)),bad anatomy,DeepNegative,easynegative,
 skin spots,acnes,skin blemishes,(fat:1.2),facing away,looking away,tilted head,bad anatomy,bad hands, missing fingers,extra digit, fewer digits,bad feet,poorly drawn hands,poorly drawn face,mutation,deformed,extra fingers,extra limbs,extra arms,extra legs,malformed limbs,fused fingers,too many fingers,long neck,cross-eyed,mutated hands,polar lowres,bad body,bad proportions,gross proportions,missing arms,missing legs,extra digit, extra arms, extra leg, extra foot,teethcroppe,
 signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 ```
@@ -16,16 +16,22 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 (1girl:1.3), (best quality, masterpiece, ultra high resolution),(photorealistic:1.3), (realistic:1.3), depth of field,(full body:1.2), (day:1.2), (cinematic lighting:1.2),
 ```
 
-* 肖像
+* 森林背景肖像
 
 ```
-(masterpiece,best quality:1.5), ultra realistic,1girl, long hair, straight hair, portrait, mysterious forest, firefly, bokeh, mysterious, night, sky, cloud
+(masterpiece,best quality:1.4), ultra realistic,1girl, long hair, straight hair, portrait, mysterious forest, firefly, bokeh, mysterious, night, sky, cloud,
+```
+
+* 纯肖像
+
+```
+(1girl:1.3),(best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3), (realistic:1.3), depth of field, (portrait:1.3),(sfw:1.4),
 ```
 
 * 证件照
 
 ```
-(1girl:1.3), (best quality, masterpiece, ultra high resolution),(photorealistic:1.3), (realistic:1.3), depth of field,(upper body:1.9), (outdoors:1.2), (day:1.2), (cinematic lighting:1.2), (dim light:1.2), (in autumn),(closed mouth), (light smile:1.2), (hair floating:1.2),busty, vivacious and seductive, (only one girl:1.2),(standing:1.2), (slender), (slender legs), (long legs:1.3), (looking at viewer, facing viewer:1.2), (pov:1.3), (sfw:1.4),(straight-on:1.2), (middle breasts:1.2), (mug shot: 2.0),
+(1girl:1.3), (best quality, masterpiece, ultra high resolution),(photorealistic:1.3), (realistic:1.3), depth of field,(upper body:1.9), (outdoors:1.2), (day:1.2), (cinematic lighting:1.2), (dim light:1.2), (in autumn),(closed mouth), (light smile:1.2), (hair floating:1.2),busty, vivacious and seductive, (only one girl:1.2),(standing:1.2), (slender), (slender legs), (long legs:1.3), (looking at viewer, facing viewer:1.2), (pov:1.3), (sfw:1.4),(straight-on:1.2), (middle breasts:1.2), (mug shot:2.0),
 ```
 
 * 星空背景
@@ -49,19 +55,19 @@ ulzzang-6500-v1.1,(original photo:1.2),(realistic:1.4),beautiful detailed girl,v
 * 室外
 
 ```
-(1girl:1.3), (best quality, masterpiece, ultra high resolution, 4K, HDR, UHD, 64K), (photorealistic:1.3), (realistic:1.3), depth of field, charming, happy, solo,(full body:1.5), outdoors, day, sunlight, cubicle_1_cubicle, (skinny:1.3),closed mouth, light smile, floating hair, long hair, dark brown hair, (standing:1.2), vivacious and seductive, slim legs, Slender legs, short thin waist, (only one girl:1.2), (large breasts), (from below:1.3), looking down, (5 fingers:1.4, perfect hand:1.3, detailed hand, high quality hand:1.3), (family friendly:1.3), 
+(1girl:1.3), (best quality, masterpiece, ultra high resolution, 4K, HDR, UHD, 64K), (photorealistic:1.3), (realistic:1.3), depth of field, charming, happy, solo,(full body:1.5), outdoors, day, sunlight, cubicle_1_cubicle, (skinny:1.3),closed mouth, light smile, floating hair, long hair, dark brown hair, (standing:1.2), vivacious and seductive, slim legs, Slender legs, short thin waist, (only one girl:1.2), (large breasts), (from below:1.3), looking down, (5 fingers:1.4), (perfect hand:1.3), (detailed hand), (high quality hand:1.3), (family friendly:1.3),
 ```
 
 * 办公室坐姿
 
 ```
-1girl, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3),depth of field, indoors, (night:1.3), (dim light), (office:1.2, flower arrangement:1.2), chair,floating hair, long hair, dark brown hair, (full body:1.3), arms at sides, seductive pose, (wedge heels), (sitting:1.3), (large breasts), (solo_focus:1.2), looking_at_viewer,(fit and petite body, busty), (curvy:1.2), (crossed legs),
+1girl, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3), (realistic:1.3),depth of field, indoors, (night:1.3), (dim light), (office:1.2), (flower arrangement:1.2), chair,floating hair, long hair, dark brown hair, (full body:1.3), arms at sides, seductive pose, (wedge heels), (sitting:1.3), (large breasts), (solo_focus:1.2), looking_at_viewer,(fit and petite body, busty), (curvy:1.2), (crossed legs),
 ```
 
 * 校园教室
 
 ```
-1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3), legs,(indoors, classroom, black board, school desk), (Canon RF 85mm f/1.2L 85mm), (flower arrangement:1.2),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (huge breasts:1.3), facing viewer, wetclothes, publictattoo, (foot focus:1.2, high heels), 
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3), (realistic:1.3), legs,(indoors, classroom, black board, school desk), (Canon RF 85mm f/1.2L 85mm), (flower arrangement:1.2),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (huge breasts:1.3), facing viewer, wetclothes, publictattoo, (foot focus:1.2), (high heels), 
 ```
 
 * 建筑背景，仰拍
@@ -91,7 +97,13 @@ good hand,4k, high-res, masterpiece, best quality, head:1.3,((Hasselblad photogr
 * 机场出入口，人海背景
 
 ```
-(8k, RAW photo, best quality, masterpiece:1.2), (realistic, photo-realistic:1.37),long shot,1girl,smiling,ulzzang-6500-v1.1, wearing AIRASIA UNIFORM with high heels and D20,cute, at busy airport lounge, professional lighting, photon mapping, radiosity, physically-based rendering, 
+(8k, RAW photo, best quality, masterpiece:1.2), (realistic, photo-realistic:1.37),long shot,1girl,smiling,ulzzang-6500-v1.1, wearing AIRASIA UNIFORM with high heels and D20,cute, (at busy airport lounge:2.0), professional lighting, photon mapping, radiosity, physically-based rendering, 
+```
+
+* 夜空机场背景
+
+```
+(masterpiece,best quality:1.4), ultra realistic,1girl, long hair, straight hair, portrait, (airport:1.3), (aircraft background:1.4), mysterious,(starry sky, clusters of stars, starry sky, glinting stars), (night, night sky), 
 ```
 
 * 健身房
@@ -109,7 +121,7 @@ good hand,4k, high-res, masterpiece, best quality, head:1.3,((Hasselblad photogr
 * 游泳池
 
 ```
-1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3),(swimming pool), (Canon RF 85mm f/1.2L 85mm), sunset, light particles,floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(sitting:1.3), (gigantic breasts:1.3), facing viewer, (side-tie bikini bottom:1.3),breasts, gigantic breasts, (sex pose, seductive pose), stretching,
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3), (realistic:1.3),(swimming pool), (Canon RF 85mm f/1.2L 85mm), sunset, light particles,floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(sitting:1.3), (gigantic breasts:1.3), facing viewer, (side-tie bikini bottom:1.3),breasts, gigantic breasts, (sex pose, seductive pose), stretching,
 ```
 
 * 中国风
@@ -141,15 +153,11 @@ A child playing in the grass, surrounded by plants and animals, illustration, Ch
 child playing in the grass, surrounded by plants, Forest, by the stream, illustration, Children's illustrations, Children's, Cartoon, Gouache, graffiti, watercolor painting, Q
 ```
 
-* 龙女
+* 龙女(需要配合Lora https://www.liblib.art/modelinfo/50b82da2bd1c450aa114fef1aa51c213，如果多Lora且主Lora不是这个，主Lora权重不要超过0.7)
 
 ```
-Chinese Dragon,1girl\(solo,fashion model,appearance\(picture-perfect face,black eyes,perfect eyes,red lips,slim,narrow waist,cleavage,(fair shiny skin):1.5,(Hands drooping on both sides of body):1.5\),(has a chinese dragon by her side: 1.5),(hanfu Ru Skirt)\((rad and white):1.3,Glitter,luxurious,gorgeous with embroidery patterns\(golden decorative patterns,Plum Blossom,Lotus,Rose,Orchid\)\),makeup\(red lips,earrings,eyelashes,eyeliner,eyeshadow\):1.3,Cleavage,plump,looking at viewer,breasts,floating hair,outdoor,(full body):1.3\), Background\(full monn,desert,sky,forest,cliffs\), masterpiece,best quality,unreal engine 5 rendering,movie light,movie lens,movie special effects,detailed details,HDR,UHD,8K,CG wallpaper
+Chinese Dragon,1girl(solo,fashion model,appearance(picture-perfect face,black eyes,perfect eyes,red lips,slim,narrow waist,cleavage,(fair shiny skin):1.5,(Hands drooping on both sides of body):1.5),(has a chinese dragon by her side:1.5),(hanfu Ru Skirt)((rad and white):1.3,Glitter,luxurious,gorgeous with embroidery patterns(golden decorative patterns,Plum Blossom,Lotus,Rose,Orchid)),makeup(red lips,earrings,eyelashes,eyeliner,eyeshadow):1.3,Cleavage,plump,looking at viewer,breasts,floating hair,outdoor,(full body):1.3), Background(full monn,desert,sky,forest,cliffs), masterpiece,best quality,unreal engine 5 rendering,movie light,movie lens,movie special effects,detailed details,HDR,UHD,8K,CG wallpaper
 ```
-
-
-
-
 
 * 山水画
 
@@ -171,5 +179,21 @@ masterpiece,best quality,(anime),illustration,extremely detailed,extremely intri
 
 ```
 fruit,nohumans,artist name,close-up,food,grey background,leaf,simple background,traditional media
+```
+
+
+
+## 图片识别的提示词
+
+* 雪地，汉服，柿子
+
+```
+1girl, solo, long hair, black hair, hair ornament, long sleeves, dress, holding, sitting, flower, food, barefoot, hair flower, tree, fur trim, fruit, chair, chinese clothes, table, looking up, snow, snowing, apple, branch, paintbrush, winter, hanfu, holding paintbrush
+```
+
+* black uniform
+
+```
+1girl, solo, skirt, black hair, school uniform, pantyhose, uniform, realistic, real life insert
 ```
 
