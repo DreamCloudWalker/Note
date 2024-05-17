@@ -72,7 +72,7 @@ export PATH=/opt/homebrew/opt/qt@5/bin:$PATH
 
 ## **编辑器项目**
 
-1. 编辑器项目地址：https://git.garena.com/shopee/live-tech/shopeefun/SPMagicEditor
+1. 编辑器项目地址：
 2. clone完毕拉取子模块：执行`git submodule update --init` 
 
 ## 非QtCreator查看Qt变量：
