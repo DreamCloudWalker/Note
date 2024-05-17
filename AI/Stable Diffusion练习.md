@@ -100,6 +100,8 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * from above 高位视角
   * (face shot:1.4) 身份证角度
   * facing to camera 身体正视镜头
+  * close-up 特写
+  * portrait 肖像
 * 场景
   * indoors: 室内
   *  (outdoors:1.2) 户外
@@ -114,6 +116,9 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * super big chest,Tight chest,Tight clothes
 * 人数
   * (only one girl:1.2) 
+* 动作
+  * arms_behind_back 手放后面
+
 
 
 
