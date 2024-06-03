@@ -83,7 +83,8 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
   * thighhighs 长筒袜
 * 饰品
   * hair stick 发簪
-
+  * oil-paper umbrella 油纸伞
+  
 * 姿势
   * looking at viewer 看向阅览者
   * facing viewer 面向观众

@@ -85,7 +85,7 @@ ulzzang-6500-v1.1,(original photo:1.2),(realistic:1.4),beautiful detailed girl,v
 * 证件照
 
 ```
-(Combat_boots:1.2),(face shot:1.4)(IDphoto,white background:1.5), (happy,smile),black eyes,,(upper body:1.2), (PureErosFace_V1:0.8),(ulzzang-6500:0.3), (red lipstick:0.8), (detailed pupils:1.3),(aegyo sal:1), ((puffy eyes)),(Glowing ambiance, enchanting radiance, luminous lighting, ethereal atmosphere, mesmerizing glow, evocative hues, captivating coloration, dramatic lighting, enchanting aura), trending
+(Combat_boots:1.2),(face shot:1.4)(IDphoto,white background:1.4), (happy,smile),black eyes,,(upper body:1.2), (PureErosFace_V1:0.8),(ulzzang-6500:0.3), (red lipstick:0.8), (detailed pupils:1.3),(aegyo sal:1), ((puffy eyes)),(Glowing ambiance, enchanting radiance, luminous lighting, ethereal atmosphere, mesmerizing glow, evocative hues, captivating coloration, dramatic lighting, enchanting aura), trending
 ```
 
 * 日式风格

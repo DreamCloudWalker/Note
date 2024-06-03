@@ -9,7 +9,8 @@ JNI的引用分为三种Local References、Global References和Weak Global Refer
 
   * (在循环体或回调函数中)创建大量 JNI 局部引用，即使它们并不会被同时使用，因为 JVM 需要足够的空间去跟踪所有的 JNI 引用，所以可能会造成内存溢出或者栈溢出;
   * 如果对一个大的 Java 对象创建了 JNI 局部引用，也必须在使用完后手动释放该引用，否则 GC 迟迟无法回收该 Java 对象也会引发内存泄漏.
-
+  * 长时间泄漏不释放LocalRef可能导致崩溃：SIGABRT: Abort program: art/runtime/indirect_reference_table.cc:184] JNI ERROR (app bug): local reference table overflow (max=512)。参考https://stackoverflow.com/questions/26685491/jni-error-app-bug-local-reference-table-overflow-max-512。
+  
 * Global References
   Global引用在整个生命周期中都是有效的（直到手动释放它），同样它的<font color="red">引用个数也是有限的</font>，所以在不需要的时候需要手动释放一下。使用NewGlobalRef创建一个Global引用，使用DeleteGlobalRef删除一个Global引用。
 
