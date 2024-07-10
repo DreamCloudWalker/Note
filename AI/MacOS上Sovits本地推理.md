@@ -48,6 +48,18 @@ brew install python@3.10
 
 
 
+如果跑python3.10 webUI.py出现如下错误：
+
+OSError: dlopen(/opt/homebrew/lib/python3.10/site-packages/torchaudio/lib/libtorchaudio.so, 0x0006): Symbol not found: __ZN2at4_ops6conv1d4callERKNS_6TensorES4_RKN3c108optionalIS2_EENS5_8ArrayRefIxEESB_SB_x
+
+![image-20240702111443060](.asserts/image-20240702111443060.png)
+
+可以尝试如下命令重新安装torchaudio
+
+pip3.10 install --pre --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
+
+
+
 ## 版本问题
 
 从git上clone的https://github.com/svc-develop-team/so-vits-svc 这个默认版本是4.0（refs/heads/4.0）。但实际还有一个更新的4.1-Stable版本。可以git checkout -b 4.1-Stable origin/4.1-Stable 用这个来拿到4.1版本。
@@ -59,3 +71,12 @@ brew install python@3.10
 参考：https://www.cnblogs.com/strawberryPudding/p/17473944.html
 
 2. 本地推理时，4.0分支checkpoint_best_legacy_500.pt这个模型需要放在so-vits-svc/hubert目录下。而4.1-stable分支需要放到so-vits-svc/pretrain目录。
+
+
+
+## 推理
+
+男声变女声：
+
+女声变男声：
+

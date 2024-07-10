@@ -115,7 +115,7 @@ good hand,4k, high-res, masterpiece, best quality, head:1.3,((Hasselblad photogr
 * 街头晚上
 
 ```
-1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3), (Golden hour),(road, street lamp, neon lights, river), (Canon RF 85mm f/1.2L 85mm),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (large breasts:1.3), facing viewer, (long buttoned hoodie:1.2), ([canary]canary_leggings:1.2), (running shoes), (school bag:1.2),(sex pose, seductive pose),
+1girl, solo, (best quality, masterpiece, ultra-high resolution, 4K, HDR, UHD, 64K, official art), (photorealistic:1.3, realistic:1.3), (Golden hour),(road, street lamp, neon lights, river), (Canon RF 85mm f/1.2L 85mm),floating hair, long hair, brown hair,(full body:1.3), (busty:1.2),(standing:1.3), (large breasts:1.3), facing viewer, (long buttoned hoodie:1.2), ([canary]canary_leggings:1.2), (running shoes), (school bag:1.2),(sex pose, seductive posea),
 ```
 
 * 游泳池
