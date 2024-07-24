@@ -70,6 +70,8 @@ adb shell后
 
 或者从AS中看到对应的进程号，然后直接用命令：
 
+或用adb shell pidof <package_name> 查看包名对应的进程号
+
 top -d 1 -p 16350   ![image-20220421151457212](.asserts/image-20220421151457212.png)
 
 也可以用代码打印出来：
