@@ -723,15 +723,622 @@ https://fuxiii.github.io/Essentials.of.Vulkan/DeviceQueue.html
 
 
 
+# Vulkan 逻辑设备
+
+**Vulkan 开发系列文章：**
+
+\1. [开篇，Vulkan 概述](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177037&idx=1&sn=b7adcfa1fa1592df694f59753985183f&chksm=8cf3543ebb84dd282395f1403ed66116039ee7a4a42f0f1dc0bdaf318584302f82f97ed3362a&scene=21#wechat_redirect)
+
+\2. [Vulkan 实例](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177037&idx=1&sn=b7adcfa1fa1592df694f59753985183f&chksm=8cf3543ebb84dd282395f1403ed66116039ee7a4a42f0f1dc0bdaf318584302f82f97ed3362a&scene=21#wechat_redirect)
+
+\3. [Vulkan 物理设备](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177041&idx=1&sn=1701e31a8aa6d6520dfbec640ef9ba8b&chksm=8cf35422bb84dd34a8332c60ec5525818fa9767b21889dc15b989618ad50707ad3572c02c403&scene=21#wechat_redirect)
+
+\4. [Vulkan 设备队列](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177050&idx=1&sn=a9bedbf489a562e8ba6238d708d17ad0&chksm=8cf35429bb84dd3f86ad93fa414295a0ddb39993630ff1b36b731896fb52ff941653c1d61aba&scene=21#wechat_redirect)
+
+在 Vulkan 中，**逻辑设备（Logical Device）是与物理设备（Physical Device）交互的接口。它抽象了对特定 GPU （物理设备）的访问，使得应用程序能够提交命令并管理资源，而无需直接与物理硬件打交道。**
+
+举例来说，物理设备可能包含了三种队列：图形、计算和传输。但是逻辑设备创建的时候，可以只关联一个单独的队列（比如图形），这样我们就可以很方便地向队列提交指令缓存了。
 
 
 
+## 创建逻辑设备
+
+创建逻辑设备时，你需要指定你希望使用的队列族和队列、启用的扩展、以及一些其他特性。我们通过 vkCreateDevice() 函数创建逻辑设备。其定义如下：
 
 
 
+## vkCreateDevice
+
+```c++
+VkResult vkCreateDevice(
+VkPhysicalDevice                            physicalDevice,
+const VkDeviceCreateInfo*                   pCreateInfo,
+const VkAllocationCallbacks*                pAllocator,
+VkDevice*                                   pDevice);
+```
 
 
 
+- physicalDevice 指定在哪一个物理设备上创建逻辑设备。
+- pCreateInfo 创建逻辑设备的配置信息。
+- pAllocator 内存分配器。为 nullptr 表示使用内部默认分配器，否则为自定义分配器。
+- pDevice 创建逻辑设备的结果。
+
+其中 VkDeviceCreateInfo 定义如下：
 
 
 
+## VkDeviceCreateInfo
+
+```c++
+typedef struct VkDeviceCreateInfo {
+VkStructureType                    sType;
+const void*                        pNext;
+VkDeviceCreateFlags                flags;
+uint32_t                           queueCreateInfoCount;
+const VkDeviceQueueCreateInfo*     pQueueCreateInfos;
+uint32_t                           enabledLayerCount;
+const char* const*                 ppEnabledLayerNames;
+uint32_t                           enabledExtensionCount;
+const char* const*                 ppEnabledExtensionNames;
+const VkPhysicalDeviceFeatures*    pEnabledFeatures;
+} VkDeviceCreateInfo;
+```
+
+
+
+- sType 是该结构体的类型枚举值， 必须 是 VkStructureType::VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO 。
+- pNext 要么是 NULL 要么指向其他结构体来扩展该结构体。
+- flags 目前没用上，为将来做准备。
+- queueCreateInfoCount 指定 pQueueCreateInfos 数组元素个数。
+- pQueueCreateInfos 指定 VkDeviceQueueCreateInfo 数组。用于配置要创建的设备队列信息。
+- enabledLayerCount 指定 ppEnabledLayerNames 数组元素个数。该成员已被 遗弃 并 忽略 。
+- ppEnabledLayerNames 指定要开启的验证层。该成员已被 遗弃 并 忽略 。
+- enabledExtensionCount 指定 ppEnabledExtensionNames 数组中元素个数。
+- ppEnabledExtensionNames 指定要开启的扩展。该数组数量必须大于等于 enabledExtensionCount 。
+- pEnabledFeatures 配置要开启的特性。
+
+其中 queueCreateInfoCount 和 pQueueCreateInfos 用于指定在逻辑设备中需要创建的 设备队列 。其中 VkDeviceQueueCreateInfo 定义如下：
+
+
+
+## VkDeviceQueueCreateInfo
+
+```c++
+// 由 VK_VERSION_1_0 提供
+typedef struct VkDeviceQueueCreateInfo {
+VkStructureType             sType;
+const void*                 pNext;
+VkDeviceQueueCreateFlags    flags;
+uint32_t                    queueFamilyIndex;
+uint32_t                    queueCount;
+const float*                pQueuePriorities;
+} VkDeviceQueueCreateInfo;
+```
+
+
+
+- **sType** 是该结构体的类型枚举值， 必须 是 VkStructureType::VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO 。
+- **pNext** 要么是 NULL 要么指向其他结构体来扩展该结构体。
+- **flags** 配置额外的信息。可设置的值定义在 VkDeviceQueueCreateFlagBits 枚举中。
+- **queueFamilyIndex** 指定目标设备队列族的索引。
+- **queueCount** 指定要在 queueFamilyIndex 中创建设备队列的数量。
+- **pQueuePriorities** 指向元素数量为 queueCount 的 float 数组。用于配置创建的每一个设备队列的优先级。
+
+其中 queueFamilyIndex 必须 是目标物理设备中有效的设备队列族索引，并且 queueCount 必须小于等于 queueFamilyIndex 索引对应的设备队列族中的队列数量。
+
+其中 pQueuePriorities 配置的优先级的有效等级范围为[0, 1] ，值越大，优先级越高。其中 0.0 是最低的优先级， 1.0 是最高的优先级。在某些设备中，优先级越高意味着将会得到更多的执行机会，具体的队列调由设备自身管理， Vulkan 并不规定调度规则。
+
+
+
+## 设备扩展
+
+前文创建实例的时候可以设置实例的扩展，在 VkDeviceCreateInfo 我们需要通过 enabledExtensionCount 和 ppEnabledExtensionNames 来指定该逻辑设备要开启的 设备扩展 （ Device Extension ）。
+
+在开启设备扩展之前，我们需要通过 vkEnumerateDeviceExtensionProperties(...) 函数获取目标设备支持的扩展。其定义如下：
+
+
+
+## vkEnumerateDeviceExtensionProperties
+
+```c++
+// 由 VK_VERSION_1_0 提供
+VkResult vkEnumerateDeviceExtensionProperties(
+VkPhysicalDevice                            physicalDevice,
+const char*                                 pLayerName,
+uint32_t*                                   pPropertyCount,
+VkExtensionProperties*                      pProperties);
+```
+
+
+
+- physicalDevice 要查询扩展的目标物理设备。
+- pLayerName 要么为 空 要么为 层 的名称。
+- pPropertyCount 要么为 空 要么为 pProperties 中元素的数量。
+- pProperties 为扩展信息数组。元素个数 必须 大于等于 pPropertyCount 中指定数量。
+
+枚举设备扩展：
+
+```c++
+VkPhysicalDevice physicalDevice;//之前获取的物理设备;
+
+uint32_t extension_property_count = 0;
+vkEnumerateDeviceExtensionProperties(physicalDevice, &extension_property_count, nullptr);
+
+std::vector<VkExtensionProperties> extension_properties(extension_property_count);
+vkEnumerateDeviceExtensionProperties(physicalDevice, &extension_property_count, extension_properties.data());
+```
+
+有 几个常用的设备扩展：
+
+- **VK_KHR_swapchain 交换链**。用于与VK_KHR_surface 和平台相关的 VK_{vender}_{platform}_surface 扩展配合使用。用于窗口化显示渲染结果。
+- VK_KHR_display 某些平台支持直接全屏显示渲染结果（比如嵌入式平台：车载、移动平台等）。
+- VK_KHR_display_swapchain 全屏显示交换链。与 VK_KHR_display 扩展配合使用。
+
+
+
+## 获取设备队列
+
+在创建完逻辑设备后，就可以通过 vkGetDeviceQueue() 函数获取设备队列。其定义如下：
+
+```c++
+void vkGetDeviceQueue(
+VkDevice                                    device,
+uint32_t                                    queueFamilyIndex,
+uint32_t                                    queueIndex,
+VkQueue*                                    pQueue);
+```
+
+
+
+- **device** 目标逻辑设备。
+- **queueFamilyIndex** 是前面获取的目标设备队列的队列族索引。
+- **queueIndex** 对应 VkDeviceQueueCreateInfo::queueCount 的对应设备队列索引, 用于区分创建的多个队列。
+- **pQueue** 对应 VkDeviceQueueCreateInfo::queueCount 创建的第 queueIndex 的设备队列。
+
+
+
+# 创建逻辑设备示例
+
+```c++
+//获取目标队列族索引
+uint32_t queueFamilyCount = 0;
+vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, nullptr);
+std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice, &queueFamilyCount, queueFamilies.data());
+
+// 找到支持图形操作的队列族
+int graphicsQueueFamilyIndex = -1;
+for (uint32_t i = 0; i < queueFamilyCount; i++) {
+    if (queueFamilies[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+        graphicsQueueFamilyIndex = i;
+        break;
+    }
+}
+
+//定义队列创建信息
+float queuePriority = 1.0f;
+VkDeviceQueueCreateInfo queueCreateInfo = {};
+queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+queueCreateInfo.queueFamilyIndex = graphicsQueueFamilyIndex;
+queueCreateInfo.queueCount = 1;
+queueCreateInfo.pQueuePriorities = &queuePriority;
+
+//定义逻辑设备创建信息
+
+//设备扩展
+std::vector<const char*> device_extensions;
+device_extensions.push_back("VK_KHR_swapchain");
+
+VkDeviceCreateInfo deviceCreateInfo = {};
+deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+deviceCreateInfo.queueCreateInfoCount = 1;
+deviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
+deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(device_extensions.size());
+deviceCreateInfo.ppEnabledExtensionNames = device_extensions.data();
+
+// 你可以在这里指定设备特性和扩展
+VkPhysicalDeviceFeatures deviceFeatures = {};
+deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
+
+//调用 vkCreateDevice 函数创建逻辑设备，并获取设备句柄。
+VkDevice device;
+if (vkCreateDevice(physicalDevice, &deviceCreateInfo, nullptr, &device) != VK_SUCCESS) {
+    throw std::runtime_error("failed to create logical device!");
+}
+
+// 获取图形队列句柄
+VkQueue graphicsQueue;
+vkGetDeviceQueue(device, graphicsQueueFamilyIndex, 0, &graphicsQueue);
+
+//Vulkan 编程...
+
+//销毁逻辑设备
+vkDestroyDevice(device, nullptr);
+```
+
+
+
+# Vulkan 内存管理
+
+**Vulkan 开发系列文章：**
+
+\1. [开篇，Vulkan 概述](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177037&idx=1&sn=b7adcfa1fa1592df694f59753985183f&chksm=8cf3543ebb84dd282395f1403ed66116039ee7a4a42f0f1dc0bdaf318584302f82f97ed3362a&scene=21#wechat_redirect)
+
+\2. [Vulkan 实例](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177037&idx=1&sn=b7adcfa1fa1592df694f59753985183f&chksm=8cf3543ebb84dd282395f1403ed66116039ee7a4a42f0f1dc0bdaf318584302f82f97ed3362a&scene=21#wechat_redirect)
+
+\3. [Vulkan 物理设备](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177041&idx=1&sn=1701e31a8aa6d6520dfbec640ef9ba8b&chksm=8cf35422bb84dd34a8332c60ec5525818fa9767b21889dc15b989618ad50707ad3572c02c403&scene=21#wechat_redirect)
+
+\4. [Vulkan 设备队列](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177050&idx=1&sn=a9bedbf489a562e8ba6238d708d17ad0&chksm=8cf35429bb84dd3f86ad93fa414295a0ddb39993630ff1b36b731896fb52ff941653c1d61aba&scene=21#wechat_redirect)
+
+\5. [Vulkan 逻辑设备](http://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654177058&idx=1&sn=1e94127b5ad3825d0e6501b89ffc794f&chksm=8cf35411bb84dd075249f830a547178117b2f788cf1fe2847d94c61348f8a6a52abffbb67dad&scene=21#wechat_redirect)
+
+**众所周知，Vulkan 编程的代码量相对于 OpenGL 多了一个数量级**（不用害怕，后面Vulkan封装一下，用起来也会非常简洁），本文避免一上去就讲一大堆代码，奉行概念先行。
+
+概念掌握的差不多了，再去看代码,  这样思路不容易卡住，大致就可以把握住整体代码逻辑，知道这一块代码是干嘛的，那一块是什么目的。
+
+
+
+**Vulkan 将内存管理的工作交给了开发者自己负责**，如何分配释放内存，怎样制定内存策略都由开发者自己决定，当然出了问题也是由开发者自己负责。
+
+Vulkan 将内存划分为两大类：**主机内存 Host Memory 和 设备内存 Device Memory**。
+
+在移动设备上，**主机内存就是 CPU 内存，设备内存就是 GPU 内存，显存**。在此基础上，每种内存类型还可以单独按照属性进一步划分。
+
+Vulkan提供了一种透明的机制来显示内部内存的细节以及相关属性。这样的做法在OpenGL中是完全不可能的，后者不允许应用程序显示地控制内存区域和布局。
+
+<img src=".asserts/image-20240730104211380.png" alt="image-20240730104211380" style="zoom:50%;" />
+
+Vulkan 系统中的内存有四种类型（并不是所有设备都支持这四种类型）：
+
+- Host Local Memory，只对 Host 可见的内存，通常称之为普通内存
+- Device Local Memory，只对 Device 可见的内存，通常称之为显存
+- **Host Local Device Memory，由 Host 管理的，对 Device 可见的内存**
+- Device Local Host Memory，由 Device 管理的，对 Host 可见的内存
+
+对比这两种内存类型的话，主机内存比设备内存更慢，但是宿主机内存的容量通常更大。
+
+设备内存，它对于物理设备是直接可见的。物理设备可以直接读取其中的内存区块。设备内存与物理设备之间的关系非常紧密，因此它的性能比宿主机内存更高。
+
+**图像对象（VkImage） 、缓存对象（VkBuffer），以及一致变量的缓存对象（Uniform Buffer）都是在设备内存端分配的。**
+
+单一的物理设备可能有多种类型的内存；根据它们的堆类型以及属性的不同还可能进一步细分。
+
+函数 vkGetPhysicalDeviceMemoryProperties() 负责查询物理设备上可用的内存堆和内存属性。
+
+## VkPhysicalDeviceMemoryProperties
+
+```c++
+typedef struct VkPhysicalDeviceMemoryProperties {
+    uint32_t        memoryTypeCount;
+    VkMemoryType    memoryTypes[VK_MAX_MEMORY_TYPES];
+    uint32_t        memoryHeapCount;
+    VkMemoryHeap    memoryHeaps[VK_MAX_MEMORY_HEAPS];
+} VkPhysicalDeviceMemoryProperties;
+```
+
+- memoryTypeCount 支持的内存类型数量。
+- **memoryTypes** 有效元素个数为 memoryTypeCount 的内存类型信息数组。
+- memoryHeapCount 支持的内存堆数量。
+- **memoryHeaps** 有效元素个数为 memoryHeapCount 的内存堆信息数组。
+
+其中 memoryHeaps 中就是用于获取具体内存堆是哪一种。其中 VkMemoryHeap 定义如下：
+
+## VkMemoryHeap
+
+```c++
+typedef struct VkMemoryHeap {
+    VkDeviceSize         size;
+    VkMemoryHeapFlags    flags;
+} VkMemoryHeap;
+```
+
+- size 该堆大小。单位为字节。
+- flags 该堆类型标志位。
+
+其中 flags 就是用于指示该堆的类型。其有效值定义于 VkMemoryHeapFlagBits 中，如下：
+
+#### VkMemoryHeapFlagBits
+
+```c++
+typedef enum VkMemoryHeapFlagBits {
+    VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = 0x00000001,
+    VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = 0x00000002,
+    VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR = VK_MEMORY_HEAP_MULTI_INSTANCE_BIT,
+    VK_MEMORY_HEAP_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
+} VkMemoryHeapFlagBits;
+```
+
+#### 枚举值解释：
+
+- VK_MEMORY_HEAP_DEVICE_LOCAL_BIT (0x00000001): 表示内存堆是设备本地的。这种内存通常是最快的，因为它与 GPU 紧密集成，适合存储需要频繁访问的数据。
+- VK_MEMORY_HEAP_MULTI_INSTANCE_BIT (0x00000002): 用于多 GPU 配置，表示内存堆在多个物理设备实例中是独立的。
+- VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR: 这是 VK_MEMORY_HEAP_MULTI_INSTANCE_BIT 的一个别名，为了兼容性而定义。KHR 后缀表示这是一个 Khronos 扩展（Khronos 是 Vulkan 标准的管理机构）。
+- VK_MEMORY_HEAP_FLAG_BITS_MAX_ENUM (0x7FFFFFFF): 用于强制枚举类型为 32 位整数。这个值不实际使用，仅作为枚举类型的大小限制。
+
+其中每个堆自身可以包含一到多个类型的内存，堆上的内存类型信息被定义在 memoryTypes 中，其 VkMemoryType 定义如下：
+
+## VkMemoryType
+
+```c++
+typedef struct VkMemoryType {
+VkMemoryPropertyFlags    propertyFlags;
+uint32_t                 heapIndex;
+} VkMemoryType;
+```
+
+- propertyFlags 内存类型标志位。
+- **heapIndex** 对应的 memoryHeaps 堆索引。
+
+其中 propertyFlags 有效值被定义在了 VkMemoryPropertyFlagBits 枚举中，其定义如下：
+
+#### VkMemoryPropertyFlagBits（重点关注）
+
+```c++
+typedef enum VkMemoryPropertyFlagBits {
+VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT = 0x00000001,
+VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT = 0x00000002,
+VK_MEMORY_PROPERTY_HOST_COHERENT_BIT = 0x00000004,
+VK_MEMORY_PROPERTY_HOST_CACHED_BIT = 0x00000008,
+VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT = 0x00000010,
+} VkMemoryPropertyFlagBits;
+```
+
+- **VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT** 表示在此内存类型上分配的内存可被物理设备高效访问。只有对应的堆为 VK_MEMORY_HEAP_DEVICE_LOCAL_BIT 才会有该内存类型。
+- **VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT** 表示在此内存类型上分配的内存可被 Host 端通过 vkMapMemory() 函数进行映射，进而进行访问。
+- **VK_MEMORY_PROPERTY_HOST_COHERENT_BIT** 表示在此内存类型上分配的内存将会自动进行同步，不需要手动调用 vkFlushMappedMemoryRanges() 和 vkInvalidateMappedMemoryRanges() 来进行内存同步。
+- VK_MEMORY_PROPERTY_HOST_CACHED_BIT 表示在此内存类型上分配的内存为 缓存 （高速缓存）内存， Host 端访问 非缓存 内存要比访问 缓存 内存慢。但是 非缓存 内存总是 同步内存 ( VK_MEMORY_PROPERTY_HOST_COHERENT_BIT )。
+- VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT 表示在此内存类型上分配的内存只有物理设备可访问。内存类型不能同时为 VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT 和 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT 。此外其底层内存将会用于 惰性内存 。
+
+
+
+# **内存分配**
+
+使用vkAllocateMemory函数分配的设备内存只能在设备端进行访问，它对于宿主机来说是不可见的。
+
+宿主机只能访问那些支持映射的设备内存类型，即，内存属性包含了**VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT**标识量的内存对象。
+
+通过之前 vkGetPhysicalDeviceMemoryProperties() 函数我们可以获取到设备的内存信息，现在我们就可以通过这些信息进行内存分配了。
+
+为此 Vulkan 为我们提供了 vkAllocateMemory() 函数进行内存分配。该函数定义如下：
+
+#### vkAllocateMemory
+
+```c++
+VkResult vkAllocateMemory(
+    VkDevice                                    device,
+    const VkMemoryAllocateInfo*                 pAllocateInfo,
+    const VkAllocationCallbacks*                pAllocator,
+    VkDeviceMemory*                             pMemory);
+```
+
+- device 分配内存的目标设备。
+- pAllocateInfo 内存分配信息。
+- pAllocator 句柄内存分配器。
+- pMemory 分配的内存句柄。
+
+其中 pAllocateInfo 用于指定内存的分配信息， pAllocator 用于指定创建 pMemory 内存句柄时的分配器。
+
+其中主要的内存分配信息被定义在了 pAllocateInfo ，对应的 VkMemoryAllocateInfo 定义如下：
+
+#### VkMemoryAllocateInfo
+
+```c++
+typedef struct VkMemoryAllocateInfo {
+    VkStructureType    sType;
+    const void*        pNext;
+    VkDeviceSize       allocationSize;
+    uint32_t           memoryTypeIndex;
+} VkMemoryAllocateInfo;
+```
+
+- sType 是该结构体的类型枚举值， 必须 是 VkStructureType::VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO 。
+- pNext 要么是 NULL 要么指向其他结构体来扩展该结构体。
+- allocationSize 要分配的内存大小。单位为 字节 。
+- **memoryTypeIndex** 分配内存的目标内存类型索引。
+
+其中 memoryTypeIndex 尤为重要，用于指定在 memoryTypes[memoryTypeIndex] 对应的内存类型上进行内存分配，对应分配的堆为 memoryHeaps[memoryTypes[memoryTypeIndex].heapIndex] 。
+
+由于每个 memoryTypes 都有着不同的属性，所以一般会根据功能需求在某个内存类型上进行分配。
+
+```c++
+VkDevice device; 
+VkPhysicalDevice physicalDevice;
+VkDeviceSize size = 1024;
+VkDeviceMemory* memory = nullptr;
+
+// 获取物理设备内存属性
+vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memoryProperties);
+
+// 查找一个主机可见的内存类型
+uint32_t memoryTypeIndex = VK_MAX_MEMORY_TYPES;
+for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++) {
+    if ((memoryProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT) &&
+        (memoryProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)) {
+        memoryTypeIndex = i;
+        break;
+    }
+}
+
+if (memoryTypeIndex == VK_MAX_MEMORY_TYPES) {
+    fprintf(stderr, "Could not find a suitable memory type!\n");
+    exit(EXIT_FAILURE);
+}
+
+// 准备内存分配信息
+VkMemoryAllocateInfo allocInfo = {};
+allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+allocInfo.allocationSize = size;
+allocInfo.memoryTypeIndex = memoryTypeIndex;
+
+// 分配内存
+VK_CHECK_RESULT(vkAllocateMemory(device, &allocInfo, nullptr, memory));
+
+printf("Memory allocated successfully!\n");
+```
+
+
+
+# **内存映射**
+
+**我们通过API函数vkMapMemory（）来实现宿主机对设备内存的映射访问。这个函数会返回一个虚拟地址的指针，指向映射后的设备内存区域。**
+
+原则上所有的设备内存对于 CPU 来说并不像 new/malloc 分配出来的内存那样能够直接进行读写。
+
+**为了 CPU 能够读写设备内存，硬件供应商都会提供一部分带有 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT 属性的内存用于 CPU 访问。**
+
+而在 Vulkan 中分配的内存最终只会对应一个 VkDeviceMemory 句柄，为了能够获得 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT 内存类型分配的内存句柄底层的内存地址，可以通过 vkMapMemory() 函数将分配的设备内存底层的虚拟 （说明见下文）地址返回给 CPU （也就是 Host 端）。
+
+#### vkMapMemory
+
+```c++
+VkResult vkMapMemory(
+    VkDevice                                    device,
+    VkDeviceMemory                              memory,
+    VkDeviceSize                                offset,
+    VkDeviceSize                                size,
+    VkMemoryMapFlags                            flags,
+    void**                                      ppData);
+```
+
+- device 内存对应的逻辑设备。
+- memory 要映射的目标内存。
+- offset 内存映射从内存首地址开始的偏移量。从 0 开始。单位为 字节 。
+- size 要映射的内存大小。单位为 字节 。如果指定为 VK_WHOLE_SIZE ，则表明映射范围为从 offset 开始到 memory 结尾。
+- flags 内存映射的额外标志位参数。
+- ppData 内存映射结果。为 void* 的指针。该指针减去 offset 的对齐大小最小 必须 为 VkPhysicalDeviceLimits::minMemoryMapAlignment 。
+
+其中 memory 必须 在 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT 类型的内存上分配。
+
+**当该函数成功返回后， memory 就被认为在Host 端进行了内存映射 ，并处于映射态。**
+
+**当内存映射并使用结束后，可进行解除映射，进而释放系统的虚拟内存。可通过 vkUnmapMemory() 函数将映射过的内存进行解映射 。**
+
+内存映射代码示例：
+
+```c++
+// 映射内存
+void* data;
+VK_CHECK_RESULT(vkMapMemory(device, *memory, 0, size, 0, &data));
+printf("Memory mapped successfully!\n");
+
+// 写入数据到内存
+int* intData = (int*)data;
+for (size_t i = 0; i < size / sizeof(int); i++) {
+    intData[i] = i;
+}
+printf("Data written to memory successfully!\n");
+
+// 解除内存映射
+vkUnmapMemory(device, *memory);
+printf("Memory unmapped successfully!\n");
+```
+
+
+
+# **内存同步**
+
+**所谓内存同步是指：虚拟内存中的数据与对应的 VkDeviceMemory 设备内存底层数据保持一致。**
+
+当分配的设备内存所对应的内存类型 包含 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_COHERENT_BIT 时，内存同步将 会自动 进行。其同步规则如下：
+
+- **当向映射的虚拟内存中写入时，写入虚拟内存中的数据也会同步到对应的 VkDeviceMemory 底层设备内存中。**
+- **如果 GPU 向 VkDeviceMemory 底层设备内存中写入数据时，这部分修改的设备内存也会同步到映射的虚拟内存中。**
+
+如果分配的设备内存所对应的内存类型 不包含 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_COHERENT_BIT 的话，内存同步将不会自动进行。需要手动进行内存同步。
+
+换句话说就是，映射的虚拟内存和对应的 VkDeviceMemory 设备内存是两个独立的内存，如果分配的设备内存 包含 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_COHERENT_BIT 则无论对虚拟内存做修改，还是对设备内存做修改，双方数据将会自动保持一致。否则需要手动进行内存同步。
+
+如此就有两个同步方：
+
+- **映射的虚拟内存**
+- **VkDeviceMemory 设备内存**
+
+#### 虚拟内存同步到设备内存
+
+当对映射的虚拟内存中的数据修改时，如果设备内存类型 不包含 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_COHERENT_BIT 的话，则需要**通过调用 vkFlushMappedMemoryRanges() 函数手动将虚拟内存中的数据同步（拷贝）到设备内存**中。
+
+也就是将虚拟内存中的内容 冲刷 到设备内存中。其定义如下：
+
+##### vkFlushMappedMemoryRanges
+
+```c++
+VkResult vkFlushMappedMemoryRanges(
+    VkDevice                                    device,
+    uint32_t                                    memoryRangeCount,
+    const VkMappedMemoryRange*                  pMemoryRanges);
+```
+
+- device 内存对应的逻辑设备。
+- memoryRangeCount 指定 pMemoryRanges 数组长度。
+- pMemoryRanges 指向 VkMappedMemoryRange 数组。用于配置虚拟内存到设备内存的同步。
+
+#### 设备内存同步到虚拟内存
+
+当对设备内存数据修改时，如果设备内存类型 不包含 VkMemoryPropertyFlagBits::VK_MEMORY_PROPERTY_HOST_COHERENT_BIT 的话，则需要通过调用 vkInvalidateMappedMemoryRanges() 函数手动将设备内存中的数据同步（拷贝）到虚拟内存中。
+
+##### vkInvalidateMappedMemoryRanges
+
+```c++
+VkResult vkInvalidateMappedMemoryRanges(
+    VkDevice                                    device,
+    uint32_t                                    memoryRangeCount,
+    const VkMappedMemoryRange*                  pMemoryRanges);
+```
+
+- device 内存对应的逻辑设备。
+- memoryRangeCount 指定 pMemoryRanges 数组长度。
+- pMemoryRanges 指向 VkMappedMemoryRange 数组。用于配置设备内存到虚拟内存的同步。
+
+其中 VkMappedMemoryRange 定义如下：
+
+#### VkMappedMemoryRange
+
+```c++
+typedef struct VkMappedMemoryRange {
+    VkStructureType    sType;
+    const void*        pNext;
+    VkDeviceMemory     memory;
+    VkDeviceSize       offset;
+    VkDeviceSize       size;
+} VkMappedMemoryRange;
+```
+
+- sType 是该结构体的类型枚举值， 必须 是 VkStructureType::VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE 。
+- pNext 要么是 NULL 要么指向其他结构体来扩展该结构体。
+- memory 要同步的目标设备内存。
+- offset 要同步的目标设备内存的偏移。单位为 字节 。
+- size 要同步的目标设备内存的大小。单位为 字节 。如果为 VK_WHOLE_SIZE 则表示同步范围为 [offset, memory 结尾] 。
+
+**其中 VkMappedMemoryRange::memory 在手动同步时必须处在映射态 。**
+
+**也就是 VkMappedMemoryRange::memory 必须已经通过 vkMapMemory() 将设备内存进行映射，并且没有 映射 。当内存同步结束之后，就可以进行 解映射 了。**
+
+
+
+# **内存释放**
+
+当内存成功分配之后，一般会对该内存进行一些列写入和读取操作，当该内存不再被需要时，就可以将该内存通过调用 vkFreeMemory() 进行回收了。其定义如下：
+
+#### vkFreeMemory
+
+```c++
+void vkFreeMemory(
+VkDevice                                    device,
+VkDeviceMemory                              memory,
+const VkAllocationCallbacks*                pAllocator);
+```
+
+- device 要回收 memory 在分配时所对应的逻辑设备。
+
+- memory 要回收的目标内存。
+
+- pAllocator 要回收 memory 在分配时所对应的句柄分配器。
+
+  
+
+**参考**
+
+- https://zhuanlan.zhihu.com/p/166387973
+- [https://mp.weixin.qq.com/s/wCqRYpOBWbJSQqncqgXhBA](https://mp.weixin.qq.com/s?__biz=MzIwNTIwMzAzNg==&mid=2654173984&idx=1&sn=59593877466c3f1d267b7e9751c741d5&scene=21#wechat_redirect)
+- 《Vulkan学习指南》 — [新加坡] 帕敏德·辛格（Parminder Singh）
