@@ -8,7 +8,7 @@ signature,watermark,username,blurry,cropped,jpeg artifacts,text,error,
 
 
 
-## 正向提示词
+## 普通正向提示词
 
 * 通用全身照
 
@@ -180,6 +180,59 @@ masterpiece,best quality,(anime),illustration,extremely detailed,extremely intri
 ```
 fruit,nohumans,artist name,close-up,food,grey background,leaf,simple background,traditional media
 ```
+
+
+
+##  精品正向提示词
+
+* 荷塘、湿身
+
+```
+masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bokeh,film grain:1.4,ultra wide angle,dramatic composition,portrait of the most beautiful form of chaos,elegant,a brutalist designed,romanticism,atmospheric,hypermaximalist,cmyk,a blurry image of a beautiful age 18 girl,((long exposure)),(neon light),out of focus,cinematrography,necromorph,aura volumetric lights,bioluminiscent,spiraling,connected,(((lotus leaf:1.3))),(rainy days,heavy rain:1.2),(water drop on skin,wet hair:1.3),lazy,sitting on water,chinese chothes,china style,qipao,blue dress,short sleeve,smile,open eyes,big eyes,
+```
+
+<img src=".asserts/image-20240816163732553.png" alt="image-20240816163732553" style="zoom:50%;" />
+
+* 荷塘、锦鲤、泡水
+
+```
+(masterpiece, best quality, highres:1.2),minimalism,realistic,(unified picture:1.1),(A girl standing in water, upper body above, lower body submerged:1.8),upper body on the water,lower body below the surface,(1girl:1.1),(solo:1.1),(on the water were giant lotus flowers and leaves:1.4),(giant lotus leaves grow out of the water:1.2),(Cirrocumulus:1.1),(below the surface are schools of giant snake:1.3),(giant koi:1.1),black hair,long hair,wet clothes,wet body,wet hair,clear and clean water,[ripples],(from_below:1.4),depth of field,(simple_background:1.2),jewelry,looking at viewer,earrings,ring,cross,shirt,lipstick,makeup,lips,jewelry,earrings,hoop earrings,black eyes,hair ornament,flower,long sleeves,blurry,hair flower,black eyes,floral print,parted lips,earrings,jewelry,hanfu,
+```
+
+<img src=".asserts/image-20240816164043269.png" alt="image-20240816164043269" style="zoom:50%;" />
+
+* 金碧辉煌、灯笼
+
+```
+best quality,masterpiece,highres,(exquisite body:1.5),gorgeous face,(milky skin:1.3),intricate details,high resolution,wallpaper,1girl,solo,dress,hair ornament,(((gold and red dress))),flowers,long hair,brown hair,closed mouth,jewelry,long sleeves,wide sleeves,big eyes,floating hair,chinese clothes,embroidery,natural pose,falling petals,indoor,fanning,lantern,16K,HDR,highres,depth field,(film grain:1.1),boken,golden hour,(lens flare),vignette,rainbowing,(color grading:1.5),(large breasts:1.2),(upper body:1.3),looking at viewer,hanfu,
+```
+
+<img src=".asserts/image-20240816164200614.png" alt="image-20240816164200614" style="zoom:50%;" />
+
+* 雪地、泛白
+
+```
+girl,long hair,face to the view,close up,looking at viewer,long dress,clothes flowing,zen atmosphere,white background,sitting,silver long hair,white air ornament,white hair bun,white flower,white tree,outdoors,snow,single hair bun,wide sleeves,bare tree,watermark,holding,holding flower,long sleeves,robe,hair pulled back,day,novel illustration,high quality,8K,snow hanfu,hanfu,
+```
+
+<img src=".asserts/image-20240816164301010.png" alt="image-20240816164301010" style="zoom:50%;" />
+
+* 太空
+
+```
+(on the outer space galaxy:1.8),black holes,gorgeous,majestic,(1girl:1.2),beautiful face,Facial details,Proper facial features,long hair,(Chinese style Hanfu 1.2),Floating in high altitude,People in the clouds,Reduced body proportions,
+surrealism,big scene,best quality,16k,ultra high definition,highres,very detailed,best quality,wideshot,(Reduce the proportion of people:1.6),vast landscape,
+```
+
+<img src=".asserts/image-20240816164334963.png" alt="image-20240816164334963" style="zoom:50%;" />
+
+* 赛博朋克
+
+```
+(Masterpiece, Best Quality:1.5),steampunk mecha,1 girl,armor,blur,blurred background,brown eyes,red hair with hair tied into a ponytail,earrings,mecha,glow,ore,lens flare,lips,looking at viewer,shoulder armor,solo,upper body,complex mecha,above the hips,(hanfu:1.4),
+```
+
+<img src=".asserts/image-20240816163920722.png" alt="image-20240816163920722" style="zoom:50%;" />
 
 
 
