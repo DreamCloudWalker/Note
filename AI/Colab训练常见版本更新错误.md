@@ -17,6 +17,18 @@ Try: `pip install transformers -U` or `pip install -e '.[dev]'` if you're workin
 
 ![image-20240723112251380](.asserts/image-20240723112251380.png)
 
+在8月29Colab版本更新后，再次报错：
+
+ERROR: Could not find a version that satisfies the requirement torch==2.3.1+cu121 (from versions: 1.11.0, 1.12.0, 1.12.1, 1.13.0, 1.13.1, 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.1.2, 2.2.0, 2.2.1, 2.2.2, 2.3.0, 2.3.1, 2.4.0) ERROR: No matching distribution found for torch==2.3.1+cu121
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts. transformers 4.42.4 requires huggingface-hub<1.0,>=0.23.2, but you have huggingface-hub 0.23.0 which is incompatible.
+
+ImportError: huggingface-hub>=0.23.2,<1.0 is required for a normal functioning of this module, but found huggingface-hub==0.23.0. Try: `pip install transformers -U` or `pip install -e '.[dev]'` if you're working with git main
+
+依赖再次修改：
+
+![image-20240829112555036](.asserts/image-20240829112555036.png)
+
 
 
 训练脚本如下：
