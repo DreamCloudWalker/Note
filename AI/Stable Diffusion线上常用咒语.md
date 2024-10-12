@@ -196,7 +196,7 @@ masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bo
 * 荷塘、锦鲤、泡水
 
 ```
-(masterpiece, best quality, highres:1.2),minimalism,realistic,(unified picture:1.1),(A girl standing in water, upper body above, lower body submerged:1.8),upper body on the water,lower body below the surface,(1girl:1.1),(solo:1.1),(on the water were giant lotus flowers and leaves:1.4),(giant lotus leaves grow out of the water:1.2),(Cirrocumulus:1.1),(below the surface are schools of giant snake:1.3),(giant koi:1.1),black hair,long hair,wet clothes,wet body,wet hair,clear and clean water,[ripples],(from_below:1.4),depth of field,(simple_background:1.2),jewelry,looking at viewer,earrings,ring,cross,shirt,lipstick,makeup,lips,jewelry,earrings,hoop earrings,black eyes,hair ornament,flower,long sleeves,blurry,hair flower,black eyes,floral print,parted lips,earrings,jewelry,hanfu,
+(masterpiece, best quality, highres:1.2),minimalism,realistic,(unified picture:1.1),(A girl standing in water, upper body above, lower body submerged:1.4),upper body on the water,lower body below the surface,(1girl:1.1),(solo:1.1),(on the water were giant lotus flowers and leaves:1.4),(giant lotus leaves grow out of the water:1.2),(Cirrocumulus:1.1),(below the surface are schools of giant snake:1.3),(giant koi:1.1),black hair,long hair,wet clothes,wet body,wet hair,clear and clean water,[ripples],(from_below:1.4),depth of field,(simple_background:1.2),jewelry,looking at viewer,earrings,ring,cross,shirt,lipstick,makeup,lips,jewelry,earrings,hoop earrings,black eyes,hair ornament,flower,long sleeves,blurry,hair flower,black eyes,floral print,parted lips,earrings,jewelry,hanfu,
 ```
 
 <img src=".asserts/image-20240816164043269.png" alt="image-20240816164043269" style="zoom:50%;" />
@@ -204,7 +204,7 @@ masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bo
 * 金碧辉煌、灯笼
 
 ```
-best quality,masterpiece,highres,(exquisite body:1.5),gorgeous face,(milky skin:1.3),intricate details,high resolution,wallpaper,1girl,solo,dress,hair ornament,(((gold and red dress))),flowers,long hair,brown hair,closed mouth,jewelry,long sleeves,wide sleeves,big eyes,floating hair,chinese clothes,embroidery,natural pose,falling petals,indoor,fanning,lantern,16K,HDR,highres,depth field,(film grain:1.1),boken,golden hour,(lens flare),vignette,rainbowing,(color grading:1.5),(large breasts:1.2),(upper body:1.3),looking at viewer,hanfu,
+best quality,masterpiece,highres,(exquisite body:1.4),gorgeous face,(milky skin:1.3),intricate details,high resolution,wallpaper,1girl,solo,dress,hair ornament,(((gold and red dress))),flowers,long hair,brown hair,closed mouth,jewelry,long sleeves,wide sleeves,big eyes,floating hair,chinese clothes,embroidery,natural pose,falling petals,indoor,fanning,lantern,16K,HDR,highres,depth field,(film grain:1.1),boken,golden hour,(lens flare),vignette,rainbowing,(color grading:1.4),(large breasts:1.2),(upper body:1.3),looking at viewer,hanfu,
 ```
 
 <img src=".asserts/image-20240816164200614.png" alt="image-20240816164200614" style="zoom:50%;" />

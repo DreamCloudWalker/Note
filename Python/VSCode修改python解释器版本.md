@@ -1,0 +1,1 @@
+在编辑器内按下快捷键Ctrl+Shift+P打开命令窗口，然后在该窗口内输入Python:Select Interpreter，意思就是选择python默认解释器。输入完成之后会出现唯一一个匹配的选项点击它，然后会切换到python默认解释器选择窗口。

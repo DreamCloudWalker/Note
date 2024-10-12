@@ -50,6 +50,10 @@ browser.get("https://www.baidu.com/")
 
 
 
+可以在终端用chromedriver --version 查看当前mac环境是否已经有chromedriver
+
+
+
 ## 选择合适的Chrome版本
 
 由于测试时候会需要用到历史版本，但发现不是很好找，于是记录一下。
@@ -158,6 +162,8 @@ driver.find_element(By.XPATH, '//div[contains(text(), "文本内容")]')
 
 ## selenium 保留登录状态
 
+### 方法一：
+
 参考https://segmentfault.com/a/1190000022766398 selenium每次启动打开相同的Chrome浏览器实例，实现免Cookie登录网站
 
 普通方法使用selenium，每次会新建一个全新的浏览器实例，而无法保存曾经登录过的Cookie等信息。现今业务需要selenium每次打开同一个浏览器。经查阅资料，记下该笔记，以便日后查询。
@@ -196,6 +202,48 @@ driver = webdriver.Chrome(chrome_options=option, executable_path="/opt/google/ch
 
 
 实际应用报错：got an unexpected keyword argument 'chrome_options'
+
+
+
+### 方法二：手动保存和加载cookie
+
+需要import pickle
+
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import pickle
+import time
+
+# 启动 Chrome 浏览器
+driver = webdriver.Chrome()
+driver.get("https://your-login-website.com")
+
+# 等待用户手动登录
+time.sleep(30)  # 30 秒，足够时间进行手动登录
+
+# 保存 cookies
+pickle.dump(driver.get_cookies(), open("cookies.pkl", "wb"))
+driver.quit()
+```
+
+```python
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import pickle
+
+# 启动 Chrome 浏览器
+driver = webdriver.Chrome()
+driver.get("https://your-login-website.com")
+
+# 加载 cookies
+cookies = pickle.load(open("cookies.pkl", "rb"))
+for cookie in cookies:
+    driver.add_cookie(cookie)
+
+# 刷新页面以应用 cookies
+driver.refresh()
+```
 
 
 
