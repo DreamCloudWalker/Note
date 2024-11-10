@@ -92,7 +92,125 @@
 
 * C++11提供关键字override，只用于做个标记，防止误写重写方法；
 
-  
+
+#### 内存模型
+
+先看几个例子
+
+```c++
+#include<iostream>
+using namespace std;
+
+class A
+{
+private:
+public:
+    A(){};
+   ~A(){};
+};
+
+int main()
+{
+    A a;
+    cout<<sizeof(a)<<endl; //输出为1
+    return 0;
+}
+```
+
+这段代码中，类A中没有任何成员变量，那么他的对象的大小是否是0？不是的，这个代码的输出是1！因为没有地址就没法存储这个对象，c++为没有成员变量的函数都开辟了一个字节的地址。
+
+```c++
+#include<iostream>
+using namespace std;
+
+class A
+{
+private:
+    int data;
+public:
+    A(){};
+   ~A(){};
+};
+
+int main()
+{
+    A a;
+    cout<<sizeof(a)<<endl; //输出是4
+    return 0;
+}
+```
+
+```C++
+#include<iostream>
+using namespace std;
+
+
+class A
+{
+private:
+    
+public:
+    A(){};
+   virtual ~A(){};
+};
+
+int main()
+{
+    A a;
+    cout<<sizeof(a)<<endl; //输出居然是8！
+    return 0;
+}
+
+```
+
+上面的代码中我们把析构函数设置为虚函数，对象的居然有8个字节，这8个字节就是我们要介绍的虚指针的大小。
+
+c++的内存模型由于涉及到对齐的问题，这里不详细介绍。
+
+#### 虚指针
+
+任何含有虚函数的类中，不论这个虚函数是继承的还是定义的，都有一个函数指针指向一个虚函数表，虚函数表是一个数组，数组中的每个元素都是一个虚函数指针。
+
+```c++
+#include<iostream>
+using namespace std;
+
+class A
+{
+private:
+    int data1;
+    int data2;
+public:
+    A(){};
+   virtual ~A(){};
+};
+
+class B :public A
+{
+};
+int main()
+{
+    A a;
+    B b;
+    cout<<sizeof(a)<<endl; //16
+    cout<<sizeof(b)<<endl; //16
+    return 0;
+}
+```
+
+B继承了A，虽然没有显式声明，其依然继承了A的所有的元素, 包含两个int类型的成员变量和一个虚指针，因此内存大小是16。
+
+#### 虚函数表
+
+虚指针指向的就是虚函数表，本质是一个数组，存着所有的虚函数指针。
+
+如果父类的虚函数没有被子类改写， 那么子类的虚函数表中的元素就是父类的对应的虚函数指针；相反，如果子类改写了父类的虚函数，那么对应的虚函数表中的元素就是自己的虚函数指针，决议这个指向的过程发生在运行时，就是所谓的动态绑定！
+
+虚函数中的元素的顺序就是按照虚函数定义的方式存储。
+
+![image-20241108104824788](.asserts/image-20241108104824788.png)
+
+
 
 ## 5. 左值引用和右值引用
 
