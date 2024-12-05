@@ -13,7 +13,7 @@ Surface 就是“表面”的意思，可以**简单理解为内存中的一段�
 
 Surface本身的作用类似一个句柄，得到了这个句柄就可以得到其中的Canvas、原始缓冲区以及其他方面的内容，所以简单的说Surface是用来管理数据的(句柄)。
 
-- 
+
 
 ### **SurfaceView 简介**
 
@@ -82,7 +82,7 @@ Surfaceview提供了一个可见区域，只有在这个可见区域内的Surfac
 
 
 
-从 Android7.0 开始，SurfaceView 的窗口位置与其他 View 渲染同步更新。这意味着在屏幕上平移和缩放 SurfaceView 不会导致渲染失真。
+<b>从 Android7.0 开始，SurfaceView 的窗口位置与其他 View 渲染同步更新</b>。这意味着在屏幕上平移和缩放 SurfaceView 不会导致渲染失真。
 
 
 
@@ -166,3 +166,35 @@ SurfaceTexture 包含一个应用是其使用方的BufferQueue。当生产方将
 - T**extureView的内部缓冲队列导致比SurfaceView使用更多的内存**。
 - SurfaceView：内部自己持有surface，surface 创建、销毁、大小改变时系统来处理的，通过surfaceHolder 的callback回调通知。
 - 当画布创建好时，可以将surface绑定到MediaPlayer中。SurfaceView如果为用户可见的时候，创建SurfaceView的SurfaceHolder用于显示视频流解析的帧图片，如果发现SurfaceView变为用户不可见的时候，则立即销毁SurfaceView的SurfaceHolder，以达到节约系统资源的目的。
+
+
+
+### Canvas 的底层实现
+
+- **Canvas** 是一个用于绘制图形和文本的类，提供了许多绘制 API。底层实现依赖于 `Skia` 图形库，这是 Android 的核心图形引擎。`Skia` 是一个开源的 2D 图形库，用于执行高效的图形绘制操作。
+- **操作流程**：
+  1. 当你使用<b> `lockCanvas()` 方法时，`SurfaceView` 将锁定一个与其 `Surface` 关联的 `Canvas`，这个 `Canvas` 为后缓冲区</b>。
+  2. 接下来，你可以在这个 `Canvas` 上调用绘制方法（如 `drawRect()`, `drawBitmap()`等）进行各种绘制。
+  3. 完成绘制后，调用 `unlockCanvasAndPost(Canvas)` 方法将绘制的内容提交到 `Surface`。这时，`Surface` 将所绘制的内容显示到屏幕上。
+
+### Surface 和 SurfaceFlinger 的关系
+
+- **Surface**：
+  - `Surface` 是一个提供绘图缓冲区的对象。它可以被视为一个表面，上面可以绘制图像，并且可以显示到屏幕上。它代表了一个外部图形输入输出的接口，与硬件图形系统直接交互。
+  - `Surface` 允许应用程序进行低级别的绘制操作，并与 `Canvas` 结合使用以实现这些低级绘制操作。
+- **SurfaceFlinger**：
+  - `SurfaceFlinger` 是 Android 中的一个服务，负责处理最终的图像合成和显示。它的作用是将来自不同应用的表面合成成最終输出图像并将其发送到屏幕。
+  - 它处理多个 `Surface` 的显示，把每个 `Surface` 的内容合成到一个输出缓冲区，确保显示的流畅性和顺序。它还负责管理窗口的 z-order（即窗口的堆叠顺序），透明度等。
+
+### 综述实现过程
+
+1. 当应用程序需要绘图时，它通过 `Surface` 访问系统的绘图机制，锁定一个 `Canvas`进行绘制。
+2. 应用程序将绘制操作提交给该 `Canvas`。
+3. 一旦绘制完成，通过滑动的 `Surface`，内容由 `SurfaceFlinger` 提交给屏幕，以完成最终的显示。
+4. `SurfaceFlinger` 将所有来自不同应用（或组件）的 `Surface` 内容进行合成，然后直接发送给硬件（如 GPU），以在屏幕上显示最终图像。
+
+### 总结
+
+- `Canvas` 是在 `Surface` 上进行绘图的一种机制，底层依赖于 `Skia` 图形库。
+- `Surface` 提供了一个缓冲区，允许绘制和展示图形。
+- `SurfaceFlinger` 是负责最终图形合成和屏幕显示的服务，它将多个 `Surface` 合成到一个输出，以确保图形显示的顺畅和高效。

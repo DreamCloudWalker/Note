@@ -23,25 +23,25 @@
 
 - **1. 没有任务要执行，缓冲队列为空**
 
- <img src=".asserts/image-20230525102204526.png" alt="image-20230525102204526" style="zoom:50%;" />
+<img src=".asserts/image-20230525102204526.png" alt="image-20230525102204526" style="zoom:50%;" />
 
 空队列情况
 
 - **2. 队列中任务数量，小于等于线程池中线程任务数量**
 
- <img src=".asserts/image-20230525102241614.png" alt="image-20230525102241614" style="zoom:50%;" />
+<img src=".asserts/image-20230525102241614.png" alt="image-20230525102241614" style="zoom:50%;" />
 
 任务数量小于线程数量
 
 - **3. 任务数量大于线程池数量,缓冲队列未满**
 
- <img src=".asserts/image-20230525102304388.png" alt="image-20230525102304388" style="zoom:50%;" />
+<img src=".asserts/image-20230525102304388.png" alt="image-20230525102304388" style="zoom:50%;" />
 
 任务数量大于线程池数量
 
 - **4. 任务数量大于线程池数量，缓冲队列已满**
 
- <img src=".asserts/image-20230525102323223.png" alt="image-20230525102323223" style="zoom:50%;" />
+<img src=".asserts/image-20230525102323223.png" alt="image-20230525102323223" style="zoom:50%;" />
 
 缓冲队列已满
 
