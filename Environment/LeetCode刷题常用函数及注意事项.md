@@ -1,4 +1,4 @@
-## 字符串相关
+# 字符串相关
 
 #### Java
 
@@ -28,7 +28,7 @@ bool empty() const;
 
 
 
-## 数组相关
+# 数组相关
 
 #### Java
 
@@ -46,9 +46,9 @@ sizeof(arr) / sizeof (arr[0]);
 
 
 
-## 容器相关
+# 容器相关
 
-### 动态数组
+## 动态数组
 
 #### Java
 
@@ -221,7 +221,7 @@ public:
 
 
 
-### 哈希表（K-V）
+## 哈希表（K-V）
 
 #### Java
 
@@ -307,7 +307,7 @@ std::unordered_map遍历方式一样，\- 因为元素的顺序是不确定的�
 
 
 
-### 哈希表（K）
+## 哈希表（K）
 
 #### Java
 
@@ -413,7 +413,7 @@ std::set 的遍历方式
 
 
 
-### (双向)链表
+## (双向)链表
 
 #### Java
 
@@ -459,7 +459,7 @@ for (auto it = myList.begin(); it != myList.end(); ++it) {
 
 
 
-### 队列
+## 队列
 
 #### Java
 
@@ -516,6 +516,66 @@ for (const auto& s : tempQueue) {
 ```
 
 
+
+## 栈
+
+#### Java
+
+可以用LinkedList自己实现。
+
+
+
+#### C++
+
+std::stack
+
+提供了 `push`, `pop`, `peek`, `top`, empty()等方法。
+
+* 注意，pop返回的是void，要结合top使用
+
+例题：用两个栈实现一个队列
+
+```c++
+class MyQueue {
+public:
+    MyQueue() {}
+    
+    void push(int x) {
+        in_stack.push(x);
+    }
+    
+    int pop() {
+        if (out_stack.empty()) {
+            in2out();
+        }
+
+        int ret = out_stack.top();
+        out_stack.pop();
+        return ret;
+    }
+    
+    int peek() {
+        if (out_stack.empty()) {
+            in2out();
+        }
+
+        return out_stack.top();
+    }
+    
+    bool empty() {
+        return (in_stack.empty() && out_stack.empty());
+    }
+private: 
+    void in2out() {
+        while (!in_stack.empty()) {
+            out_stack.push(in_stack.top());
+            in_stack.pop();
+        }
+    }
+    std::stack<int> in_stack;
+    std::stack<int> out_stack;
+};
+```
 
 
 
