@@ -42,6 +42,20 @@ ffmpeg -i testIn.mp4 -vcodec libx264 -bf 0 -g 1 -x264-params  "keyint=1:min-keyi
 
 
 
+### **分割视频**： 
+
+假设你知道视频总长，比如说是 6 分钟（360 秒），那么你可以使用以下命令将其分割为两个部分：
+
+```shell
+# 第一个文件
+ffmpeg -i input.mp4 -ss 0 -t 180 -c copy part1.mp4
+
+# 第二个文件
+ffmpeg -i input.mp4 -ss 180 -c copy part2.mp4
+```
+
+
+
 ### 给mp3添加封面
 
 ffmpeg -i 别云间-明-夏完淳.mp3 -i 别云间.jpg -map 0:0 -map 1:0 -c copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (Front)" 别云间-明-夏完淳F.mp3
