@@ -12,6 +12,18 @@ public native char charAt(int index)
 
 public boolean isEmpty()
 
+trim()	// 用于移除字符串前后的空格，例如把 `" Hello World! "` 变为 `"Hello World!"`。
+
+String[] split(String regex)	// 将字符串分割成多个子字符串，返回一个字符串数组。参数是一个正则表达式
+
+```java
+// 1592. 重新排列单词间的空格
+// 输入：text = "  this   is  a sentence "
+// 输出："this   is   a   sentence"
+// 解释：总共有 9 个空格和 4 个单词。可以将 9 个空格平均分配到相邻单词之间，相邻单词间空格数为：9 / (4-1) = 3 个。
+String[] words = text.trim().split("\\s+");	// \\s 是一个正则表达式的符号，表示任何空白字符，包括空格、制表符（Tab）、换行符等。+ 表示一个或多个。因此，"\\s+" 的意思是匹配一个或多个空白字符。
+```
+
 
 
 #### C++
@@ -25,6 +37,31 @@ substr(pos)     截取s中从从pos开始（包括0）到末尾的所有字符�
 at()
 
 bool empty() const;
+
+```c++
+// c++没有split方法，需要自己实现
+vector<std::string> split(const std::string &str, char trim) {
+  int n = str.size();
+  vector<std::string> res;
+  int pos = 0;
+  while (pos < n) {
+    while(pos < n && str[pos] == trim) {
+      pos++;
+    }
+    if (pos < n) {
+      int curr = pos;
+      while(pos < n && str[pos] != trim) {
+        pos++;
+      }
+      res.emplace_back(str.substr(curr, pos - curr));
+    }
+  }
+  return res;
+}
+
+// 作者：力扣官方题解
+// 链接：https://leetcode.cn/problems/rearrange-spaces-between-words/solutions/1805311/zhong-xin-pai-lie-dan-ci-jian-de-kong-ge-5kln/
+```
 
 
 
