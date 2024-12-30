@@ -14,6 +14,83 @@
 
 （7）如果返回动态分配内存的对象或者内存，必须使用指针，引用可能引起内存泄漏。
 
+在 C++ 中，引用本身并不会直接导致内存泄漏，但引用的使用方式可能会导致未能正确管理动态分配的内存，尤其是当引用指向的对象生命周期被意外改变或者释放时。以下是一些情况下，使用引用可能引起内存泄漏的示例和解释。
+
+```c++
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() {
+        std::cout << "MyClass constructed" << std::endl;
+    }
+    ~MyClass() {
+        std::cout << "MyClass destructed" << std::endl;
+    }
+};
+
+// 函数返回一个 MyClass 的引用
+MyClass& createObject() {
+    MyClass* obj = new MyClass(); // 动态分配内存
+    return *obj; // 返回引用（指向动态分配的对象）
+}
+
+int main() {
+    MyClass& ref = createObject(); // 成功接收引用
+    // 在这里 obj 已经超出了作用域，导致内存无法释放
+    // delete obj; // 此时没有对象指针去释放内存
+    // 此时 ref 还在使用已释放的对象（未定义行为）
+    
+    return 0;
+}
+```
+
+或者如下代码：
+
+```c++
+#include <iostream>
+
+class MyClass {
+public:
+    MyClass() {
+        std::cout << "MyClass constructed" << std::endl;
+    }
+    ~MyClass() {
+        std::cout << "MyClass destructed" << std::endl;
+    }
+};
+
+// 使用引用来传递指针
+void createAndAssign(MyClass*& ref) {
+    ref = new MyClass(); // 动态分配对象并将其地址赋给引用
+}
+
+int main() {
+    MyClass* pointer = nullptr;  // 初始化指针为 nullptr
+    createAndAssign(pointer);    // 正确接收动态分配的对象
+    
+    // 在此点上，pointer 指向一个动态分配的 MyClass 对象
+    std::cout << "Using the object..." << std::endl;
+
+  	// 实际项目中可能其他地方或函数释放了这个指针
+    delete pointer; // 正确释放内存
+    pointer = nullptr; // 置为 nullptr，防止野指针
+    
+    // 下面的代码示例将引入潜在的错误
+    // 让我们错将指针指向其他对象，导致引用不再有效。
+    MyClass& reference = *pointer; // 使用指针解引用以获取引用（此时 pointer 为 nullptr，未定义行为）
+
+    // 这里 attempt to use 'reference' 将是未定义行为
+    // 这个地方我们故意使用引用来说明潜在的野指针问题
+
+    // 由于 pointer 已经被 delete，此时 reference 是无效的。
+    // std::cout << "Using reference..." << std::endl;
+    // std::cout << "Value: " << reference; // 这将导致未定义行为（访问已释放内存）
+
+    return 0;
+}
+```
+
 
 
 ## 2. new 和 delete 是如何实现的，与 malloc 和 free有什么异同？

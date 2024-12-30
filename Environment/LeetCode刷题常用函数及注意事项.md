@@ -95,6 +95,8 @@ boolean isEmpty();
 
 for (String str: strs) {}	
 
+size()
+
 
 
 #### C++

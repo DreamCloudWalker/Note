@@ -188,7 +188,7 @@ fruit,nohumans,artist name,close-up,food,grey background,leaf,simple background,
 * 荷塘、湿身
 
 ```
-masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bokeh,film grain:1.4,ultra wide angle,dramatic composition,portrait of the most beautiful form of chaos,elegant,a brutalist designed,romanticism,atmospheric,hypermaximalist,cmyk,a blurry image of a beautiful age 18 girl,((long exposure)),(neon light),out of focus,cinematrography,necromorph,aura volumetric lights,bioluminiscent,spiraling,connected,(((lotus leaf:1.3))),(rainy days,heavy rain:1.2),(water drop on skin,wet hair:1.3),lazy,sitting on water,chinese chothes,china style,qipao,blue dress,short sleeve,smile,open eyes,big eyes,
+masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bokeh,film grain:1.4,ultra wide angle,dramatic composition,portrait of the most beautiful form of chaos,elegant,a brutalist designed,romanticism,atmospheric,hypermaximalist,cmyk,a blurry image of a beautiful age 18 girl,((long exposure)),(neon light),out of focus,cinematrography,necromorph,aura volumetric lights,bioluminiscent,spiraling,connected,(((lotus leaf:1.3))),(rainy days,heavy rain:1.2),(water drop on skin,wet hair:1.3),lazy,sitting on water,chinese chothes,china style,blue dress,short sleeve,smile,open eyes,big eyes,
 ```
 
 <img src=".asserts/image-20240816163732553.png" alt="image-20240816163732553" style="zoom:50%;" />
@@ -196,7 +196,7 @@ masterpiece,best quality,photorealistic,lifelike rendering,depth of field:1.2,bo
 * 荷塘、锦鲤、泡水
 
 ```
-(masterpiece, best quality, highres:1.2),minimalism,realistic,(unified picture:1.1),(A girl standing in water, upper body above, lower body submerged:1.4),upper body on the water,lower body below the surface,(1girl:1.1),(solo:1.1),(on the water were giant lotus flowers and leaves:1.4),(giant lotus leaves grow out of the water:1.2),(Cirrocumulus:1.1),(below the surface are schools of giant snake:1.3),(giant koi:1.1),black hair,long hair,wet clothes,wet body,wet hair,clear and clean water,[ripples],(from_below:1.4),depth of field,(simple_background:1.2),jewelry,looking at viewer,earrings,ring,cross,shirt,lipstick,makeup,lips,jewelry,earrings,hoop earrings,black eyes,hair ornament,flower,long sleeves,blurry,hair flower,black eyes,floral print,parted lips,earrings,jewelry,hanfu,
+(masterpiece, best quality, highres:1.2),minimalism,realistic,(unified picture:1.1),(A girl standing in water, upper body above, lower body submerged:1.4),upper body on the water,lower body below the surface,(1girl:1.1),(solo:1.1),(on the water were giant lotus flowers and leaves:1.4),(giant lotus leaves grow out of the water:1.2),(Cirrocumulus:1.1),(below the surface are schools of giant koi:1.3),(giant koi:1.1),black hair,long hair,wet clothes,wet body,wet hair,clear and clean water,[ripples],(from_below:1.4),depth of field,(simple_background:1.2),jewelry,looking at viewer,earrings,ring,cross,lipstick,makeup,lips,jewelry,earrings,hoop earrings,black eyes,hair ornament,flower,blurry,hair flower,black eyes,floral print,parted lips,earrings,jewelry,
 ```
 
 <img src=".asserts/image-20240816164043269.png" alt="image-20240816164043269" style="zoom:50%;" />
@@ -212,7 +212,7 @@ best quality,masterpiece,highres,(exquisite body:1.4),gorgeous face,(milky skin:
 * 雪地、泛白
 
 ```
-girl,long hair,face to the view,close up,looking at viewer,long dress,clothes flowing,zen atmosphere,white background,sitting,silver long hair,white air ornament,white hair bun,white flower,white tree,outdoors,snow,single hair bun,wide sleeves,bare tree,watermark,holding,holding flower,long sleeves,robe,hair pulled back,day,novel illustration,high quality,8K,snow hanfu,hanfu,
+girl,long hair,face to the view,close up,looking at viewer,long dress,clothes flowing,zen atmosphere,white background,sitting,silver long hair,white air ornament,white hair bun,white flower,white tree,outdoors,snow,single hair bun,bare tree,watermark,holding,holding flower,long sleeves,robe,hair pulled back,day,novel illustration,high quality,8K,snow hanfu,hanfu,
 ```
 
 <img src=".asserts/image-20240816164301010.png" alt="image-20240816164301010" style="zoom:50%;" />

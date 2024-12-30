@@ -139,6 +139,8 @@ fun test() {
 
 **对于 suspend 关键词修饰的挂起函数，编译器会为其增加一个 Continuation 续体类型的参数(相当于 CPS 中的回调)，可以通过这个 Continuation 续体对象的 resume 方法返回结果值来恢复协程的执行**。
 
+
+
 ## 协程创建与启动
 
 ### SuspendLambda
@@ -289,6 +291,8 @@ public final override fun resumeWith(result: Result<Any?>) {
 上面的 invokeSuspend() 是一个抽象方法，它的实现在编译器生成的 SuspendLambda 子类中，具体逻辑是通过状态机来执行协程体中的逻辑，具体见下章解析。
 
 到这里我们 launch() 里的协程体逻辑就开始真正执行了。
+
+
 
 ## 协程挂起与恢复
 

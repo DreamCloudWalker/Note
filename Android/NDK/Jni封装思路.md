@@ -47,10 +47,8 @@ if (JNI_OK != attachRet) {
     return ;
 }
 
-
 // 用完后要Detach，不然会报错
 ::javaVm->DetachCurrentThread();
-
 ```
 
 * jobject即不能跨函数也不能跨线程，否则崩溃；默认是局部引用，可升级为全局引用解决问题。
