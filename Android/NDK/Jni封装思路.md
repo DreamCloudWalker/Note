@@ -6,11 +6,11 @@ JNI的引用分为三种Local References、Global References和Weak Global Refer
 
 * Local References
   大部分JNI方法返回的引用类型（例如**FindClass**）/ Jni函数内部创建的 `jobject `对象及其子类( `jclass `、 `jstring `、 `jarray  `、 `jobject `等) 对象都是local引用，local引用仅仅在此native方法中有效，当native方法返回时此local引用会被自动释放掉，**也可以**调用<font color="red">DeleteLocalRef</font>手动释放。<font color="red">local引用的个数是有限制的</font>，所以建议当不使用的时候就手动释放一下。一般情况下，我们应该依赖 JVM 去自动释放 JNI 局部引用；但下面两种情况必须手动调用 `DeleteLocalRef() `去释放：
-
+  
   * (在循环体或回调函数中)创建大量 JNI 局部引用，即使它们并不会被同时使用，因为 JVM 需要足够的空间去跟踪所有的 JNI 引用，所以可能会造成内存溢出或者栈溢出;
   * 如果对一个大的 Java 对象创建了 JNI 局部引用，也必须在使用完后手动释放该引用，否则 GC 迟迟无法回收该 Java 对象也会引发内存泄漏.
   * 长时间泄漏不释放LocalRef可能导致崩溃：SIGABRT: Abort program: art/runtime/indirect_reference_table.cc:184] JNI ERROR (app bug): local reference table overflow (max=512)。参考https://stackoverflow.com/questions/26685491/jni-error-app-bug-local-reference-table-overflow-max-512。
-  
+
 * Global References
   Global引用在整个生命周期中都是有效的（直到手动释放它），同样它的<font color="red">引用个数也是有限的</font>，所以在不需要的时候需要手动释放一下。使用NewGlobalRef创建一个Global引用，使用DeleteGlobalRef删除一个Global引用。
 
@@ -18,20 +18,18 @@ JNI的引用分为三种Local References、Global References和Weak Global Refer
   Weak Global如其名，所以在使用的时候需要判断一下这个应用对象是否还可用<font color="red">IsSameObject(o, nullptr)</font>，同样它的<font color="red">引用个数也是有限的</font>，所以在不需要的时候需要手动释放一下。使用NewWeakGlobalRef创建一个Weak Global引用，使用DeleteWeakGlobalRef删除一个Weak Global引用。
 
 * 在 JNI 层执行 Java 代码常用到 `FindClass() `、 `GetMethodID() `、 `GetFieldID() `；但只有第一个函数返回的 `jclass `属于 JNI (局部)引用对象，<font color="red">而 `jmethodID `和 `jfieldID `并不是，它们是指向内部 Runtime 数据结构的指针</font>；实际上这些 ID 是用于缓存的静态对象：第一次查找会做一次字符串比较，但后面再次调用就能直接读取而变得很快；JVM 会保证这些 ID 是合法的，直到 `Class `被 unload；所以， `jmethodID `和 `jfieldID `是不需要手动释放的，当然也不能作为 JNI 全局引用。
-
+  
   参考https://my.oschina.net/u/4419414/blog/4320396
 
 * **其他非 JNI 引用**:
-
+  
   除了上面提到的 ID，类似 `GetStringUTFChars() `和 `GetByteArrayElements() `/ `GetCharArrayElements() `等函数返回的也是 Raw Data 指针，而非 JNI 引用；
-
+  
   在调用相对应的 `ReleaseXXX() `函数释放前，它们都是合法的；
 
 * 同一个 `jobject `对象的不同引用可能拥有不同的值，比如同一 `jobject `对象每次调用 `NewGlobalRef() `可能返回不同的值；
-
-  要检查两个引用是否指向同一个 `jobject `对象，必须调用 `IsSameObject() `，而不要使用 `== `去比较;
-
   
+  要检查两个引用是否指向同一个 `jobject `对象，必须调用 `IsSameObject() `，而不要使用 `== `去比较;
 
 #### 2.  Jni多线程（JNIEnv封装）
 
@@ -52,6 +50,7 @@ if (JNI_OK != attachRet) {
 ```
 
 * jobject即不能跨函数也不能跨线程，否则崩溃；默认是局部引用，可升级为全局引用解决问题。
+
 * JavaVM（一个进程只有一个）能跨线程和跨函数；
 
 * 以下是WebRTC内部的一个实现，其实Android源码里面的实现也是一样的。我简单说明一下，当一个线程绑定了一个JNIEnv，我们可以通过GetEnv获取对应的JNIEnv，当一个线程没有绑定JNIEnv，我们可以通过AttachCurrentThread为当前线程绑定一个JNIEnv。那么当线程退出的时候我们如何释放这个JNIEnv呢？通过pthread_setspecific把这个JNIEnv存到线程中，当线程退出的时候通过pthread_getspecific取出，然后释放掉它就好了。
@@ -144,8 +143,6 @@ https://github.com/google/filament/blob/main/filament/backend/include/private/ba
 
 外部使用JNIEnv时通过::get()::getEnvironment()来获取，由static thread_local jvm instance;保证析构函数的执行。
 
-
-
 #### 3. Native异常捕获
 
 理论上来说调用大部分JNI接口都需要在调用之后判断一下是否有错误，如果不检查是否存在错误，那么会在下一个调用的时候直接奔溃，不利于问题定位。一般来说这类接口都需要在调用之后判断一下：Get<Static>MethodID、Get<Static><TYPE>Field、Call<Static><TYPE>Method、NewGlobalRef、DeleteGlobalRef、NewStringUTF等。
@@ -169,14 +166,12 @@ if (env->ExceptionCheck()) {
      LOGE(__VA_ARGS__); }
 ```
 
-
-
 #### 4. 方法调用
 
 做一层封装，给外部统一调用。
 
 * 构造函数
-
+  
   构造函数的方法名是`<init>`
 
 ```c++
@@ -199,8 +194,6 @@ method = env->GetMethodID(cla, "<init>", "(III)V");
 cla = env->NewObject(cla, method, 400, 500, 600);
 ```
 
-
-
 * 静态方法
 
 ```c++
@@ -215,8 +208,6 @@ jmethodID showInfo = env->GetStaticMethodID(studentClass, "showInfo", "(Ljava/la
 jstring  jstringValue = env->NewStringUTF("静态方法你好，我是C++");
 env->CallStaticVoidMethod(studentClass, showInfo, jstringValue);
 ```
-
-
 
 * 对象方法
 
@@ -238,8 +229,6 @@ jstring getNameResult = static_cast<jstring>(env->CallObjectMethod(student, getN
 const char * getNameValue = env->GetStringUTFChars(getNameResult, NULL);
 LOGE("调用到getName方法，值是:%s\n", getNameValue);
 ```
-
-
 
 #### 5. 类型转换
 
@@ -310,8 +299,6 @@ std::map<std::string, std::string> JavaToStdMapStrings(JNIEnv* jni, jobject j_ma
 }
 ```
 
-
-
 #### 6. 本地方法动态注册
 
 结合引用的封装。示例：
@@ -353,8 +340,6 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
 
 可再做一层封装，给外部规范化调用。
 
-
-
 #### 7. 其他（视需求决定是否封装）
 
 * Jni静态缓存
@@ -362,30 +347,28 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
 
 我们在调用这类<font color="red">Get&lt;Static&gt;MethodID、Get&lt;Static&gt;&lt;Type&gt;Field、Call&lt;Static&gt;&lt;Type&gt;Method</font>接口的时候都需要填入signature，signature用于表示描述Java类型对应C/C++类型。基本类型使用单字符表示，结构体使用L + 包名 + 结构名 + ;表示，因为JNI需要知道结构体的完整包名才能找到对应的类型。
 
-| Java 类型 | Native 类型         | 类型大小                                            | 签名                                                         |
-| :-------- | :------------------ | :-------------------------------------------------- | :----------------------------------------------------------- |
-| boolean   | jboolean / uint8_t  | unsigned 8 bits                                     | Z                                                            |
-| byte      | jbyte / int8_t      | signed 8 bits                                       | B                                                            |
-| char      | jchar / uint16_t    | unsigned 16 bits                                    | C                                                            |
-| short     | jshort / int16_t    | signed 16 bits                                      | S                                                            |
-| int       | jint / int32_t      | signed 32 bits                                      | I                                                            |
-| long      | jlong / int64_t     | signed 64 bits                                      | J                                                            |
-| float     | jfloat / float      | 32 bits                                             | F                                                            |
-| double    | jdouble / double    | 64 bits                                             | D                                                            |
-| void      | void                | N/A                                                 | V                                                            |
-| Object    | jobject             | 引用对象大小，包括 jclass/jstring/jarray/jthrowable | Lfully/qualified/class/name;<br />比如：Ljava/nio/ByteBuffer;<br />JLandroid/media/MediaCodec$BufferInfo; |
-| String    | jstring / c++对象类 | N/A                                                 | Ljava/lang/String;                                           |
-| Object[]  | jobjectArray        | N/A                                                 | N/A                                                          |
-| boolean[] | jbooleanArray       | N/A                                                 | [Z                                                           |
-| byte[]    | jbyteArray          | N/A                                                 | [B                                                           |
-| char[]    | jcharArray          | N/A                                                 | [C                                                           |
-| short[]   | jshortArray         | N/A                                                 | [S                                                           |
-| int[]     | jintArray           | N/A                                                 | [I                                                           |
-| long[]    | jlongArray          | N/A                                                 | [J                                                           |
-| float[]   | jfloatArray         | N/A                                                 | [F                                                           |
-| double[]  | jdoubleArray        | N/A                                                 | [D                                                           |
-
-
+| Java 类型   | Native 类型          | 类型大小                                       | 签名                                                                                                     |
+|:--------- |:------------------ |:------------------------------------------ |:------------------------------------------------------------------------------------------------------ |
+| boolean   | jboolean / uint8_t | unsigned 8 bits                            | Z                                                                                                      |
+| byte      | jbyte / int8_t     | signed 8 bits                              | B                                                                                                      |
+| char      | jchar / uint16_t   | unsigned 16 bits                           | C                                                                                                      |
+| short     | jshort / int16_t   | signed 16 bits                             | S                                                                                                      |
+| int       | jint / int32_t     | signed 32 bits                             | I                                                                                                      |
+| long      | jlong / int64_t    | signed 64 bits                             | J                                                                                                      |
+| float     | jfloat / float     | 32 bits                                    | F                                                                                                      |
+| double    | jdouble / double   | 64 bits                                    | D                                                                                                      |
+| void      | void               | N/A                                        | V                                                                                                      |
+| Object    | jobject            | 引用对象大小，包括 jclass/jstring/jarray/jthrowable | Lfully/qualified/class/name;<br />比如：Ljava/nio/ByteBuffer;<br />JLandroid/media/MediaCodec$BufferInfo; |
+| String    | jstring / c++对象类   | N/A                                        | Ljava/lang/String;                                                                                     |
+| Object[]  | jobjectArray       | N/A                                        | N/A                                                                                                    |
+| boolean[] | jbooleanArray      | N/A                                        | [Z                                                                                                     |
+| byte[]    | jbyteArray         | N/A                                        | [B                                                                                                     |
+| char[]    | jcharArray         | N/A                                        | [C                                                                                                     |
+| short[]   | jshortArray        | N/A                                        | [S                                                                                                     |
+| int[]     | jintArray          | N/A                                        | [I                                                                                                     |
+| long[]    | jlongArray         | N/A                                        | [J                                                                                                     |
+| float[]   | jfloatArray        | N/A                                        | [F                                                                                                     |
+| double[]  | jdoubleArray       | N/A                                        | [D                                                                                                     |
 
 ### RAII思想
 
@@ -397,12 +380,10 @@ RAII 机制就是利用了C++的上述特性,在需要获取使用资源RES的�
 
 RAII是C++基础必备知识，非常重要，智能指针、锁都用的这个机制。
 
-
-
 #### 2. RAII的例子
 
 * lock_guard
-
+  
   C++11中[lock_guard](http://www.cplusplus.com/reference/mutex/lock_guard/)对[mutex](http://www.cplusplus.com/reference/mutex/mutex/)互斥锁的管理就是典型的RAII机制，以下是C++11头文件mutex中lock_guard的源代码，看代码注释就清楚了，这是典型的RAII风格。
 
 ```C++
@@ -434,8 +415,6 @@ class lock_guard
 ```
 
 为了保证`lock_guard`对象不被错误使用，产生不可预知的后果，上面的代码中注意**`lock_guard`对象的拷贝构造函数和赋值运算符都被声明为delete(告知编译器不生成这些被标记的函数)，以确保`lock_guard`不会被复制，这是RAII机制的一个基本特征**，后面所有RAII实现都具备这个特性。
-
-
 
 `lock_guard`的调用方式也很简单了，就借用[cplusplus.com](http://www.cplusplus.com/reference/mutex/lock_guard/)上的例程来说明吧
 
@@ -478,8 +457,6 @@ int main ()
 }
 ```
 
-
-
 ### 基于RAII封装JNI
 
 除了Java和C++层本身的内存泄露，JNI编程过程中还存在潜在的内存泄露。
@@ -519,6 +496,11 @@ private:
     scoped_local_ref(const scoped_local_ref&) = delete;
 };
 ```
+
+**<mark>注意：</mark>** 不要所有jobject和jclass都无脑用scoped_local_ref封装。如果jni函数要给Java层返回定义的Java对象，return的jobject和jclass都不能用scoped_local_ref封装，不然会在析构时自动DeleteLocalRef，会崩溃报错：
+java_vm_ext.cc:594] JNI DETECTED ERROR IN APPLICATION: expected reference of kind Local but found Global: 0x2f06
+
+java_vm_ext.cc:594]     in call to DeleteLocalRef
 
 
 

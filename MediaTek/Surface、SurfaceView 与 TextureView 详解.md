@@ -5,15 +5,11 @@ Surface 就是“表面”的意思，可以**简单理解为内存中的一段�
 - 通过Surface（因为Surface是句柄）就可以获得原生缓冲器以及其中的内容。就像在C语言中，可以通过一个文件的句柄，就可以获得文件的内容一样；
 - 原生缓冲器（rawbuffer）是用于保存当前窗口的像素数据的。
 
-
-
 简单的说 **Surface 对应了一块屏幕缓冲区，每个Window对应一个Surface，任何View都是画在Surface上的**，传统的view共享一块屏幕缓冲区，所有的绘制必须在UI线程中进行我们不能直接操作Surface实例，要通过SurfaceHolder，在SurfaceView中可以通过getHolder()方法获取到SurfaceHolder实例。
 
 **Surface 是一个用来画图形的地方，但是我们知道画图都是在一个Canvas对象上面进行的**，Surface 中的 Canvas 成员，是专门用于提供画图的地方，就像黑板一样，其中的原始缓冲区是用来保存数据的地方。
 
 Surface本身的作用类似一个句柄，得到了这个句柄就可以得到其中的Canvas、原始缓冲区以及其他方面的内容，所以简单的说Surface是用来管理数据的(句柄)。
-
-
 
 ### **SurfaceView 简介**
 
@@ -45,46 +41,29 @@ Surfaceview提供了一个可见区域，只有在这个可见区域内的Surfac
 
 **Surface的排版显示受到视图层级关系的影响，它的兄弟视图结点会在顶端显示**。这意味者Surface的内容会被它的兄弟视图遮挡，这一特性可以用来放置遮盖物(overlays)(例如，文本和按钮等控件)。
 
-
 注意，如果Surface上面有透明控件，那么它的每次变化都会引起框架重新计算它和顶层控件的透明效果，这会影响性能。surfaceview变得可见时，surface被创建；surfaceview隐藏前，surface被销毁。
-
 
 这样能节省资源。如果你要查看surface被创建和销毁的时机，可以重载surfaceCreated(SurfaceHolder)和surfaceDestroyed(SurfaceHolder)。
 
-**SurfaceView的核心在于提供了两个线程：UI线程和渲染线程,两个线程通过“双缓冲”机制来达到高效的界面适时更新。**而这个双缓冲可以理解为，SurfaceView在更新视图时用到了两张Canvas，一张frontCanvas和一张backCanvas。
+SurfaceView的核心在于提供了两个线程：UI线程和渲染线程,两个线程通过“双缓冲”机制来达到高效的界面适时更新。**而这个双缓冲可以理解为，SurfaceView在更新视图时用到了两张Canvas，一张frontCanvas和一张backCanvas。
 
 每次实际显示的是frontCanvas，backCanvas存储的是上一次更改前的视图，当使用lockCanvas（）获取画布时，得到的实际上是backCanvas而不是正在显示的frontCanvas，之后你在获取到的backCanvas上绘制新视图，再unlockCanvasAndPost（canvas）此视图，那么上传的这张canvas将替换原来的frontCanvas作为新的frontCanvas，原来的frontCanvas将切换到后台作为backCanvas。
 
 例如，如果你已经先后两次绘制了视图A和B，那么你再调用lockCanvas（）获取视图，获得的将是A而不是正在显示的B，之后你将重绘的C视图上传，那么C将取代B作为新的frontCanvas显示在SurfaceView上，原来的B则转换为backCanvas。
 
-
 不用画布，直接在窗口上进行绘图叫做无缓冲绘图。用了一个画布，将所有内容都先画到画布上，在整体绘制到窗口上，就该叫做单缓冲绘图，那个画布就是一个缓冲区。用了两个画布，一个进行临时的绘图，一个进行最终的绘图，这样就叫做双缓冲。
-
-
 
 **SurfaceView 的优缺点**
 
-
-
 一般的Activity包含的多个View会组成View hierachy的树形结构，只有最顶层的DectorView才是对WMS可见的，这个DecorView在WMS中有一个对应的WindowState，再SurfaceFlinger中有对应的Layer，而SurfaceView正因为它有自己的Surface，有自己的Window，它在WMS中有对应的WindowState，在SurfaceFlinger中有Layer。
-
-
 
 虽然在App端它仍在View hierachy中，但在Server端(WMS和SurfaceFlinger)中，它与宿主窗口是分离的。**这样的好处是对这个Surface的渲染可以放到单独的线程中去做**，渲染时可以有自己的GL context。
 
-
-
 **因为它不会影响主线程对时间的响应。所以它的优点就是可以在独立的线程中绘制，不影响主线程，而且使用双缓冲机制，播放视频时画面更顺畅。**
-
-
 
 但是这也有缺点，因为这个Surface不在View hierachy中，它的显示也不受View的属性控制，所以不能进行平移、缩放等动画，它也不能放在其它ViewGroup中，SurfaceView不能嵌套使用，而且不能使用某些View的特性，例如View.setAlpha()。
 
-
-
 <b>从 Android7.0 开始，SurfaceView 的窗口位置与其他 View 渲染同步更新</b>。这意味着在屏幕上平移和缩放 SurfaceView 不会导致渲染失真。
-
-
 
 ### **SurfaceHolder 简介**
 
@@ -94,8 +73,6 @@ Surfaceview提供了一个可见区域，只有在这个可见区域内的Surfac
 所得到的Canvas对象，其实就是 Surface 中一个成员。加锁的目的其实就是为了在绘制的过程中，Surface 中的数据不会被改变。lockCanvas 是为了防止同一时刻多个线程对同一 canvas写入。
 
 从设计模式的角度来看**,Surface、SurfaceView、SurfaceHolder实质上就是MVC(Model-View-Controller)**，Model就是模型或者说是数据模型，更简单的可以理解成数据，在这里也就是Surface，View就是视图，代表用户交互界面，这里就是 SurfaceView, SurfaceHolder 就是 Controller.
-
-
 
 ### TextureView
 
@@ -112,8 +89,6 @@ Surface为BufferQueue的Producer接口实现类，使生产者可以通过它的
 SurfaceTexture 可以用作非直接输出的内容流，这样就提供二次处理的机会。与SurfaceView直接输出相比，这样会有若干帧的延迟。同时，由于它本身管理BufferQueue，因此内存消耗也会稍微大一些。
 TextureView **是一个可以把内容流作为外部纹理输出在上面的 View**, 它本身需要是一个硬件加速层。
 
-
-
 ### **SurfaceTexture**
 
 **SurfaceTexture 是 Surface 和 OpenGL ES(GLES) 纹理的组合。SurfaceTexture 用于提供输出到 GLES 纹理的 Surface 。**
@@ -125,8 +100,6 @@ SurfaceTexture 是从Android 3.0开始加入，与SurfaceView不同的是，**�
 首先，SurfaceTexture从图像流 (来自Camera预览、视频解码、GL绘制场景等) 中获得帧数据，当调用updateTexImage()时，根据内容流中最近的图像更新 SurfaceTexture 对应的GL纹理对象。 
 
 SurfaceTexture 包含一个应用是其使用方的BufferQueue。当生产方将新的缓冲区排入队列时，onFrameAvailable() 回调会通知应用。然后，应用调用updateTexImage()，这会释放先前占有的缓冲区，从队列中获取新缓冲区并执行EGL调用，从而使GLES可将此缓冲区作为外部纹理使用。
-
-
 
 ### **SurfaceView vs TextureView**
 
@@ -149,16 +122,14 @@ SurfaceTexture 包含一个应用是其使用方的BufferQueue。当生产方将
 
 另外，SurfaceView的隐藏，后台都会触发onSurfaceDestroyed，这点要注意。
 
-
-
 **注意：受 DRM 保护的视频只能在叠加平面上呈现。支持受保护内容的视频播放器必须使用 SurfaceView 进行实现**。
 
-| 项目       | SurfaceView | TextureView |
-| :--------- | ----------: | :---------: |
-| 内存       |          低 |     高      |
-| 耗电       |          低 |     高      |
-| 绘制       |        及时 |  1-3帧延迟  |
-| 动画和截图 |      不支持 |    支持     |
+| 项目    | SurfaceView | TextureView |
+|:----- | -----------:|:-----------:|
+| 内存    | 低           | 高           |
+| 耗电    | 低           | 高           |
+| 绘制    | 及时          | 1-3帧延迟      |
+| 动画和截图 | 不支持         | 支持          |
 
 - **在Android 7.0上系统 Surfaceview 的性能比 TextureView 更有优势**，支持对象的内容位置和包含的应用内容同步更新，平移、缩放不会产生黑边。 **在7.0以下系统如果使用场景有动画效果，可以选择性使用TextureView**。
 - 由于失效(invalidation)和缓冲的特性，**TextureView增加了额外1~3帧的延迟显示画面更新**。
@@ -166,8 +137,6 @@ SurfaceTexture 包含一个应用是其使用方的BufferQueue。当生产方将
 - T**extureView的内部缓冲队列导致比SurfaceView使用更多的内存**。
 - SurfaceView：内部自己持有surface，surface 创建、销毁、大小改变时系统来处理的，通过surfaceHolder 的callback回调通知。
 - 当画布创建好时，可以将surface绑定到MediaPlayer中。SurfaceView如果为用户可见的时候，创建SurfaceView的SurfaceHolder用于显示视频流解析的帧图片，如果发现SurfaceView变为用户不可见的时候，则立即销毁SurfaceView的SurfaceHolder，以达到节约系统资源的目的。
-
-
 
 ### Canvas 的底层实现
 
