@@ -340,6 +340,31 @@ extern "C" int jniRegisterNativeMethods_C(C_JNIEnv* env, const char* className,
 
 可再做一层封装，给外部规范化调用。
 
+
+
+动态注册和jni默认的静态注册（比如生成的Java_com_insta360_voiceassist_recognition_VoiceProcess_startProcess）区别：
+
+可以简单这样理解：比如有个Programmer类，静态注册相当于每调用一个方法，都要new出来一个对象，比如
+
+new Programmer().getUp()
+
+new Programmer().coding()
+
+new Programmer().sleep()
+
+动态注册相当于：
+Programmer a = new Programmer();
+
+a.getUp();
+
+a.coding();
+
+a.sleep();
+
+缺点是动态注册必须严格写好函数的每个参数的签名，且java层的方法无法直接通过Android Studio链接跳转到C++的方法，需要手动搜索。
+
+
+
 #### 7. 其他（视需求决定是否封装）
 
 * Jni静态缓存
