@@ -10,6 +10,8 @@
 
   adb remount 类似adb root
 
+  adb shell svc power stayon true   // 屏幕常亮 ,或者： adb shell "settings put system screen_off_timeout 6000000"
+
   adb shell am force-stop com.package.packagename   // 杀进程
 
   adb shell screencap -p /sdcard/screencap.png && adb pull /sdcard/screencap.png C:\screenshot.png    // 截屏
@@ -52,8 +54,6 @@
 
 adb shell dd if=/dev/zero of=/mnt/sdcard/bigfile
 
-
-
 * 查询媒体库信息
 
 adb shell content query --uri content://media/external/audio/media > audio_files.txt
@@ -62,7 +62,39 @@ adb shell content query --uri content://media/external/video/media > video_files
 
 adb shell content query --uri content://media/external/images/media > image_files.txt
 
+* 替换媒体库：
+  
+  1. adb root
+  
+  2. adb remount
+  
+  3. adb shell rm -rf /data/data/com.android.providers.media.module/databases
+  
+  4. adb push framework-mediaprovider.jar /system/apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar
+  
+  5. adb install -r MediaProvider.apk
+  
+  6. adb reboot
 
+* 查询stash信息
+  
+  * 列出所有stash记录：git stash list
+  
+  * 查看某次 Stash 的详细改动： git stash show -p stash@{n}
+  
+  * 检查特定文件是否存在于 Git Stash 栈中的方法：
+    
+    ```shell
+    for i in $(git stash list --format="%gd"); do
+      echo "Checking $i:"
+      git stash show -p $i | grep -l "filename.java" && echo "→ Found in $i"
+    done
+    
+    输出示例：
+    Checking stash@{0}:
+    → Found in stash@{0}
+    Checking stash@{1}:
+    ```
 
 ### 2. 进程线程信息
 

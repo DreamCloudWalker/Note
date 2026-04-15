@@ -31,6 +31,14 @@ git push
 
 * **git reset --soft HEAD^**    // 撤销commit
 
+* 补充提交：
+  
+  * git add .    // 添加要补充提交的代码文件
+  
+  * git commit --amend (--no-edit)  
+  
+  * git push origin HEAD:refs/for/master
+
 * git push --set-upstream origin 分支名 // 不提交代码，推送本地分支到远程仓库
 
 * 从分支1拉出分支2，改动后想直接Push到分支2：
@@ -121,7 +129,6 @@ git push
   $ git format-patch -1 <r1>     #生成单个commit的patch
   $ git format-patch <r1>        #生成某commit以来的修改patch（不包含该commit）
   $ git format-patch --root <r1> #生成从根到r1提交的所有patch
-  
   ```
   
   git apply patch //将patch文件内容差分到本地
